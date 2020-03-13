@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.runssnail.ddd.springboot.autoconfig.CommandBusAutoConfiguration,\
+  com.runssnail.ddd.springboot.autoconfig.EventBusAutoConfiguration,\
+  com.runssnail.ddd.springboot.autoconfig.ValidateCommandInterceptorAutoConfiguration,\
+  com.runssnail.ddd.springboot.autoconfig.AnnotationParamCommandValidatorAutoConfiguration,\
+  com.runssnail.ddd.springboot.autoconfig.I18nMessageConvertInterceptorAutoConfiguration,\
+  com.runssnail.ddd.springboot.autoconfig.MessageSourceAutoConfiguration
