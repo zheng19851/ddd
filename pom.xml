@@ -39,7 +39,7 @@
         <reflections.version>0.9.10</reflections.version>
         <aspectjweaver.version>1.8.6</aspectjweaver.version>
         <validation-api.version>2.0.0.Final</validation-api.version>
-        <hibernate-validator.version>6.0.7.Final</hibernate-validator.version>
+        <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
         <javax.el.version>2.2.6</javax.el.version>
         <fastjson.version>1.2.60</fastjson.version>
