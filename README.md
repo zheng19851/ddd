@@ -1,5 +1,9 @@
-### 一、maven依赖
-##### 1、如果你的应用没有使用springboot
+### 架构风格
+采用整洁架构风格和CQRS风格，2者结合，分4层，infrastructure、interface-adapter、application、domain
+##### 整洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+
+### 接入方式
+##### 方式1、如果你的应用没有使用springboot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -16,7 +20,7 @@
 ```
 
 
-##### 2、如果你的应用使用springboot
+##### 方式2、如果你的应用使用springboot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -25,7 +29,7 @@
 </dependency>
 ```
 
-### 二、重要组件介绍
+### 重要组件介绍
 
 ##### 1、Command
 一个Command对象对应一个用例
