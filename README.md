@@ -94,14 +94,105 @@ public class PolicyApplicationService {
 ##### 5、CommandHandler
 用来实现用例，一个用例对应一个CommandHandler，跟Command对应
 
+```
+  @Component
+  public class RemoveRuleTemplateCommandHandler extends BaseCommandHandler<RemoveRuleTemplateCommand, SingleResult> {
+  
+       // 这里省略。。。
+  
+      @Override
+      protected SingleResult<RuleTemplateDTO> doHandle(RemoveRuleTemplateCommand command) {
+  
+          // 这里省略。。。
+  
+          return SingleResult.create();
+      }
+  
+      @Override
+      public Class<RemoveRuleTemplateCommand> supportCommand() {
+          return RemoveRuleTemplateCommand.class;
+      }
+  }
+```
 ##### 6、CommandInterceptor
 用来拦截Command，子类实现CommandInterceptor接口
+```
+@Component
+@Order(1)
+@Slf4j
+public class CreatePolicyCommandInterceptor implements CommandInterceptor<CreatePolicyDefinitionCommand, SingleResult> {
 
+    @Override
+    public Class<CreatePolicyDefinitionCommand> supportCommandType() {
+        return CreatePolicyDefinitionCommand.class;
+    }
+
+    @Override
+    public void beforeHandle(CreatePolicyDefinitionCommand command) {
+        log.info("CreatePolicyInterceptor.preHandle");
+    }
+
+    @Override
+    public void afterHandle(CreatePolicyDefinitionCommand command, SingleResult result) {
+        log.info("CreatePolicyInterceptor.postHandle");
+    }
+}
+```
 ##### 7、Validator
 用来验证Command，子类实现Validator接口
+```
+@Component
+public class CreateSubPolicyCommandValidator implements Validator<CreateSubPolicyCommand> {
 
+    @Override
+    public Class<CreateSubPolicyCommand> supportType() {
+        return CreateSubPolicyCommand.class;
+    }
+
+    @Override
+    public void validate(CreateSubPolicyCommand command) throws IllegalArgumentException, BizException {
+        Validate.notNull(command);
+        Validate.notNull(command.getName());
+        Validate.isTrue(command.getName().length() <= 50, "name cannot over length 50");
+    }
+}
+```
 ##### 8、Assembler
 用来组装查询请求数据，将领域实体对象转换成DTO后返回给上层使用
+```
+@Component
+public class RuleTemplate2DTOAssembler implements Assembler<RuleTemplate, RuleTemplateDTO> {
+    @Override
+    public RuleTemplateDTO assemble(RuleTemplate ruleTemplate) {
+
+        RuleTemplateDTO dto = new RuleTemplateDTO();
+        BeanUtils.copyProperties(ruleTemplate, dto);
+
+        return dto;
+    }
+}
+
+
+```
 
 ##### 9、Converter
 实现领域实体对象和数据对象之间的转换
+```
+@Component
+public class RuleTemplateConverter implements Converter<RuleTemplate, RuleTemplateDO> {
+    @Override
+    public RuleTemplateDO serialize(RuleTemplate domainObject) {
+        RuleTemplateDO dataObject = new RuleTemplateDO();
+        BeanUtils.copyProperties(domainObject, dataObject);
+        return dataObject;
+    }
+
+    @Override
+    public RuleTemplate deserialize(RuleTemplateDO dataObject) {
+        RuleTemplate domainObject = new RuleTemplate();
+        BeanUtils.copyProperties(dataObject, domainObject);
+        return domainObject;
+    }
+}
+
+```
