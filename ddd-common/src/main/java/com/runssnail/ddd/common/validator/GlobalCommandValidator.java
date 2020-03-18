@@ -4,12 +4,13 @@ import com.runssnail.ddd.common.command.Command;
 
 /**
  * 全局命令验证器
+ * <p>
  * 可以用来统一验证使用注解的command
  *
  * @author zhengwei
  * @date 2019-12-23 20:26
  **/
-public interface GlobalValidator<T extends Command> extends Validator<T> {
+public interface GlobalCommandValidator<T extends Command> extends CommandValidator<T> {
 
     /**
      * 默认都支持

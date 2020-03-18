@@ -17,7 +17,7 @@ import com.runssnail.ddd.command.interceptor.GlobalCommandInterceptor;
 import com.runssnail.ddd.command.interceptor.ValidateCommandInterceptor;
 import com.runssnail.ddd.command.validator.CommandValidatorResolver;
 import com.runssnail.ddd.command.validator.DefaultCommandValidatorResolver;
-import com.runssnail.ddd.common.validator.Validator;
+import com.runssnail.ddd.common.validator.CommandValidator;
 import com.runssnail.ddd.spring.interceptor.OrderedValidateCommandInterceptor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -57,7 +57,7 @@ public class ValidateCommandInterceptorFactoryBean implements FactoryBean<Global
     private CommandValidatorResolver createCommandValidatorResolver() {
         CommandValidatorResolver commandValidatorResolver = new DefaultCommandValidatorResolver();
 
-        Map<String, Validator> beansOfValidators = this.applicationContext.getBeansOfType(Validator.class);
+        Map<String, CommandValidator> beansOfValidators = this.applicationContext.getBeansOfType(CommandValidator.class);
 
         if (MapUtils.isEmpty(beansOfValidators)) {
             log.info("can not find any Validator in spring context");
@@ -66,11 +66,11 @@ public class ValidateCommandInterceptorFactoryBean implements FactoryBean<Global
 
         log.info("find Validator in spring context {}", beansOfValidators.size());
 
-        List<Validator> validators = new ArrayList<>(beansOfValidators.values());
+        List<CommandValidator> validators = new ArrayList<>(beansOfValidators.values());
 
         AnnotationAwareOrderComparator.sort(validators);
 
-        for (Validator validator : validators) {
+        for (CommandValidator validator : validators) {
             commandValidatorResolver.registerValidator(validator);
         }
 

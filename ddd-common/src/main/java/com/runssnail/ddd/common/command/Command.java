@@ -1,11 +1,10 @@
 package com.runssnail.ddd.common.command;
 
 import com.runssnail.ddd.common.exception.BizException;
-import com.runssnail.ddd.common.validator.Validator;
+import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.validator.CommandValidator;
 
 import java.io.Serializable;
-
-import com.runssnail.ddd.common.result.Result;
 
 /**
  * 命令
@@ -22,7 +21,7 @@ public interface Command<T extends Result> extends Serializable {
      * @throws BizException
      * @param validator 验证器
      */
-    void validate(Validator validator) throws IllegalArgumentException, BizException;
+    void validate(CommandValidator validator) throws IllegalArgumentException, BizException;
 
     /**
      * 结果类型

@@ -7,7 +7,7 @@ import java.util.List;
 import com.runssnail.ddd.command.validator.CommandValidatorResolver;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.common.validator.GlobalValidator;
+import com.runssnail.ddd.common.validator.GlobalCommandValidator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -25,9 +25,9 @@ public class ValidateCommandInterceptor implements GlobalCommandInterceptor {
     public void beforeHandle(Command command) {
         log.debug("CommandValidateInterceptor.beforeHandle start, command={}", command);
 
-        List<GlobalValidator> globalValidators = commandValidatorResolver.getGlobalValidators();
+        List<GlobalCommandValidator> globalValidators = commandValidatorResolver.getGlobalValidators();
         if (CollectionUtils.isNotEmpty(globalValidators)) {
-            for (GlobalValidator globalValidator : globalValidators) {
+            for (GlobalCommandValidator globalValidator : globalValidators) {
                 if (globalValidator.supportCommand(command)) {
                     globalValidator.validate(command);
                 }

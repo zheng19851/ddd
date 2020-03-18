@@ -1,11 +1,11 @@
 package com.runssnail.ddd.command.validator;
 
-import java.util.List;
-
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.common.validator.GlobalValidator;
-import com.runssnail.ddd.common.validator.Validator;
+import com.runssnail.ddd.common.validator.CommandValidator;
+import com.runssnail.ddd.common.validator.GlobalCommandValidator;
+
+import java.util.List;
 
 /**
  * 命令验证器解析器
@@ -21,7 +21,7 @@ public interface CommandValidatorResolver {
      * @param command 命令
      * @return Validator 命令验证器
      */
-    <C extends Command<T>, T extends Result> Validator<C> resolve(Command<T> command);
+    <C extends Command<T>, T extends Result> CommandValidator<C> resolve(Command<T> command);
 
     /**
      * 注册(运行时注册注意并发问题)
@@ -29,7 +29,7 @@ public interface CommandValidatorResolver {
      * @param validator 命令验证器
      * @param <C>
      */
-    <C extends Command> void registerValidator(Validator<C> validator);
+    <C extends Command> void registerValidator(CommandValidator<C> validator);
 
     /**
      *
@@ -37,5 +37,5 @@ public interface CommandValidatorResolver {
      *
      * @return 全局的验证器
      */
-    List<GlobalValidator> getGlobalValidators();
+    List<GlobalCommandValidator> getGlobalValidators();
 }

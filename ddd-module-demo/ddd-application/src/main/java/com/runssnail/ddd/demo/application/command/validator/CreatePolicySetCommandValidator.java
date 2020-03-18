@@ -4,7 +4,7 @@ import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.common.exception.BizException;
-import com.runssnail.ddd.common.validator.Validator;
+import com.runssnail.ddd.common.validator.CommandValidator;
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetCommand;
 
 /**
@@ -14,7 +14,7 @@ import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetComman
  * @date 2019-11-08 16:30
  **/
 @Component
-public class CreatePolicySetCommandValidator implements Validator<CreatePolicySetCommand> {
+public class CreatePolicySetCommandValidator implements CommandValidator<CreatePolicySetCommand> {
 
     @Override
     public Class<CreatePolicySetCommand> supportType() {

@@ -13,7 +13,7 @@ import javax.validation.Validator;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.common.exception.BizException;
-import com.runssnail.ddd.common.validator.GlobalValidator;
+import com.runssnail.ddd.common.validator.GlobalCommandValidator;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,7 +25,7 @@ import lombok.Setter;
  **/
 @Setter
 @Getter
-public class AnnotationParamGlobalCommandValidator implements GlobalValidator<Command> {
+public class AnnotationParamGlobalCommandValidator implements GlobalCommandValidator<Command> {
 
     private Validator validator;
 

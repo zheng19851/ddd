@@ -11,7 +11,7 @@ import com.runssnail.ddd.common.command.Command;
  * @author zhengwei
  * @date 2019-11-05 20:14
  **/
-public interface Validator<T extends Command> {
+public interface CommandValidator<T extends Command> {
 
     /**
      * 支持的类型

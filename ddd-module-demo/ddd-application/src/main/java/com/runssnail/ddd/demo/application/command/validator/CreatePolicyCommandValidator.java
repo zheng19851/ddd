@@ -1,11 +1,11 @@
 package com.runssnail.ddd.demo.application.command.validator;
 
+import com.runssnail.ddd.common.exception.BizException;
+import com.runssnail.ddd.common.validator.CommandValidator;
+import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
+
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;
-
-import com.runssnail.ddd.common.exception.BizException;
-import com.runssnail.ddd.common.validator.Validator;
-import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 
 /**
  * 创建策略CommandValidator
@@ -14,7 +14,7 @@ import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
  * @date 2019-11-08 16:30
  **/
 @Component
-public class CreatePolicyCommandValidator implements Validator<CreatePolicyCommand> {
+public class CreatePolicyCommandValidator implements CommandValidator<CreatePolicyCommand> {
 
     @Override
     public Class<CreatePolicyCommand> supportType() {
