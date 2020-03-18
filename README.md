@@ -138,11 +138,11 @@ public class CreatePolicyCommandInterceptor implements CommandInterceptor<Create
     }
 }
 ```
-##### 7、Validator
+##### 7、CommandValidator
 用来验证Command，子类实现Validator接口
 ```
 @Component
-public class CreateSubPolicyCommandValidator implements Validator<CreateSubPolicyCommand> {
+public class CreateSubPolicyCommandValidator implements CommandValidator<CreateSubPolicyCommand> {
 
     @Override
     public Class<CreateSubPolicyCommand> supportType() {
