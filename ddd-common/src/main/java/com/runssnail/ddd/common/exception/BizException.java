@@ -18,7 +18,7 @@ public class BizException extends BaseException {
         super(bizErrCode, bizErrMsg, message);
     }
 
-    public BizException(BasicErrorCode errorCode, String message, Throwable e) {
+    public BizException(ErrorCode errorCode, String message, Throwable e) {
         super(errorCode, message, e);
     }
 
@@ -37,7 +37,7 @@ public class BizException extends BaseException {
         return bizException;
     }
 
-    public static BizException create(BasicErrorCode errorCode, String message, Throwable e) {
+    public static BizException create(ErrorCode errorCode, String message, Throwable e) {
         BizException bizException = new BizException(errorCode, message, e);
         return bizException;
     }
