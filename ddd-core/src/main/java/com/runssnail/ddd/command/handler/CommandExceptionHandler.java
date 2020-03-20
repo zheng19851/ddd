@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command.handler;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 异常处理器
@@ -17,6 +17,6 @@ public interface CommandExceptionHandler {
      * @param result  result
      * @param t       异常
      */
-    <T extends Result> void onException(Command<T> command, T result, Throwable t);
+    <T extends BaseResult> void onException(Command<T> command, T result, Throwable t);
 
 }

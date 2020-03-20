@@ -1,17 +1,17 @@
 package com.runssnail.ddd.command;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-
 import com.runssnail.ddd.command.handler.CommandExceptionHandler;
 import com.runssnail.ddd.command.handler.CommandHandler;
 import com.runssnail.ddd.command.handler.TransactionCommandHandler;
 import com.runssnail.ddd.command.interceptor.CommandInterceptor;
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Collection;
 
 /**
  * 命令调用信息
@@ -19,7 +19,7 @@ import com.runssnail.ddd.common.result.Result;
  * @param <T>
  * @author zhengwei
  */
-public class CommandInvocation<C extends Command<T>, T extends Result> {
+public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
     private static final Logger log = LoggerFactory.getLogger(CommandInvocation.class);
 
     private C command;
@@ -38,23 +38,23 @@ public class CommandInvocation<C extends Command<T>, T extends Result> {
     }
 
     public T invoke() {
-        T response = null;
+        T result = null;
         try {
             invokePreInterceptors(command);
 
             if (commandHandler instanceof TransactionCommandHandler) {
-                response = (T) ((TransactionCommandHandler) this.commandHandler).handleInTransaction(this.command);
+                result = (T) ((TransactionCommandHandler) this.commandHandler).handleInTransaction(this.command);
             } else {
-                response = this.commandHandler.handle(command);
+                result = this.commandHandler.handle(command);
             }
         } catch (Exception e) {
-            response = createResultInstance(command);
-            response.setCode(Result.SERVER_ERROR_CODE);
-            commandExceptionHandler.onException(command, response, e);
+            result = createResultInstance(command);
+            result.setCode(BaseResult.SERVER_ERROR_CODE);
+            commandExceptionHandler.onException(command, result, e);
         } finally {
-            invokePostInterceptors(command, response);
+            invokePostInterceptors(command, result);
         }
-        return response;
+        return result;
 
     }
 

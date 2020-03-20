@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command.handler;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 命令处理器
@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.result.Result;
  * @author zhengwei
  * @date 2019/3/12 3:41 PM
  **/
-public interface CommandHandler<C extends Command<T>, T extends Result> {
+public interface CommandHandler<C extends Command<T>, T extends BaseResult> {
 
     /**
      * 是否支持当前命令

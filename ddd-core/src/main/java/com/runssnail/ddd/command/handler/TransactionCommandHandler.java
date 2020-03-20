@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command.handler;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 默认开启事务的CommandHandler
@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.result.Result;
  * @author zhengwei
  * @date 2019-11-06 16:11
  **/
-public interface TransactionCommandHandler<C extends Command<T>, T extends Result> extends CommandHandler<C, T> {
+public interface TransactionCommandHandler<C extends Command<T>, T extends BaseResult> extends CommandHandler<C, T> {
 
     /**
      * 处理command

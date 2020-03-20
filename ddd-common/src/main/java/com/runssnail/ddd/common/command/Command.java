@@ -1,7 +1,7 @@
 package com.runssnail.ddd.common.command;
 
 import com.runssnail.ddd.common.exception.BizException;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 import com.runssnail.ddd.common.validator.CommandValidator;
 
 import java.io.Serializable;
@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author zhengwei
  * @date 2019/3/12 3:40 PM
  **/
-public interface Command<T extends Result> extends Serializable {
+public interface Command<T extends BaseResult> extends Serializable {
 
     /**
      * 检查参数是否正确
