@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.intf.adapter.dubbo;
 
 import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.api.PolicySetService;
 import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 import com.runssnail.ddd.demo.client.dto.command.policyset.ActivatePolicySetCommand;
@@ -9,7 +9,6 @@ import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetComman
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetVersionCommand;
 import com.runssnail.ddd.demo.client.dto.command.policyset.DeactivatePolicySetCommand;
 import com.runssnail.ddd.demo.client.dto.command.policyset.RemovePolicySetCommand;
-import com.runssnail.ddd.demo.client.dto.result.policy.CreatePolicyResult;
 import com.runssnail.ddd.demo.client.dto.result.policyset.ActivatePolicySetResult;
 import com.runssnail.ddd.demo.client.dto.result.policyset.CreatePolicySetVersionResult;
 import com.runssnail.ddd.demo.client.dto.result.policyset.DeactivatePolicySetResult;
@@ -29,12 +28,12 @@ public class PolicySetServiceImpl implements PolicySetService {
     private CommandBus commandBus;
 
     @Override
-    public SingleResult<String> createPolicySet(CreatePolicySetCommand command) {
+    public Result<String> createPolicySet(CreatePolicySetCommand command) {
         return commandBus.dispatch(command);
     }
 
     @Override
-    public SingleResult<String> createPolicy(CreatePolicyCommand command) {
+    public Result<String> createPolicy(CreatePolicyCommand command) {
         return commandBus.dispatch(command);
     }
 

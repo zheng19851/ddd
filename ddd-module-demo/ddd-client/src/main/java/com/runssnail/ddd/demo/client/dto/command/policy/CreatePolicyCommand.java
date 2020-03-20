@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.client.dto.command.policy;
 
 import com.runssnail.ddd.common.command.AbstractCommand;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 
 import lombok.Data;
 
@@ -12,7 +12,7 @@ import lombok.Data;
  * @date 2019-11-05 14:36
  **/
 @Data
-public class CreatePolicyCommand extends AbstractCommand<SingleResult> {
+public class CreatePolicyCommand extends AbstractCommand<Result> {
 
     /**
      * 策略集ID
@@ -32,7 +32,7 @@ public class CreatePolicyCommand extends AbstractCommand<SingleResult> {
     }
 
     @Override
-    public Class<SingleResult> resultType() {
-        return SingleResult.class;
+    public Class<Result> resultType() {
+        return Result.class;
     }
 }

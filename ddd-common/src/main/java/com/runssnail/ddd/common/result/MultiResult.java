@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public class MultiResult<T> extends Result {
+public class MultiResult<T> extends BaseResult {
 
     private static final long serialVersionUID = 7761262662429121287L;
 
@@ -65,6 +65,10 @@ public class MultiResult<T> extends Result {
      */
     public static <T> MultiResult<T> create(List<T> data) {
         return new MultiResult<>(SUCCESS_CODE, SUCCESS_MSG, data);
+    }
+
+    public boolean isEmpty() {
+        return this.data == null || this.data.isEmpty();
     }
 
     public List<T> getData() {

@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.application.command.interceptor.policyset;
 
 import com.runssnail.ddd.command.interceptor.CommandInterceptor;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetCommand;
 
 import org.slf4j.Logger;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 @Order(1)
-public class CreatePolicySetInterceptor implements CommandInterceptor<CreatePolicySetCommand, SingleResult> {
+public class CreatePolicySetInterceptor implements CommandInterceptor<CreatePolicySetCommand, Result> {
 
     private static final Logger log = LoggerFactory.getLogger(CreatePolicySetInterceptor.class);
 
@@ -30,7 +30,7 @@ public class CreatePolicySetInterceptor implements CommandInterceptor<CreatePoli
     }
 
     @Override
-    public void afterHandle(CreatePolicySetCommand command, SingleResult result) {
+    public void afterHandle(CreatePolicySetCommand command, Result result) {
         log.info("CreatePolicySetInterceptor.postHandle");
     }
 }

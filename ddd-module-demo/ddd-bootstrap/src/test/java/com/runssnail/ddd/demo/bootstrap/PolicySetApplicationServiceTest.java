@@ -2,7 +2,6 @@ package com.runssnail.ddd.demo.bootstrap;
 
 
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.common.result.SingleResult;
 import com.runssnail.ddd.demo.application.command.handler.policyset.CreatePolicySetCommandHandler;
 import com.runssnail.ddd.demo.application.command.interceptor.policyset.CreatePolicySetInterceptor;
 import com.runssnail.ddd.demo.application.command.interceptor.policyset.Order2CreatePolicySetInterceptor;
@@ -106,7 +105,7 @@ public class PolicySetApplicationServiceTest {
         createPolicySetCommand.setEventType("Login");
         createPolicySetCommand.setName("test");
         createPolicySetCommand.setVersion("lastest");
-        SingleResult<String> result = policySetService.createPolicySet(createPolicySetCommand);
+        Result<String> result = policySetService.createPolicySet(createPolicySetCommand);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getData());
@@ -123,7 +122,7 @@ public class PolicySetApplicationServiceTest {
         createPolicySetCommand.setEventType("Login");
         createPolicySetCommand.setName("testfffffffffff");
         createPolicySetCommand.setVersion("lastest");
-        SingleResult<String> result = policySetService.createPolicySet(createPolicySetCommand);
+        Result<String> result = policySetService.createPolicySet(createPolicySetCommand);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(Result.PARAM_ERROR_CODE == result.getCode());

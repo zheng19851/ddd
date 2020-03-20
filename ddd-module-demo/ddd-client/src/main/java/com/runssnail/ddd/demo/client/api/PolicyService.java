@@ -1,6 +1,6 @@
 package com.runssnail.ddd.demo.client.api;
 
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 
 /**
@@ -9,5 +9,5 @@ import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
  **/
 public interface PolicyService {
 
-    SingleResult<String> createPolicy(CreatePolicyCommand command);
+    Result<String> createPolicy(CreatePolicyCommand command);
 }

@@ -1,6 +1,6 @@
 package com.runssnail.ddd.demo.client.api;
 
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 import com.runssnail.ddd.demo.client.dto.command.policyset.ActivatePolicySetCommand;
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetCommand;
@@ -18,9 +18,9 @@ import com.runssnail.ddd.demo.client.dto.result.policyset.RemovePolicySetResult;
  **/
 public interface PolicySetService {
 
-    SingleResult<String> createPolicySet(CreatePolicySetCommand command);
+    Result<String> createPolicySet(CreatePolicySetCommand command);
 
-    SingleResult<String> createPolicy(CreatePolicyCommand command);
+    Result<String> createPolicy(CreatePolicyCommand command);
 
     RemovePolicySetResult removePolicySet(RemovePolicySetCommand command);
 

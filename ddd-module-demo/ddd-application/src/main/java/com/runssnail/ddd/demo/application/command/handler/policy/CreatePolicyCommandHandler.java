@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.application.command.handler.policy;
 
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 import com.runssnail.ddd.demo.domain.event.policy.PolicyCreatedEvent;
 import com.runssnail.ddd.demo.domain.model.policy.Policy;
@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @date 2019-11-05 14:50
  **/
 @Component
-public class CreatePolicyCommandHandler extends BaseCommandHandler<CreatePolicyCommand, SingleResult> {
+public class CreatePolicyCommandHandler extends BaseCommandHandler<CreatePolicyCommand, Result> {
 
     @Autowired
     private PolicySetRepository policySetRepository;
@@ -41,7 +41,7 @@ public class CreatePolicyCommandHandler extends BaseCommandHandler<CreatePolicyC
     }
 
     @Override
-    public SingleResult<String> doHandle(CreatePolicyCommand command) {
+    public Result<String> doHandle(CreatePolicyCommand command) {
 
         PolicySet policySet = policySetRepository.selectById(command.getPolicySetId());
 
@@ -54,6 +54,6 @@ public class CreatePolicyCommandHandler extends BaseCommandHandler<CreatePolicyC
         // 发布领域事件
         eventBus.publish(new PolicyCreatedEvent(policy.getPolicyId()));
 
-        return SingleResult.create(policy.getPolicyId().getId());
+        return Result.success(policy.getPolicyId().getId());
     }
 }

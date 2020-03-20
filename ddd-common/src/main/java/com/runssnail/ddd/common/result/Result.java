@@ -1,72 +1,64 @@
 package com.runssnail.ddd.common.result;
 
 
-import com.runssnail.ddd.common.dto.BaseDTO;
-import com.runssnail.ddd.common.exception.BasicErrorCode;
+import com.runssnail.ddd.common.exception.ErrorCode;
 
 /**
  * 结果
  *
  * @author zhengwei
  */
-public class Result extends BaseDTO {
+public class Result<T> extends BaseResult {
+    private static final long serialVersionUID = 7796096612205501634L;
 
-    public static final int SUCCESS_CODE = 200;
-    public static final String SUCCESS_MSG = "success.message";
-
-    public static final int PARAM_ERROR_CODE = BasicErrorCode.PARAMS_ERROR.getErrorCode();
-    public static final Result PARAM_ERROR = new Result(PARAM_ERROR_CODE, BasicErrorCode.PARAMS_ERROR.getErrorMsg());
-
-
-    public static final int SERVER_ERROR_CODE = BasicErrorCode.SYS_ERROR.getErrorCode();
-    public static final Result SERVER_ERROR = new Result(SERVER_ERROR_CODE, BasicErrorCode.SYS_ERROR.getErrorMsg());
-
-    public static final Result SUCCESS = new Result(SUCCESS_CODE, SUCCESS_MSG);
-
-    private int code = SERVER_ERROR_CODE;
-    private String subCode;
-    private String message;
+    private T data;
 
     public Result() {
     }
 
     public Result(int code, String message) {
-        this.code = code;
-        this.message = message;
+        super(code, message);
     }
 
     public Result(int code, String subCode, String message) {
-        this.code = code;
-        this.subCode = subCode;
-        this.message = message;
+        super(code, subCode, message);
     }
 
-    public boolean isSuccess() {
-        return SUCCESS_CODE == this.code;
+    public Result(int code, String msg, T data) {
+        this(code, msg);
+        this.data = data;
     }
 
-
-    public int getCode() {
-        return code;
+    public Result(int code, String subCode, String msg, T data) {
+        this(code, subCode, msg);
+        this.data = data;
     }
 
-    public void setCode(int code) {
-        this.code = code;
+    public static <T> Result<T> failure(ErrorCode errorCode) {
+        return new Result<>(errorCode.getErrorCode(), errorCode.getErrorMsg());
     }
 
-    public String getSubCode() {
-        return subCode;
+    public static <T> Result<T> failure(int code, String msg) {
+        return new Result<>(code, msg);
     }
 
-    public void setSubCode(String subCode) {
-        this.subCode = subCode;
+    public static <T> Result<T> failure(int code, String subCode, String msg) {
+        return new Result<>(SERVER_ERROR_CODE, subCode, msg);
     }
 
-    public String getMessage() {
-        return message;
+    public static <T> Result<T> success() {
+        return new Result<>(SUCCESS_CODE, SUCCESS_MSG, SUCCESS_MSG);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public static <T> Result<T> success(T data) {
+        return new Result<>(SUCCESS_CODE, SUCCESS_MSG, SUCCESS_MSG, data);
+    }
+
+    public T getData() {
+        return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

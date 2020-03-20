@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.application.command.handler.policyset;
 
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetCommand;
 import com.runssnail.ddd.demo.domain.event.policyset.PolicySetCreatedEvent;
 import com.runssnail.ddd.demo.domain.model.policyset.PolicySet;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @date 2019-11-05 14:50
  **/
 @Component
-public class CreatePolicySetCommandHandler extends BaseCommandHandler<CreatePolicySetCommand, SingleResult> {
+public class CreatePolicySetCommandHandler extends BaseCommandHandler<CreatePolicySetCommand, Result> {
 
     @Autowired
     private PolicySetRepository policySetRepository;
@@ -34,7 +34,7 @@ public class CreatePolicySetCommandHandler extends BaseCommandHandler<CreatePoli
     }
 
     @Override
-    public SingleResult<String> doHandle(CreatePolicySetCommand command) {
+    public Result<String> doHandle(CreatePolicySetCommand command) {
 
         // 转换领域对象
         PolicySet policySet = this.policySetDomainService.createPolicySet(command);
@@ -45,6 +45,6 @@ public class CreatePolicySetCommandHandler extends BaseCommandHandler<CreatePoli
         // 发布领域事件
         eventBus.publish(new PolicySetCreatedEvent(policySet.getPolicySetId()));
 
-        return SingleResult.create(policySet.getPolicySetId());
+        return Result.success(policySet.getPolicySetId());
     }
 }

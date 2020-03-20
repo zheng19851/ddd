@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.application.service;
 
 import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.policyset.CreatePolicySetCommand;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class PolicySetApplicationService {
      * @return
      */
     @Transactional
-    public SingleResult createPolicySet(CreatePolicySetCommand command) {
+    public Result createPolicySet(CreatePolicySetCommand command) {
         return commandBus.dispatch(command);
     }
 }

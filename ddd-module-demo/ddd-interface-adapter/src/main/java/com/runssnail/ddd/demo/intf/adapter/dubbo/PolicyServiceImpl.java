@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.intf.adapter.dubbo;
 
 import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.common.result.SingleResult;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.api.PolicyService;
 import com.runssnail.ddd.demo.client.dto.command.policy.CreatePolicyCommand;
 
@@ -19,7 +19,7 @@ public class PolicyServiceImpl implements PolicyService {
     private CommandBus commandBus;
 
     @Override
-    public SingleResult<String> createPolicy(CreatePolicyCommand command) {
+    public Result<String> createPolicy(CreatePolicyCommand command) {
         return commandBus.dispatch(command);
     }
 }
