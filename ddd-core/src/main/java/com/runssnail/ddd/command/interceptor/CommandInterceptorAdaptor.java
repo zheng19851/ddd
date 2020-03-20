@@ -1,11 +1,11 @@
 package com.runssnail.ddd.command.interceptor;
 
 
+import com.runssnail.ddd.common.command.Command;
+import com.runssnail.ddd.common.result.BaseResult;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
 
 /**
  * 命令拦截器
@@ -17,7 +17,7 @@ import com.runssnail.ddd.common.result.Result;
  * @see org.springframework.core.annotation.Order
  * @see org.springframework.core.Ordered
  */
-public abstract class CommandInterceptorAdaptor<C extends Command<T>, T extends Result> implements CommandInterceptor<C, T> {
+public abstract class CommandInterceptorAdaptor<C extends Command<T>, T extends BaseResult> implements CommandInterceptor<C, T> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     /**

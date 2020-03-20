@@ -1,12 +1,11 @@
 package com.runssnail.ddd.demo.application.service;
 
 import com.runssnail.ddd.command.CommandBus;
+import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.demo.client.dto.command.rule.CreateRuleCommand;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.runssnail.ddd.demo.client.dto.command.rule.CreateRuleCommand;
-import com.runssnail.ddd.demo.client.dto.result.rule.CreateRuleResult;
 
 /**
  * @author zhengwei
@@ -24,7 +23,7 @@ public class RuleApplicationService {
      * @param command
      * @return
      */
-    public CreateRuleResult createRule(CreateRuleCommand command) {
+    public Result<String> createRule(CreateRuleCommand command) {
         return commandBus.dispatch(command);
     }
 }

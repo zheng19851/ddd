@@ -1,14 +1,13 @@
 package com.runssnail.ddd.demo.client.dto.command.rule;
 
-import java.util.List;
-
 import com.runssnail.ddd.common.command.AbstractCommand;
-import com.runssnail.ddd.common.command.Command;
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.domain.rule.OperateCodeEnum;
 import com.runssnail.ddd.demo.client.dto.domain.rule.RiskWeightConfig;
 import com.runssnail.ddd.demo.client.dto.domain.rule.RuleAction;
 import com.runssnail.ddd.demo.client.dto.domain.rule.RuleConditionDTO;
-import com.runssnail.ddd.demo.client.dto.result.rule.CreateRuleResult;
+
+import java.util.List;
 
 import lombok.Data;
 
@@ -19,7 +18,7 @@ import lombok.Data;
  * @date 2019-11-05 14:36
  **/
 @Data
-public class CreateRuleCommand extends AbstractCommand<CreateRuleResult> implements Command<CreateRuleResult> {
+public class CreateRuleCommand extends AbstractCommand<Result> {
 
     private String policyId;
 
@@ -58,7 +57,7 @@ public class CreateRuleCommand extends AbstractCommand<CreateRuleResult> impleme
     private List<RuleAction> actions;
 
     @Override
-    public Class<CreateRuleResult> resultType() {
-        return CreateRuleResult.class;
+    public Class<Result> resultType() {
+        return Result.class;
     }
 }

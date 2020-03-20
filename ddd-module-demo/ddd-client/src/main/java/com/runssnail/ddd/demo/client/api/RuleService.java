@@ -1,7 +1,7 @@
 package com.runssnail.ddd.demo.client.api;
 
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.rule.CreateRuleCommand;
-import com.runssnail.ddd.demo.client.dto.result.rule.CreateRuleResult;
 
 /**
  * @author zhengwei
@@ -9,5 +9,5 @@ import com.runssnail.ddd.demo.client.dto.result.rule.CreateRuleResult;
  **/
 public interface RuleService {
 
-    CreateRuleResult createRule(CreateRuleCommand command);
+    Result<String> createRule(CreateRuleCommand command);
 }

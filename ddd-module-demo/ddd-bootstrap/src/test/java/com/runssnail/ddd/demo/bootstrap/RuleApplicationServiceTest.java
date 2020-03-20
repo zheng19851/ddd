@@ -1,13 +1,13 @@
 package com.runssnail.ddd.demo.bootstrap;
 
 
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.handler.rule.CreateRuleCommandHandler;
 import com.runssnail.ddd.demo.application.service.RuleApplicationService;
 import com.runssnail.ddd.demo.client.dto.command.rule.CreateRuleCommand;
 import com.runssnail.ddd.demo.client.dto.domain.rule.LogicOperatorEnum;
 import com.runssnail.ddd.demo.client.dto.domain.rule.OperateCodeEnum;
 import com.runssnail.ddd.demo.client.dto.domain.rule.RuleConditionDTO;
-import com.runssnail.ddd.demo.client.dto.result.rule.CreateRuleResult;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -56,9 +56,9 @@ public class RuleApplicationServiceTest {
 
         command.setConditions(conditions);
 
-        CreateRuleResult result = ruleApplicationService.createRule(command);
+        Result result = ruleApplicationService.createRule(command);
 
         Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getRuleId());
+        Assert.assertNotNull(result.getData());
     }
 }

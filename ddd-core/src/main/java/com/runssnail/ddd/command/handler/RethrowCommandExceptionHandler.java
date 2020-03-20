@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command.handler;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 重新抛出异常
@@ -12,7 +12,7 @@ import com.runssnail.ddd.common.result.Result;
 public class RethrowCommandExceptionHandler implements CommandExceptionHandler {
 
     @Override
-    public <T extends Result> void onException(Command<T> command, T result, Throwable t) {
+    public <T extends BaseResult> void onException(Command<T> command, T result, Throwable t) {
 
         if (t instanceof RuntimeException) {
             throw (RuntimeException) t;

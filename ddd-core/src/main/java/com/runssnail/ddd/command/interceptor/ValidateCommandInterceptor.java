@@ -1,13 +1,14 @@
 package com.runssnail.ddd.command.interceptor;
 
+import com.runssnail.ddd.command.validator.CommandValidatorResolver;
+import com.runssnail.ddd.common.command.Command;
+import com.runssnail.ddd.common.result.BaseResult;
+import com.runssnail.ddd.common.validator.GlobalCommandValidator;
+
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.List;
 
-import com.runssnail.ddd.command.validator.CommandValidatorResolver;
-import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.common.validator.GlobalCommandValidator;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -39,7 +40,7 @@ public class ValidateCommandInterceptor implements GlobalCommandInterceptor {
     }
 
     @Override
-    public void afterHandle(Command command, Result result) {
+    public void afterHandle(Command command, BaseResult result) {
 
     }
 

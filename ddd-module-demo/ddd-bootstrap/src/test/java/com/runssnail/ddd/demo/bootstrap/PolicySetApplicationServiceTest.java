@@ -1,6 +1,7 @@
 package com.runssnail.ddd.demo.bootstrap;
 
 
+import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.handler.policyset.CreatePolicySetCommandHandler;
 import com.runssnail.ddd.demo.application.command.interceptor.policyset.CreatePolicySetInterceptor;
@@ -125,7 +126,7 @@ public class PolicySetApplicationServiceTest {
         Result<String> result = policySetService.createPolicySet(createPolicySetCommand);
 
         Assert.assertNotNull(result);
-        Assert.assertTrue(Result.PARAM_ERROR_CODE == result.getCode());
+        Assert.assertTrue(BasicErrorCode.PARAMS_ERROR.getErrorCode() == result.getCode());
 //        System.out.println(result.getCode());
     }
 }

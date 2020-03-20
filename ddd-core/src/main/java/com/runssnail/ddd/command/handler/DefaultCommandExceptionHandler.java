@@ -3,7 +3,8 @@ package com.runssnail.ddd.command.handler;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.exception.BaseException;
 import com.runssnail.ddd.common.exception.BasicErrorCode;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,13 +17,13 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultCommandExceptionHandler implements CommandExceptionHandler {
 
     @Override
-    public void onException(Command command, Result result, Throwable t) {
-        buildResponse(result, t);
+    public void onException(Command command, BaseResult result, Throwable t) {
+        buildResult(result, t);
         printLog(command, result, t);
     }
 
 
-    private void printLog(Command cmd, Result result, Throwable exception) {
+    private void printLog(Command cmd, BaseResult result, Throwable exception) {
         if ((exception instanceof BaseException) || (exception instanceof IllegalArgumentException)) {
             log.info(buildErrorMsg(cmd, result, exception));
         } else {
@@ -30,11 +31,11 @@ public class DefaultCommandExceptionHandler implements CommandExceptionHandler {
         }
     }
 
-    private String buildErrorMsg(Command cmd, Result result, Throwable exception) {
+    private String buildErrorMsg(Command cmd, BaseResult result, Throwable exception) {
         return "handle [" + cmd + "] failed, errorCode: " + result.getCode() + ", errorMsg:" + result.getMessage() + ", exceptionMsg:" + exception.getMessage();
     }
 
-    private void buildResponse(Result result, Throwable t) {
+    private void buildResult(BaseResult result, Throwable t) {
         if (t instanceof IllegalArgumentException) {
             result.setCode(BasicErrorCode.PARAMS_ERROR.getErrorCode());
             result.setMessage(t.getMessage());

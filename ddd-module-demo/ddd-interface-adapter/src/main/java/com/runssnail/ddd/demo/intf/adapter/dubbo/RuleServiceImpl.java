@@ -3,6 +3,7 @@ package com.runssnail.ddd.demo.intf.adapter.dubbo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.service.RuleApplicationService;
 import com.runssnail.ddd.demo.client.api.RuleService;
 import com.runssnail.ddd.demo.client.dto.command.rule.CreateRuleCommand;
@@ -19,7 +20,7 @@ public class RuleServiceImpl implements RuleService {
     private RuleApplicationService ruleApplicationService;
 
     @Override
-    public CreateRuleResult createRule(CreateRuleCommand command) {
+    public Result<String> createRule(CreateRuleCommand command) {
         return ruleApplicationService.createRule(command);
     }
 }
