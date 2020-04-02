@@ -230,14 +230,5 @@
             </plugin>
         </plugins>
     </build>
-    <distributionManagement>
-        <repository>
-            <id>fraudmetrixRepo</id>
-            <url>http://maven.fraudmetrix.cn/nexus/content/repositories/releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>fraudmetrixRepo</id>
-            <url>http://maven.fraudmetrix.cn/nexus/content/repositories/snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
+
 </project>
