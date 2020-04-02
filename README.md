@@ -196,3 +196,14 @@ public class RuleTemplateConverter implements Converter<RuleTemplate, RuleTempla
 }
 
 ```
+
+
+##### 10、ConcurrencyConflicts
+用来判断修改数据时，是否产生了并发问题。
+```
+ @Override
+    public void remove(Rule rule) throws ConcurrencyConflictException {
+        int count = this.ruleDOMapper.deleteByUuid(rule.getUuid(), rule.getOperator(), rule.getConcurrencyVersion());
+        ConcurrencyConflicts.check(count, "remove Rule, uuid={}, concurrencyVersion={}", rule.getUuid(), rule.getConcurrencyVersion());
+    }
+```
