@@ -1,8 +1,8 @@
 package com.runssnail.ddd.command.interceptor;
 
-import java.util.List;
-
 import com.runssnail.ddd.common.command.Command;
+
+import java.util.List;
 
 /**
  * @author zhengwei
@@ -19,7 +19,7 @@ public interface CommandInterceptorResolver {
     List<CommandInterceptor> resolveInterceptors(Class<? extends Command> aCommandClass);
 
     /**
-     * 注册命令拦截器
+     * 注册命令拦截器(not threadsafe)
      *
      * @param interceptor
      */

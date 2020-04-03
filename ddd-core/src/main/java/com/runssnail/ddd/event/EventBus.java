@@ -2,6 +2,8 @@ package com.runssnail.ddd.event;
 
 import com.runssnail.ddd.common.event.Event;
 
+import java.util.List;
+
 /**
  * event bus
  *
@@ -25,9 +27,12 @@ public interface EventBus {
     void asyncPublish(Event event);
 
     /**
-     * 注册EventListener
+     * 注册EventListener(not threadsafe)
+     *
      * @param handler EventHandler
-     * @param <T> Event
+     * @param <T>     Event
      */
     <T extends Event> void registerHandler(EventHandler<T> handler);
+
+    <T extends Event> void registerHandlers(List<EventHandler<T>> handlers);
 }

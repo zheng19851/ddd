@@ -1,15 +1,15 @@
 package com.runssnail.ddd.command.handler;
 
+import com.runssnail.ddd.command.CommandException;
+import com.runssnail.ddd.common.command.Command;
+
 import org.apache.commons.lang3.Validate;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.PostConstruct;
 
-import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.command.CommandException;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,7 +24,7 @@ public class DefaultCommandHandlerResolver implements CommandHandlerResolver {
     /**
      * key = command class
      */
-    private ConcurrentMap<Class, CommandHandler> commandHandlerMapping = new ConcurrentHashMap<>();
+    private Map<Class, CommandHandler> commandHandlerMapping = new HashMap<>();
 
     @Override
     public CommandHandler resolve(Command command) throws CannotFindCommandHandlerException {

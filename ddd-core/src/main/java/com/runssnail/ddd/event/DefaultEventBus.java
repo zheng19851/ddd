@@ -1,21 +1,21 @@
 package com.runssnail.ddd.event;
 
+import com.runssnail.ddd.common.event.Event;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
-import com.runssnail.ddd.common.event.Event;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -42,7 +42,7 @@ public class DefaultEventBus implements EventBus {
     /**
      * key=event class type
      */
-    private Map<Class, List<EventHandler>> handlerMapping = new ConcurrentHashMap<>();
+    private Map<Class, List<EventHandler>> handlerMapping = new HashMap<>();
 
     @PostConstruct
     public void init() {
@@ -81,11 +81,19 @@ public class DefaultEventBus implements EventBus {
             List<EventHandler> eventHandlers = handlerMapping.get(eventHandler.supportEventType());
             eventHandlers.add(eventHandler);
         } else {
-            handlerMapping.put(eventHandler.supportEventType(), new CopyOnWriteArrayList<>());
-            List<EventHandler> eventHandlers = this.handlerMapping.get(eventHandler.supportEventType());
+            List<EventHandler> eventHandlers = handlerMapping.putIfAbsent(eventHandler.supportEventType(), new ArrayList<>());
             eventHandlers.add(eventHandler);
         }
 
+    }
+
+    @Override
+    public <T extends Event> void registerHandlers(List<EventHandler<T>> eventHandlers) {
+        Validate.notEmpty(eventHandlers);
+
+        for (EventHandler handler : eventHandlers) {
+            this.registerHandler(handler);
+        }
     }
 
     private void publish(final Event event, final boolean async) {

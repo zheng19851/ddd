@@ -22,14 +22,14 @@ public interface CommandBus {
     <T extends Result> T dispatch(Command<T> command);
 
     /**
-     * 注册命令处理器
+     * 注册命令处理器(not threadsafe)
      *
      * @param commandHandler 命令处理器
      */
     void registerCommandHandler(CommandHandler commandHandler);
 
     /**
-     * 注册命令拦截器
+     * 注册命令拦截器(not threadsafe)
      *
      * @param interceptor
      */

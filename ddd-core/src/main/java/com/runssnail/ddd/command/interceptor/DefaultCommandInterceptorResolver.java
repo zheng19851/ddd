@@ -1,17 +1,17 @@
 package com.runssnail.ddd.command.interceptor;
 
+import com.runssnail.ddd.common.command.Command;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.PostConstruct;
 
-import com.runssnail.ddd.common.command.Command;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,7 +31,7 @@ public class DefaultCommandInterceptorResolver implements CommandInterceptorReso
      * <p>
      * key=Command Class
      */
-    private Map<Class, List<CommandInterceptor>> interceptorsMapping = new ConcurrentHashMap<>();
+    private Map<Class, List<CommandInterceptor>> interceptorsMapping = new HashMap<>();
 
     @PostConstruct
     public void init() {
@@ -54,8 +54,7 @@ public class DefaultCommandInterceptorResolver implements CommandInterceptorReso
             List<CommandInterceptor> commandInterceptors = interceptorMapping.get(interceptor.supportCommandType());
             commandInterceptors.add(interceptor);
         } else {
-            interceptorMapping.putIfAbsent(interceptor.supportCommandType(), new CopyOnWriteArrayList<>());
-            List<CommandInterceptor> commandInterceptors = interceptorMapping.get(interceptor.supportCommandType());
+            List<CommandInterceptor> commandInterceptors = interceptorMapping.putIfAbsent(interceptor.supportCommandType(), new ArrayList<>());
             commandInterceptors.add(interceptor);
         }
     }

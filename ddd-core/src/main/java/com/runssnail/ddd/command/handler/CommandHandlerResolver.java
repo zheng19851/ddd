@@ -15,14 +15,13 @@ public interface CommandHandlerResolver {
      * 找到对应处理类
      *
      * @param command 请求
-     * @throws CannotFindCommandHandlerException
-     *
      * @return CommandHandler
+     * @throws CannotFindCommandHandlerException
      */
     <C extends Command<T>, T extends Result> CommandHandler<C, T> resolve(Command<T> command) throws CannotFindCommandHandlerException;
 
     /**
-     * 注册命令处理器
+     * 注册命令处理器(not threadsafe)
      *
      * @param commandHandler 命令处理器
      */
