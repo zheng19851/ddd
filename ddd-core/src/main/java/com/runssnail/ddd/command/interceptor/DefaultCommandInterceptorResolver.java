@@ -54,7 +54,8 @@ public class DefaultCommandInterceptorResolver implements CommandInterceptorReso
             List<CommandInterceptor> commandInterceptors = interceptorMapping.get(interceptor.supportCommandType());
             commandInterceptors.add(interceptor);
         } else {
-            List<CommandInterceptor> commandInterceptors = interceptorMapping.putIfAbsent(interceptor.supportCommandType(), new ArrayList<>());
+            interceptorMapping.putIfAbsent(interceptor.supportCommandType(), new ArrayList<>());
+            List<CommandInterceptor> commandInterceptors = interceptorMapping.get(interceptor.supportCommandType());
             commandInterceptors.add(interceptor);
         }
     }
