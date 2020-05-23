@@ -42,18 +42,19 @@
 
 ```
 @Component
-public class PolicyApplicationService {
+public class ProductApplicationService {
 
     @Autowired
     private CommandBus commandBus;
 
     /**
-     * 创建策略
+     * 创建策略集
      *
      * @param command
      * @return
      */
-    public CreatePolicyResult createPolicy(CreatePolicyCommand command) {
+    @Transactional
+    public Result<Product> createProduct(CreateProductCommand command) {
         return commandBus.dispatch(command);
     }
 }
@@ -65,30 +66,38 @@ public class PolicyApplicationService {
 
 ```
   @Component
-  public class RemoveRuleTemplateCommandHandler extends BaseCommandHandler<RemoveRuleTemplateCommand, SingleResult> {
+  public class CreateProductCommandHandler extends BaseCommandHandler<CreateProductCommand, Result> {
   
-       // 这里省略。。。
+      @Autowired
+      private ProductRepository productRepository;
+  
+      @Autowired
+      private ProductDomainService productDomainService;
   
       @Autowired
       private EventBus eventBus;
   
       @Override
-      protected SingleResult<RuleTemplateDTO> doHandle(RemoveRuleTemplateCommand command) {
-  
-          // 这里省略。。。
-  
-          RuleTemplateDTO ruleTemplateDTO = null;
-  
-          this.eventBus.publish(new RuleTemplateRemovedEvent(ruleTemplateDTO));
-  
-          return SingleResult.create(ruleTemplateDTO);
+      public Class<CreateProductCommand> supportCommand() {
+          return CreateProductCommand.class;
       }
   
       @Override
-      public Class<RemoveRuleTemplateCommand> supportCommand() {
-          return RemoveRuleTemplateCommand.class;
+      public Result<String> doHandle(CreateProductCommand command) {
+  
+          // 转换领域对象
+          Product product = this.productDomainService.createProduct(command);
+  
+          // 保存数据
+          productRepository.save(product);
+  
+          // 发布领域事件
+          eventBus.publish(new ProductCreatedEvent(product.getProductId()));
+  
+          return Result.success(product.getProductId());
       }
   }
+
 ```
 
 ##### 5、CommandHandler
@@ -96,64 +105,66 @@ public class PolicyApplicationService {
 
 ```
   @Component
-  public class RemoveRuleTemplateCommandHandler extends BaseCommandHandler<RemoveRuleTemplateCommand, SingleResult> {
-  
-       // 这里省略。。。
-  
-      @Override
-      protected SingleResult<RuleTemplateDTO> doHandle(RemoveRuleTemplateCommand command) {
-  
-          // 这里省略。。。
-  
-          return SingleResult.create();
-      }
-  
-      @Override
-      public Class<RemoveRuleTemplateCommand> supportCommand() {
-          return RemoveRuleTemplateCommand.class;
-      }
-  }
+    public class CreateProductCommandHandler extends BaseCommandHandler<CreateProductCommand, Result> {
+    
+        // 这里省略...
+    
+        @Override
+        public Class<CreateProductCommand> supportCommand() {
+            return CreateProductCommand.class;
+        }
+    
+        @Override
+        public Result<String> doHandle(CreateProductCommand command) {
+    
+            // do bussniess
+         
+            return Result.success(product.getProductId());
+        }
+    }
 ```
 ##### 6、CommandInterceptor
 用来拦截Command，子类实现CommandInterceptor接口
 ```
 @Component
 @Order(1)
-@Slf4j
-public class CreatePolicyCommandInterceptor implements CommandInterceptor<CreatePolicyDefinitionCommand, SingleResult> {
+public class CreateProductInterceptor implements CommandInterceptor<CreateProductCommand, Result> {
+
+    private static final Logger log = LoggerFactory.getLogger(CreateProductInterceptor.class);
 
     @Override
-    public Class<CreatePolicyDefinitionCommand> supportCommandType() {
-        return CreatePolicyDefinitionCommand.class;
+    public Class<CreateProductCommand> supportCommandType() {
+        return CreateProductCommand.class;
     }
 
     @Override
-    public void beforeHandle(CreatePolicyDefinitionCommand command) {
-        log.info("CreatePolicyInterceptor.preHandle");
+    public void beforeHandle(CreateProductCommand command) {
+        log.info("CreateProductInterceptor.preHandle");
     }
 
     @Override
-    public void afterHandle(CreatePolicyDefinitionCommand command, SingleResult result) {
-        log.info("CreatePolicyInterceptor.postHandle");
+    public void afterHandle(CreateProductCommand command, Result result) {
+        log.info("CreateProductInterceptor.postHandle");
     }
 }
+
 ```
 ##### 7、CommandValidator
 用来验证Command，子类实现Validator接口
 ```
 @Component
-public class CreateSubPolicyCommandValidator implements CommandValidator<CreateSubPolicyCommand> {
+public class CreateProductCommandValidator implements CommandValidator<CreateProductCommand> {
 
     @Override
-    public Class<CreateSubPolicyCommand> supportType() {
-        return CreateSubPolicyCommand.class;
+    public Class<CreateProductCommand> supportType() {
+        return CreateProductCommand.class;
     }
 
     @Override
-    public void validate(CreateSubPolicyCommand command) throws IllegalArgumentException, BizException {
-        Validate.notNull(command);
-        Validate.notNull(command.getName());
-        Validate.isTrue(command.getName().length() <= 50, "name cannot over length 50");
+    public void validate(CreateProductCommand createProductCommand) throws IllegalArgumentException, BizException {
+        Validate.notNull(createProductCommand);
+        Validate.notNull(createProductCommand.getName());
+        Validate.isTrue(createProductCommand.getName().length() <= 10);
     }
 }
 ```
@@ -161,17 +172,16 @@ public class CreateSubPolicyCommandValidator implements CommandValidator<CreateS
 用来组装查询请求数据，将领域实体对象转换成DTO后返回给上层使用
 ```
 @Component
-public class RuleTemplate2DTOAssembler implements Assembler<RuleTemplate, RuleTemplateDTO> {
+public class CreateProductAssembler implements Assembler<Product, ProductDTO> {
+
     @Override
-    public RuleTemplateDTO assemble(RuleTemplate ruleTemplate) {
+    public ProductDTO assemble(Product product) {
 
-        RuleTemplateDTO dto = new RuleTemplateDTO();
-        BeanUtils.copyProperties(ruleTemplate, dto);
-
-        return dto;
+        ProductDTO target = new ProductDTO();
+        BeanUtils.copyProperties(product, target);
+        return target;
     }
 }
-
 
 ```
 
@@ -179,19 +189,22 @@ public class RuleTemplate2DTOAssembler implements Assembler<RuleTemplate, RuleTe
 实现领域实体对象和数据对象之间的转换
 ```
 @Component
-public class RuleTemplateConverter implements Converter<RuleTemplate, RuleTemplateDO> {
+public class ProductConverter implements Converter<Product, ProductDO> {
+
     @Override
-    public RuleTemplateDO serialize(RuleTemplate domainObject) {
-        RuleTemplateDO dataObject = new RuleTemplateDO();
-        BeanUtils.copyProperties(domainObject, dataObject);
-        return dataObject;
+    public ProductDO serialize(Product product) {
+
+        // todo 领域对象转换成数据对象
+        ProductDO productDO = new ProductDO();
+        productDO.setId(product.getProductId());
+        return productDO;
     }
 
     @Override
-    public RuleTemplate deserialize(RuleTemplateDO dataObject) {
-        RuleTemplate domainObject = new RuleTemplate();
-        BeanUtils.copyProperties(dataObject, domainObject);
-        return domainObject;
+    public Product deserialize(ProductDO productDO) {
+
+        // todo 数据对象转换成领域对象
+        return new Product(productDO.getId());
     }
 }
 
@@ -202,8 +215,8 @@ public class RuleTemplateConverter implements Converter<RuleTemplate, RuleTempla
 用来判断修改数据时，是否产生了并发问题。
 ```
  @Override
-    public void remove(Rule rule) throws ConcurrencyConflictException {
-        int count = this.ruleDOMapper.deleteByUuid(rule.getUuid(), rule.getOperator(), rule.getConcurrencyVersion());
-        ConcurrencyConflicts.check(count, "remove Rule, uuid={}, concurrencyVersion={}", rule.getUuid(), rule.getConcurrencyVersion());
+    public void remove(Product product) throws ConcurrencyConflictException {
+        int count = this.productDOMapper.deleteById(product.getId(), product.getOperator(), product.getConcurrencyVersion());
+        ConcurrencyConflicts.check(count, "remove Product, id={}, concurrencyVersion={}", product.getId(), product.getConcurrencyVersion());
     }
 ```
