@@ -48,7 +48,7 @@ public class ProductApplicationService {
     private CommandBus commandBus;
 
     /**
-     * 创建策略集
+     * 创建商品
      *
      * @param command
      * @return
