@@ -1,8 +1,10 @@
+[TOC]
+
 ### 架构风格
-采用整洁架构风格和CQRS风格，2者结合，分4层，infrastructure、interface-adapter、application、domain
+结合了整洁架构风格、CQRS风格以及分层架构风格，分4层，infrastructure、interface-adapter、application、domain
 ##### 整洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 
-### 接入方式
+### 使用方式
 ##### 方式1、如果你的应用没有使用springboot
 ```
 <dependency>
@@ -32,13 +34,40 @@
 ### 重要组件介绍
 
 ##### 1、Command
-一个Command对象对应一个用例
+一个Command对象对应一个用例的请求数据
+```
+@Data
+public class CreateProductCommand extends AbstractCommand<Result> {
+
+    private String name;
+
+    private String description;
+
+    @Override
+    public Class<Result> resultType() {
+        return Result.class;
+    }
+}
+
+```
 
 ##### 2、Event
 表示一个领域事件，用例完成后，发布一个领域事件
 
+```
+@Getter
+public class ProductCreatedEvent extends AbstractEvent {
+
+    private String productId;
+
+    public ProductCreatedEvent(String productId) {
+        this.productId = productId;
+    }
+}
+```
+
 ##### 3、CommandBus
-分发Command
+分发Command到对应的CommandHandler里去处理业务
 
 ```
 @Component
@@ -68,12 +97,8 @@ public class ProductApplicationService {
   @Component
   public class CreateProductCommandHandler extends BaseCommandHandler<CreateProductCommand, Result> {
   
-      @Autowired
-      private ProductRepository productRepository;
-  
-      @Autowired
-      private ProductDomainService productDomainService;
-  
+      // 这里省略...
+
       @Autowired
       private EventBus eventBus;
   
@@ -124,7 +149,7 @@ public class ProductApplicationService {
     }
 ```
 ##### 6、CommandInterceptor
-用来拦截Command，子类实现CommandInterceptor接口
+用来拦截Command，支持多个CommandInterceptor处理同一个Command
 ```
 @Component
 @Order(1)
@@ -150,7 +175,7 @@ public class CreateProductInterceptor implements CommandInterceptor<CreateProduc
 
 ```
 ##### 7、CommandValidator
-用来验证Command，子类实现Validator接口
+用来验证Command参数或者业务前置校验
 ```
 @Component
 public class CreateProductCommandValidator implements CommandValidator<CreateProductCommand> {
@@ -169,7 +194,7 @@ public class CreateProductCommandValidator implements CommandValidator<CreatePro
 }
 ```
 ##### 8、Assembler
-用来组装查询请求数据，将领域实体对象转换成DTO后返回给上层使用
+用来组装查询请求数据，将领域实体对象转换成DTO后返回给外部使用，将领域对象封装在内部
 ```
 @Component
 public class CreateProductAssembler implements Assembler<Product, ProductDTO> {
@@ -220,3 +245,9 @@ public class ProductConverter implements Converter<Product, ProductDO> {
         ConcurrencyConflicts.check(count, "remove Product, id={}, concurrencyVersion={}", product.getId(), product.getConcurrencyVersion());
     }
 ```
+
+
+### 参考
+https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+https://github.com/alibaba/COLA
+https://github.com/AxonFramework/AxonFramework
