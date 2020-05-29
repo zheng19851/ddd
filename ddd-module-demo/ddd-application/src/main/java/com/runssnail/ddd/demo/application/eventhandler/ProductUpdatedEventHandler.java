@@ -14,7 +14,7 @@ public class ProductUpdatedEventHandler extends BaseEventHandler<ProductUpdatedE
 
     @Override
     protected void doHandle(ProductUpdatedEvent event) {
-        log.info("receive a PolicySetUpdatedEvent, id={}", event.getProductId());
+        log.info("receive a ProductUpdatedEvent, id={}", event.getProductId());
     }
 
     @Override

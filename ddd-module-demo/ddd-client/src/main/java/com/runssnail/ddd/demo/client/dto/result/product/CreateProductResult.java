@@ -1,6 +1,7 @@
 package com.runssnail.ddd.demo.client.dto.result.product;
 
 import com.runssnail.ddd.common.result.Result;
+
 import lombok.Data;
 
 /**
@@ -10,6 +11,6 @@ import lombok.Data;
 @Data
 public class CreateProductResult extends Result {
 
-    private String policySetId;
+    private String productId;
 
 }

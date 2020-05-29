@@ -1,6 +1,14 @@
 package com.runssnail.ddd.demo.bootstrap;
 
 
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.handler.product.CreateProductCommandHandler;
@@ -15,14 +23,6 @@ import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
 import com.runssnail.ddd.demo.client.dto.result.product.ActivateProductResult;
 import com.runssnail.ddd.demo.client.dto.result.product.DeactivateProductResult;
 import com.runssnail.ddd.demo.client.dto.result.product.RemoveProductResult;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit4.SpringRunner;
 
 
 /**
@@ -53,7 +53,7 @@ public class ProductApplicationServiceTest {
     }
 
     @Test
-    public void testActivatePolicySetOk() {
+    public void testActivateProductOk() {
         ActivateProductCommand command = new ActivateProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
@@ -64,7 +64,7 @@ public class ProductApplicationServiceTest {
     }
 
     @Test
-    public void testRemovePolicySetOk() {
+    public void testRemoveProductOk() {
         RemoveProductCommand command = new RemoveProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
@@ -75,7 +75,7 @@ public class ProductApplicationServiceTest {
     }
 
     @Test
-    public void testCreatePolicySetOk() {
+    public void testCreateProductOk() {
         CreateProductCommand createProductCommand = new CreateProductCommand();
         createProductCommand.setDescription("demo");
         createProductCommand.setName("test");
@@ -86,7 +86,7 @@ public class ProductApplicationServiceTest {
     }
 
     @Test
-    public void testCreatePolicySetNameOverLength() {
+    public void testCreateProductNameOverLength() {
         CreateProductCommand createProductCommand = new CreateProductCommand();
         createProductCommand.setDescription("demo");
         createProductCommand.setName("testfffffffffff");
