@@ -1,11 +1,33 @@
-[TOC]
+
+* [架构风格](#架构风格)
+* [使用方式](#使用方式)
+   * [方式1、如果你的应用没有使用springboot](#方式1如果你的应用没有使用springboot)
+   * [方式2、如果你的应用使用springboot](#方式2如果你的应用使用springboot)
+* [重要组件介绍](#重要组件介绍)
+   * [Command（命令）](#command命令)
+   * [Event（事件）](#event事件)
+   * [CommandBus（命令总线）](#commandbus命令总线)
+   * [EventBus（事件总线）](#eventbus事件总线)
+   * [CommandHandler（命令处理器）](#commandhandler命令处理器)
+   * [CommandInterceptor（命令拦截器）](#commandinterceptor命令拦截器)
+   * [CommandValidator（命令验证器）](#commandvalidator命令验证器)
+   * [Assembler（组装器）](#assembler组装器)
+   * [Converter（转换器）](#converter转换器)
+   * [ConcurrencyConflicts（并发校验工具）](#concurrencyconflicts并发校验工具)
+* [参考](#参考)
 
 ### 架构风格
-结合了整洁架构风格、CQRS风格以及分层架构风格，分4层，infrastructure、interface-adapter、application、domain
-##### 整洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+结合了整洁架构风格、CQRS风格以及分层架构风格，分4层，如下：
+* interface-adapter 接口适配层（比如适配dubbo、rest接口）
+* application 应用层（实现用例的地方，eg：用户下单是个用例）
+* domain 领域层（写领域逻辑的地方，eg：下单用例包含订单逻辑、商品逻辑、以及优惠逻辑等）
+* infrastructure 基础层（放Cache、MQ框架、数据库持久实现等的地方）
 
 ### 使用方式
-##### 方式1、如果你的应用没有使用springboot
+
+注意：需要提前将jar mvn install进maven本地库或私库里
+
+* ##### 方式1、如果你的应用没有使用springboot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -22,7 +44,7 @@
 ```
 
 
-##### 方式2、如果你的应用使用springboot
+* ##### 方式2、如果你的应用使用springboot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -33,7 +55,7 @@
 
 ### 重要组件介绍
 
-##### 1、Command
+* ##### Command（命令）
 一个Command对象对应一个用例的请求数据
 ```
 @Data
@@ -51,7 +73,7 @@ public class CreateProductCommand extends AbstractCommand<Result> {
 
 ```
 
-##### 2、Event
+* ##### Event（事件）
 表示一个领域事件，用例完成后，发布一个领域事件
 
 ```
@@ -66,7 +88,7 @@ public class ProductCreatedEvent extends AbstractEvent {
 }
 ```
 
-##### 3、CommandBus
+* ##### CommandBus（命令总线）
 分发Command到对应的CommandHandler里去处理业务
 
 ```
@@ -90,7 +112,7 @@ public class ProductApplicationService {
 
 ```
 
-##### 4、EventBus
+* ##### EventBus（事件总线）
 发布一个领域事件
 
 ```
@@ -125,7 +147,7 @@ public class ProductApplicationService {
 
 ```
 
-##### 5、CommandHandler
+* ##### CommandHandler（命令处理器）
 用来实现用例，一个用例对应一个CommandHandler，跟Command对应
 
 ```
@@ -148,7 +170,7 @@ public class ProductApplicationService {
         }
     }
 ```
-##### 6、CommandInterceptor
+* ##### CommandInterceptor（命令拦截器）
 用来拦截Command，支持多个CommandInterceptor处理同一个Command
 ```
 @Component
@@ -174,7 +196,7 @@ public class CreateProductInterceptor implements CommandInterceptor<CreateProduc
 }
 
 ```
-##### 7、CommandValidator
+* ##### CommandValidator（命令验证器）
 用来验证Command参数或者业务前置校验
 ```
 @Component
@@ -193,7 +215,7 @@ public class CreateProductCommandValidator implements CommandValidator<CreatePro
     }
 }
 ```
-##### 8、Assembler
+* ##### Assembler（组装器）
 用来组装查询请求数据，将领域实体对象转换成DTO后返回给外部使用，将领域对象封装在内部
 ```
 @Component
@@ -210,7 +232,7 @@ public class CreateProductAssembler implements Assembler<Product, ProductDTO> {
 
 ```
 
-##### 9、Converter
+* ##### Converter（转换器）
 实现领域实体对象和数据对象之间的转换
 ```
 @Component
@@ -236,7 +258,7 @@ public class ProductConverter implements Converter<Product, ProductDO> {
 ```
 
 
-##### 10、ConcurrencyConflicts
+* ##### ConcurrencyConflicts（并发校验工具）
 用来判断修改数据时，是否产生了并发问题。
 ```
  @Override
@@ -248,6 +270,6 @@ public class ProductConverter implements Converter<Product, ProductDO> {
 
 
 ### 参考
-https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-https://github.com/alibaba/COLA
-https://github.com/AxonFramework/AxonFramework
+* 整洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
+* COLA：https://github.com/alibaba/COLA
+* AxonFramework：https://github.com/AxonFramework/AxonFramework
