@@ -1,10 +1,5 @@
 package com.runssnail.ddd.event;
 
-import com.runssnail.ddd.common.event.Event;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.Validate;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -15,6 +10,11 @@ import java.util.concurrent.ExecutorService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.Validate;
+
+import com.runssnail.ddd.common.event.Event;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -81,8 +81,8 @@ public class DefaultEventBus implements EventBus {
             List<EventHandler> eventHandlers = handlerMapping.get(eventHandler.supportEventType());
             eventHandlers.add(eventHandler);
         } else {
-            List<EventHandler> eventHandlers = handlerMapping.putIfAbsent(eventHandler.supportEventType(), new ArrayList<>());
-            eventHandlers.add(eventHandler);
+            handlerMapping.putIfAbsent(eventHandler.supportEventType(), new ArrayList<>());
+            handlerMapping.get(eventHandler.supportEventType()).add(eventHandler);
         }
 
     }
