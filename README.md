@@ -18,12 +18,15 @@
 * [参考](#参考)
 
 ### 架构风格
-结合了整洁架构风格、CQRS风格以及分层架构风格，分4层，如下：
-* interface-adapter 接口适配层（比如适配dubbo、rest接口）
-* application 应用层（实现用例的地方，eg：用户下单是个用例）
-* domain 领域层（写领域逻辑的地方，eg：下单用例包含订单逻辑、商品逻辑、以及优惠逻辑等）
+结合了 [整洁架构风格](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html?_blank) 、CQRS风格以及分层架构风格，并采用依赖原则分4层，如下：
+* interface-adapter 接口适配层（适配dubbo、rest接口等协议）
+* application 应用层（实现用例的地方，eg：电商场景里的用户下单是个用例）
+* domain 领域层（写领域逻辑的地方，eg：电商场景里的用户下单包含订单逻辑、商品逻辑、以及优惠逻辑等）
 * infrastructure 基础层（放Cache、MQ框架、数据库持久实现等的地方）
 
+模块依赖关系以及与 [整洁架构](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html?_blank) 对应关系：
+
+![采用依赖倒置的依赖关系](https://mmbiz.qpic.cn/mmbiz_png/IuUJiciaodp4ePgKtYeUV7aroO6yQUTGzwvFPFUDqKkq0GmticL51s0f11Qjx5n6SB7x1bwY8Js4YbJWnVxiaDUrSQ/0?wx_fmt=png)
 
 ### DEMO
 * 执行ddd-module-demo/ddd-bootstrap下的App类的main方法
@@ -320,6 +323,6 @@ public class ProductConverter implements Converter<Product, ProductDO> {
 
 
 ### 参考
-* 整洁架构：https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
-* COLA：https://github.com/alibaba/COLA
-* AxonFramework：https://github.com/AxonFramework/AxonFramework
+* [整洁架构](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html?_blank)
+* [Alibaba COLA](https://github.com/alibaba/COLA?_blank)
+* [AxonFramework](https://github.com/AxonFramework/AxonFramework?_blank)
