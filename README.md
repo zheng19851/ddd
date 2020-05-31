@@ -33,7 +33,7 @@ curl -H "Content-Type:application/json" -X POST http://localhost:8080/product/cr
 ```
 代码路径：ProductController.createProduct
 
-* 获取商品信息([点击](http://localhost:8080/product/get?productId=1))
+* 获取商品信息([点击](http://localhost:8080/product/get?productId=1&_blank))
 ```
 http://localhost:8080/product/get?productId=1
 ```
@@ -45,7 +45,8 @@ curl -H "Content-Type:application/json"  -X GET 'http://localhost:8080/product/g
 ```
 代码路径：ProductController.getProduct
 
-* 分页查询商品信息([点击](http://localhost:8080/product/query?name=test))
+* 分页查询商品信息([点击](http://localhost:8080/product/query?name=test&_blank))
+
 代码路径：ProductController.queryProducts
 
 * 修改商品
