@@ -5,49 +5,44 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
-import com.runssnail.ddd.demo.domain.event.product.ProductUpdatedEvent;
+import com.runssnail.ddd.demo.application.assembler.product.ProductAssembler;
+import com.runssnail.ddd.demo.client.dto.ProductDTO;
+import com.runssnail.ddd.demo.client.dto.command.product.GetProductCommand;
 import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductRepository;
-import com.runssnail.ddd.event.EventBus;
 
 /**
  * @author zhengwei
  * @date 2019-11-05 14:50
  **/
 @Component
-public class UpdateProductCommandHandler extends BaseCommandHandler<UpdateProductCommand, Result> {
+public class GetProductCommandHandler extends BaseCommandHandler<GetProductCommand, Result> {
 
     @Autowired
     private ProductRepository productRepository;
 
     @Autowired
-    private EventBus eventBus;
+    private ProductAssembler productAssembler;
 
     @Override
-    public Result doHandle(UpdateProductCommand command) {
+    public Class<GetProductCommand> supportCommand() {
+        return GetProductCommand.class;
+    }
+
+    @Override
+    public Result<ProductDTO> doHandle(GetProductCommand command) {
 
         // 转换领域对象
-        Product product = productRepository.selectById(command.getProductId());
+        Product product = this.productRepository.selectById(command.getProductId());
         if (product == null || product.isDeleted()) {
             // 不存在
             return Result.failure(ProductErrorCode.PRODUCT_NOT_EXISTS);
         }
 
-        product.update(command);
+        // 保存数据
+        ProductDTO productDTO = productAssembler.assemble(product);
 
-        productRepository.update(product);
-
-        // 发布领域事件
-        eventBus.publish(new ProductUpdatedEvent(product.getProductId()));
-
-        return Result.success(product.getProductId());
+        return Result.success(productDTO);
     }
-
-    @Override
-    public Class<UpdateProductCommand> supportCommand() {
-        return UpdateProductCommand.class;
-    }
-
 }

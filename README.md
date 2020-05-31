@@ -1,5 +1,6 @@
 
 * [架构风格](#架构风格)
+* [DEMO](#demo)
 * [使用方式](#使用方式)
    * [方式1、如果你的应用没有使用springboot](#方式1如果你的应用没有使用springboot)
    * [方式2、如果你的应用使用springboot](#方式2如果你的应用使用springboot)
@@ -23,9 +24,57 @@
 * domain 领域层（写领域逻辑的地方，eg：下单用例包含订单逻辑、商品逻辑、以及优惠逻辑等）
 * infrastructure 基础层（放Cache、MQ框架、数据库持久实现等的地方）
 
+
+### DEMO
+* 执行ddd-module-demo/ddd-bootstrap下的App类的main方法
+* 创建一个商品
+```
+curl -H "Content-Type:application/json" -X POST http://localhost:8080/product/create --data '{"name":"test","description":"test description"}'
+```
+代码路径：ProductController.createProduct
+
+* 获取商品信息([点击](http://localhost:8080/product/get?productId=1))
+```
+http://localhost:8080/product/get?productId=1
+```
+代码路径：ProductController.getProduct
+
+* 获取商品信息(命令行)
+```
+curl -H "Content-Type:application/json"  -X GET 'http://localhost:8080/product/get?productId=1'
+```
+代码路径：ProductController.getProduct
+
+* 分页查询商品信息([点击](http://localhost:8080/product/query?name=test))
+代码路径：ProductController.queryProducts
+
+* 修改商品
+```
+curl -H "Content-Type:application/json" -X POST http://localhost:8080/product/update --data '{"productId":"1","name":"test","description":"test description"}'
+```
+代码路径：ProductController.updateProduct
+
+* 禁用商品
+```
+curl -H "Content-Type:application/json" -X POST 'http://localhost:8080/product/deactivate?productId=1'
+```
+代码路径：ProductController.deactivateProduct
+
+* 启用商品
+```
+curl -H "Content-Type:application/json" -X POST 'http://localhost:8080/product/activate?productId=1'
+```
+代码路径：ProductController.activateProduct
+
+* 删除商品
+```
+curl -H "Content-Type:application/json" -X POST 'http://localhost:8080/product/delete?productId=1'
+```
+代码路径：ProductController.deleteProduct
+
 ### 使用方式
 
-注意：需要提前将jar mvn install进maven本地库或私库里
+注意：需要提前将jar ```mvn clean install -Dmaven.test.skip=true```进maven本地库或私库里
 
 * ##### 方式1、如果你的应用没有使用springboot
 ```

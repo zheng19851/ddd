@@ -1,7 +1,8 @@
 package com.runssnail.ddd.demo.domain.repository;
 
-import com.runssnail.ddd.demo.domain.model.product.Product;
+import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.demo.client.dto.domain.product.ProductId;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 
 /**
  * @author zhengwei
@@ -32,4 +33,7 @@ public interface ProductRepository {
     void activate(Product product);
 
     void remove(Product product);
+
+    PagingResult<Product> queryProducts(ProductQuery query);
+
 }

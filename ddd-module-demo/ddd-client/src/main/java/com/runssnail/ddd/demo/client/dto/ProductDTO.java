@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class ProductDTO extends BaseDTO {
 
-    private String id;
+    private String productId;
 
     private String name;
 

@@ -8,7 +8,8 @@ import com.runssnail.ddd.command.handler.CommandHandlerResolver;
 import com.runssnail.ddd.command.interceptor.CommandInterceptor;
 import com.runssnail.ddd.command.interceptor.CommandInterceptorResolver;
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,7 +34,7 @@ public class DefaultCommandInvocationFactory implements CommandInvocationFactory
     }
 
     @Override
-    public <C extends Command<T>, T extends Result> CommandInvocation<C, T> createCommandInvocation(Command<T> command) {
+    public <C extends Command<T>, T extends BaseResult> CommandInvocation<C, T> createCommandInvocation(Command<T> command) {
         final CommandHandler<C, T> commandHandler = commandHandlerResolver.resolve(command);
 
         final List<CommandInterceptor> commandInterceptors = commandInterceptorResolver.resolveInterceptors(command.getClass());

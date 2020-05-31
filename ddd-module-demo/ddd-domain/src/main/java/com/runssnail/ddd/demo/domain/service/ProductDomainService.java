@@ -1,11 +1,11 @@
 package com.runssnail.ddd.demo.domain.service;
 
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
-import com.runssnail.ddd.demo.domain.model.product.Product;
+import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import java.util.UUID;
+import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 
 /**
  * 领域服务
@@ -21,7 +21,7 @@ public class ProductDomainService {
     }
 
     public Product createProduct(CreateProductCommand command) {
-        Product product = new Product(this.nextId(), command.getName(), command.getDescription());
+        Product product = Product.create(this.nextId(), command.getName(), command.getDescription());
 
         product.validate();
         return product;

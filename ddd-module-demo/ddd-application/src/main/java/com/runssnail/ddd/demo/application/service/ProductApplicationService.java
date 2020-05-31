@@ -5,9 +5,16 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.runssnail.ddd.command.CommandBus;
+import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.demo.client.dto.ProductDTO;
+import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
-import com.runssnail.ddd.demo.domain.model.product.Product;
+import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
+import com.runssnail.ddd.demo.client.dto.command.product.GetProductCommand;
+import com.runssnail.ddd.demo.client.dto.command.product.QueryProductCommand;
+import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
+import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
 
 /**
  * @author zhengwei
@@ -26,7 +33,35 @@ public class ProductApplicationService {
      * @return
      */
     @Transactional
-    public Result<Product> createProduct(CreateProductCommand command) {
+    public Result<String> createProduct(CreateProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    public Result<ProductDTO> getProduct(GetProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    @Transactional
+    public Result<String> updateProduct(UpdateProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    @Transactional
+    public Result<String> activateProduct(ActivateProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    @Transactional
+    public Result<String> deactivateProduct(DeactivateProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    @Transactional
+    public Result<String> removeProduct(RemoveProductCommand command) {
+        return commandBus.dispatch(command);
+    }
+
+    public PagingResult<ProductDTO> queryProducts(QueryProductCommand command) {
         return commandBus.dispatch(command);
     }
 }

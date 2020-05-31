@@ -1,7 +1,6 @@
 package com.runssnail.ddd.demo.domain.event.product;
 
 import com.runssnail.ddd.common.event.AbstractEvent;
-import com.runssnail.ddd.demo.client.dto.domain.product.ProductId;
 
 import lombok.Getter;
 
@@ -12,9 +11,9 @@ import lombok.Getter;
 @Getter
 public class ProductActivatedEvent extends AbstractEvent {
 
-    private ProductId productId;
+    private String productId;
 
-    public ProductActivatedEvent(ProductId productId) {
+    public ProductActivatedEvent(String productId) {
         this.productId = productId;
     }
 

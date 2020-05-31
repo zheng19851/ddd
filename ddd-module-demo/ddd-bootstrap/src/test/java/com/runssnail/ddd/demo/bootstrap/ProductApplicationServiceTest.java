@@ -20,9 +20,6 @@ import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
-import com.runssnail.ddd.demo.client.dto.result.product.ActivateProductResult;
-import com.runssnail.ddd.demo.client.dto.result.product.DeactivateProductResult;
-import com.runssnail.ddd.demo.client.dto.result.product.RemoveProductResult;
 
 
 /**
@@ -46,10 +43,10 @@ public class ProductApplicationServiceTest {
         DeactivateProductCommand command = new DeactivateProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        DeactivateProductResult result = productService.deactivateProduct(command);
+        Result<String> result = productService.deactivateProduct(command);
 
         Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getProductId());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
@@ -57,10 +54,10 @@ public class ProductApplicationServiceTest {
         ActivateProductCommand command = new ActivateProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        ActivateProductResult result = productService.activateProduct(command);
+        Result<String> result = productService.activateProduct(command);
 
         Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getProductId());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test
@@ -68,10 +65,10 @@ public class ProductApplicationServiceTest {
         RemoveProductCommand command = new RemoveProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        RemoveProductResult result = productService.removeProduct(command);
+        Result<String> result = productService.removeProduct(command);
 
         Assert.assertNotNull(result);
-        Assert.assertNotNull(result.getProductId());
+        Assert.assertNotNull(result.getData());
     }
 
     @Test

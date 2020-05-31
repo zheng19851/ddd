@@ -11,7 +11,7 @@ import com.runssnail.ddd.command.interceptor.CommandInterceptor;
 import com.runssnail.ddd.command.interceptor.CommandInterceptorResolver;
 import com.runssnail.ddd.command.interceptor.DefaultCommandInterceptorResolver;
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 命令总线
@@ -33,7 +33,7 @@ public class DefaultCommandBus implements CommandBus {
     private CommandInvocationFactory commandInvocationFactory;
 
     @Override
-    public <T extends Result> T dispatch(Command<T> command) {
+    public <T extends BaseResult> T dispatch(Command<T> command) {
         CommandInvocation commandInvocation = commandInvocationFactory.createCommandInvocation(command);
         return (T) commandInvocation.invoke();
     }

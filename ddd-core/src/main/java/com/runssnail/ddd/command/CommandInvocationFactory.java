@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * @author zhengwei
@@ -9,5 +9,5 @@ import com.runssnail.ddd.common.result.Result;
  **/
 public interface CommandInvocationFactory {
 
-    <C extends Command<T>, T extends Result> CommandInvocation<C, T> createCommandInvocation(Command<T> command);
+    <C extends Command<T>, T extends BaseResult> CommandInvocation<C, T> createCommandInvocation(Command<T> command);
 }

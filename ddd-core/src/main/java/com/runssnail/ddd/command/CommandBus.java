@@ -3,7 +3,7 @@ package com.runssnail.ddd.command;
 import com.runssnail.ddd.command.handler.CommandHandler;
 import com.runssnail.ddd.command.interceptor.CommandInterceptor;
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 命令总线
@@ -19,7 +19,7 @@ public interface CommandBus {
      * @param command command
      * @return 结果
      */
-    <T extends Result> T dispatch(Command<T> command);
+    <T extends BaseResult> T dispatch(Command<T> command);
 
     /**
      * 注册命令处理器(not threadsafe)

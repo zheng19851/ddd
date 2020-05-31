@@ -1,7 +1,7 @@
 package com.runssnail.ddd.command.handler;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * 命令处理器解析器
@@ -18,7 +18,7 @@ public interface CommandHandlerResolver {
      * @return CommandHandler
      * @throws CannotFindCommandHandlerException
      */
-    <C extends Command<T>, T extends Result> CommandHandler<C, T> resolve(Command<T> command) throws CannotFindCommandHandlerException;
+    <C extends Command<T>, T extends BaseResult> CommandHandler<C, T> resolve(Command<T> command) throws CannotFindCommandHandlerException;
 
     /**
      * 注册命令处理器(not threadsafe)

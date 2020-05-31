@@ -38,6 +38,7 @@ public class Product extends Entity {
     private String operator;
 
     public Product() {
+
     }
 
     public Product(String productId, String name, String description) {
@@ -48,6 +49,10 @@ public class Product extends Entity {
 
     public Product(String productId) {
         this.productId = productId;
+    }
+
+    public static Product create(String productId, String name, String description) {
+        return new Product(productId, name, description);
     }
 
     public Product name(String name) {

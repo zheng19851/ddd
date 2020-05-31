@@ -4,13 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 
 /**
  * @author zhengwei
  * @date 2019/3/12 5:16 PM
  **/
-public abstract class BaseCommandHandler<C extends Command<T>, T extends Result> implements CommandHandler<C, T> {
+public abstract class BaseCommandHandler<C extends Command<T>, T extends BaseResult> implements CommandHandler<C, T> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public BaseCommandHandler() {

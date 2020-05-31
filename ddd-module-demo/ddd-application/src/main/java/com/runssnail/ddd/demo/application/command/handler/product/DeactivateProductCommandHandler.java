@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
+import com.runssnail.ddd.demo.domain.event.product.ProductDeactivatedEvent;
+import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductRepository;
-import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.result.product.DeactivateProductResult;
-import com.runssnail.ddd.demo.domain.event.product.ProductDeactivatedEvent;
 import com.runssnail.ddd.event.EventBus;
 
 /**
@@ -17,7 +17,7 @@ import com.runssnail.ddd.event.EventBus;
  * @date 2019-11-05 14:50
  **/
 @Component
-public class DeactivateProductCommandHandler extends BaseCommandHandler<DeactivateProductCommand, DeactivateProductResult> {
+public class DeactivateProductCommandHandler extends BaseCommandHandler<DeactivateProductCommand, Result> {
 
     @Autowired
     private ProductRepository productRepository;
@@ -31,9 +31,13 @@ public class DeactivateProductCommandHandler extends BaseCommandHandler<Deactiva
     }
 
     @Override
-    public DeactivateProductResult doHandle(DeactivateProductCommand command) {
+    public Result<String> doHandle(DeactivateProductCommand command) {
 
         Product product = productRepository.selectById(command.getProductId());
+        if (product == null || product.isDeleted()) {
+            // 不存在
+            return Result.failure(ProductErrorCode.PRODUCT_NOT_EXISTS);
+        }
 
         // 禁用
         product.deactivate(command);
@@ -44,10 +48,6 @@ public class DeactivateProductCommandHandler extends BaseCommandHandler<Deactiva
         // 发布领域事件
         eventBus.publish(new ProductDeactivatedEvent(product.getProductId()));
 
-        DeactivateProductResult result = new DeactivateProductResult();
-        result.setCode(Result.SUCCESS_CODE);
-        result.setMessage(Result.SUCCESS_MSG);
-        result.setProductId(product.getProductId());
-        return result;
+        return Result.success(product.getProductId());
     }
 }

@@ -1,23 +1,23 @@
 package com.runssnail.ddd.demo.application.command.handler.product;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.result.product.ActivateProductResult;
-import com.runssnail.ddd.demo.domain.event.product.ProductDeactivatedEvent;
+import com.runssnail.ddd.demo.domain.event.product.ProductActivatedEvent;
+import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductRepository;
 import com.runssnail.ddd.event.EventBus;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author zhengwei
  * @date 2019-11-05 14:50
  **/
 @Component
-public class ActivateProductCommandHandler extends BaseCommandHandler<ActivateProductCommand, ActivateProductResult> {
+public class ActivateProductCommandHandler extends BaseCommandHandler<ActivateProductCommand, Result> {
 
     @Autowired
     private ProductRepository productRepository;
@@ -31,10 +31,13 @@ public class ActivateProductCommandHandler extends BaseCommandHandler<ActivatePr
     }
 
     @Override
-    public ActivateProductResult doHandle(ActivateProductCommand command) {
+    public Result doHandle(ActivateProductCommand command) {
 
         Product product = productRepository.selectById(command.getProductId());
-
+        if (product == null || product.isDeleted()) {
+            // 不存在
+            return Result.failure(ProductErrorCode.PRODUCT_NOT_EXISTS);
+        }
         // 启用
         product.activate(command);
 
@@ -42,12 +45,8 @@ public class ActivateProductCommandHandler extends BaseCommandHandler<ActivatePr
         productRepository.activate(product);
 
         // 发布领域事件
-        eventBus.publish(new ProductDeactivatedEvent(product.getProductId()));
+        eventBus.publish(new ProductActivatedEvent(product.getProductId()));
 
-        ActivateProductResult result = new ActivateProductResult();
-        result.setCode(Result.SUCCESS_CODE);
-        result.setMessage(Result.SUCCESS_MSG);
-        result.setProductId(product.getProductId());
-        return result;
+        return Result.success(product.getProductId());
     }
 }

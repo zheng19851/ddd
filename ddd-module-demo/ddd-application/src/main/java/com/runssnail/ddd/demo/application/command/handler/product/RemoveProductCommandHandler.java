@@ -5,11 +5,11 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.command.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
+import com.runssnail.ddd.demo.domain.event.product.ProductRemovedEvent;
+import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductRepository;
-import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
-import com.runssnail.ddd.demo.client.dto.result.product.RemoveProductResult;
-import com.runssnail.ddd.demo.domain.event.product.ProductRemovedEvent;
 import com.runssnail.ddd.event.EventBus;
 
 /**
@@ -17,7 +17,7 @@ import com.runssnail.ddd.event.EventBus;
  * @date 2019-11-05 14:50
  **/
 @Component
-public class RemoveProductCommandHandler extends BaseCommandHandler<RemoveProductCommand, RemoveProductResult> {
+public class RemoveProductCommandHandler extends BaseCommandHandler<RemoveProductCommand, Result> {
 
     @Autowired
     private ProductRepository productRepository;
@@ -31,9 +31,13 @@ public class RemoveProductCommandHandler extends BaseCommandHandler<RemoveProduc
     }
 
     @Override
-    public RemoveProductResult doHandle(RemoveProductCommand command) {
+    public Result doHandle(RemoveProductCommand command) {
 
         Product product = productRepository.selectById(command.getProductId());
+        if (product == null || product.isDeleted()) {
+            // 不存在
+            return Result.failure(ProductErrorCode.PRODUCT_NOT_EXISTS);
+        }
 
         product.remove(command);
 
@@ -43,10 +47,6 @@ public class RemoveProductCommandHandler extends BaseCommandHandler<RemoveProduc
         // 发布领域事件
         eventBus.publish(new ProductRemovedEvent(product.getProductId()));
 
-        RemoveProductResult result = new RemoveProductResult();
-        result.setCode(Result.SUCCESS_CODE);
-        result.setMessage(Result.SUCCESS_MSG);
-        result.setProductId(product.getProductId());
-        return result;
+        return Result.success(product.getProductId());
     }
 }
