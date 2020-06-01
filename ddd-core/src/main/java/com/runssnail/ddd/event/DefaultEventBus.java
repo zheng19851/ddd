@@ -47,10 +47,12 @@ public class DefaultEventBus implements EventBus {
     @PostConstruct
     public void init() {
         initExceptionHandler();
+        log.info("EventBus init end");
     }
 
     private void initExceptionHandler() {
         if (this.exceptionHandler == null) {
+            log.debug("Using LoggingExceptionHandler");
             this.exceptionHandler = new LoggingExceptionHandler();
         }
     }
@@ -60,6 +62,7 @@ public class DefaultEventBus implements EventBus {
         if (this.eventExecutor != null) {
             this.eventExecutor.shutdown();
         }
+        log.info("EventBus destroy end");
     }
 
     @Override

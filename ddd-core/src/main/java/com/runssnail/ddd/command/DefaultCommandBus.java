@@ -13,12 +13,15 @@ import com.runssnail.ddd.command.interceptor.DefaultCommandInterceptorResolver;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.BaseResult;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * 命令总线
  *
  * @author zhengwei
  * @date 2019-11-04 15:36
  **/
+@Slf4j
 public class DefaultCommandBus implements CommandBus {
 
     private CommandHandlerResolver commandHandlerResolver = new DefaultCommandHandlerResolver();
@@ -52,16 +55,19 @@ public class DefaultCommandBus implements CommandBus {
     public void init() {
         initCommandExceptionHandler();
         initCommandInvocationFactory();
+        log.info("CommandBus init end");
     }
 
     private void initCommandInvocationFactory() {
         if (this.commandInvocationFactory == null) {
+            log.debug("Using DefaultCommandInvocationFactory");
             this.commandInvocationFactory = new DefaultCommandInvocationFactory(this.commandHandlerResolver, this.commandInterceptorResolver, this.commandExceptionHandler);
         }
     }
 
     private void initCommandExceptionHandler() {
         if (this.commandExceptionHandler == null) {
+            log.debug("Using DefaultCommandExceptionHandler");
             this.commandExceptionHandler = new DefaultCommandExceptionHandler();
         }
     }

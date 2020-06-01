@@ -1,6 +1,12 @@
 package com.runssnail.ddd.spring;
 
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeansException;
@@ -12,18 +18,12 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.SynchronousQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.runssnail.ddd.event.DefaultEventBus;
 import com.runssnail.ddd.event.EventBus;
 import com.runssnail.ddd.event.EventExceptionHandler;
 import com.runssnail.ddd.event.EventHandler;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -87,7 +87,7 @@ public class EventBusFactoryBean implements FactoryBean<EventBus>, ApplicationCo
 
         if (this.applicationContext.containsBean(DEFAULT_EXCEPTION_HANDLER_BEAN_NAME)) {
             Object exceptionHandler = this.applicationContext.getBean(DEFAULT_EXCEPTION_HANDLER_BEAN_NAME);
-            if (exceptionHandler != null && exceptionHandler instanceof EventExceptionHandler) {
+            if (exceptionHandler instanceof EventExceptionHandler) {
                 eventBus.setExceptionHandler((EventExceptionHandler) exceptionHandler);
                 return;
             }
@@ -103,7 +103,7 @@ public class EventBusFactoryBean implements FactoryBean<EventBus>, ApplicationCo
 
         if (this.applicationContext.containsBean(DEFAULT_EVENT_EXECUTOR_BEAN_NAME)) {
             Object eventExecutor = this.applicationContext.getBean(DEFAULT_EVENT_EXECUTOR_BEAN_NAME);
-            if (eventExecutor != null && eventExecutor instanceof ThreadPoolExecutor) {
+            if (eventExecutor instanceof ThreadPoolExecutor) {
                 eventBus.setEventExecutor((ThreadPoolExecutor) eventExecutor);
                 return;
             }
@@ -129,6 +129,7 @@ public class EventBusFactoryBean implements FactoryBean<EventBus>, ApplicationCo
         }
 
         List<EventHandler> eventHandlers = new ArrayList<>(beansOfEventHandlers.values());
+        log.info("Find {} EventHandlers, {}", eventHandlers.size(), eventHandlers);
 
         // 排序
         AnnotationAwareOrderComparator.sort(eventHandlers);
