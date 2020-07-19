@@ -27,6 +27,8 @@ import com.runssnail.ddd.event.EventHandler;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * EventBusFactoryBean
+ *
  * @author zhengwei
  * @date 2019-11-07 17:14
  **/
@@ -89,6 +91,7 @@ public class EventBusFactoryBean implements FactoryBean<EventBus>, ApplicationCo
             Object exceptionHandler = this.applicationContext.getBean(DEFAULT_EXCEPTION_HANDLER_BEAN_NAME);
             if (exceptionHandler instanceof EventExceptionHandler) {
                 eventBus.setExceptionHandler((EventExceptionHandler) exceptionHandler);
+                log.info("find EventExceptionHandler form ApplicationContext {}", DEFAULT_EXCEPTION_HANDLER_BEAN_NAME);
                 return;
             }
         }

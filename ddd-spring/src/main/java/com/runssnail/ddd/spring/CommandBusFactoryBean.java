@@ -1,26 +1,25 @@
 package com.runssnail.ddd.spring;
 
-import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.command.DefaultCommandBus;
-import com.runssnail.ddd.command.handler.CommandExceptionHandler;
-import com.runssnail.ddd.command.handler.CommandHandler;
-
-import org.apache.commons.collections4.MapUtils;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.core.annotation.AnnotationAwareOrderComparator;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.MapUtils;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.annotation.AnnotationAwareOrderComparator;
+
+import com.runssnail.ddd.command.CommandBus;
+import com.runssnail.ddd.command.DefaultCommandBus;
 import com.runssnail.ddd.command.handler.CannotFindCommandHandlerException;
+import com.runssnail.ddd.command.handler.CommandExceptionHandler;
+import com.runssnail.ddd.command.handler.CommandHandler;
 import com.runssnail.ddd.command.interceptor.CommandInterceptor;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -32,11 +31,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class CommandBusFactoryBean implements FactoryBean<CommandBus>, ApplicationContextAware, InitializingBean {
 
+    private static final String DEFAULT_COMMAND_EXCEPTION_HANDLER_BEAN_NAME = "commandExceptionHandler";
+
     private ApplicationContext applicationContext;
 
     private CommandBus commandBus;
 
-    @Autowired
     private CommandExceptionHandler commandExceptionHandler;
 
     private boolean detectAllCommandHandlers = true;
@@ -60,8 +60,7 @@ public class CommandBusFactoryBean implements FactoryBean<CommandBus>, Applicati
     @Override
     public void afterPropertiesSet() throws Exception {
         DefaultCommandBus commandBus = new DefaultCommandBus();
-        commandBus.setCommandExceptionHandler(this.commandExceptionHandler);
-        commandBus.init();
+        initCommandExceptionHandler(commandBus);
 
         if (this.detectAllCommandHandlers) {
             detectAllCommandHandlers(commandBus);
@@ -70,8 +69,26 @@ public class CommandBusFactoryBean implements FactoryBean<CommandBus>, Applicati
             detectAllCommandInterceptors(commandBus);
         }
 
+        commandBus.init();
+
         this.commandBus = commandBus;
     }
+
+    private void initCommandExceptionHandler(DefaultCommandBus bus) {
+        if (this.commandExceptionHandler != null) {
+            bus.setCommandExceptionHandler(this.commandExceptionHandler);
+            return;
+        }
+
+        if (this.applicationContext.containsBean(DEFAULT_COMMAND_EXCEPTION_HANDLER_BEAN_NAME)) {
+            Object exceptionHandler = this.applicationContext.getBean(DEFAULT_COMMAND_EXCEPTION_HANDLER_BEAN_NAME);
+            if (exceptionHandler instanceof CommandExceptionHandler) {
+                bus.setCommandExceptionHandler((CommandExceptionHandler) exceptionHandler);
+                log.info("find CommandExceptionHandler form ApplicationContext {}", DEFAULT_COMMAND_EXCEPTION_HANDLER_BEAN_NAME);
+            }
+        }
+    }
+
 
     private void detectAllCommandInterceptors(DefaultCommandBus commandBus) {
         Map<String, CommandInterceptor> beansOfInterceptors = this.applicationContext.getBeansOfType(CommandInterceptor.class);
@@ -127,5 +144,13 @@ public class CommandBusFactoryBean implements FactoryBean<CommandBus>, Applicati
 
     public void setDetectAllCommandInterceptors(boolean detectAllCommandInterceptors) {
         this.detectAllCommandInterceptors = detectAllCommandInterceptors;
+    }
+
+    public CommandExceptionHandler getCommandExceptionHandler() {
+        return commandExceptionHandler;
+    }
+
+    public void setCommandExceptionHandler(CommandExceptionHandler commandExceptionHandler) {
+        this.commandExceptionHandler = commandExceptionHandler;
     }
 }
