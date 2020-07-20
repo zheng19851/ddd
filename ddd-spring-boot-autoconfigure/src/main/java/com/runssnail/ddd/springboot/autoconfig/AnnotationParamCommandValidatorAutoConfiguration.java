@@ -1,15 +1,15 @@
 package com.runssnail.ddd.springboot.autoconfig;
 
-import com.runssnail.ddd.command.validator.AnnotationParamGlobalCommandValidator;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
-import org.hibernate.validator.HibernateValidator;
+import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import com.runssnail.ddd.command.validator.AnnotationParamGlobalCommandValidator;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,8 +28,13 @@ public class AnnotationParamCommandValidatorAutoConfiguration {
     public AnnotationParamGlobalCommandValidator paramGlobalCommandValidator() {
 
         AnnotationParamGlobalCommandValidator commandValidator = new AnnotationParamGlobalCommandValidator();
-        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
-                .configure().failFast(true)
+//        ValidatorFactory validatorFactory = Validation.byProvider(HibernateValidator.class)
+//                .configure().failFast(true)
+//                .buildValidatorFactory();
+
+        ValidatorFactory validatorFactory = Validation.byDefaultProvider()
+                .configure()
+                .messageInterpolator(new ParameterMessageInterpolator())
                 .buildValidatorFactory();
         Validator validator = validatorFactory.getValidator();
         commandValidator.setValidator(validator);

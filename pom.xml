@@ -27,23 +27,21 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <mockito.version>2.23.4</mockito.version>
-        <mybatis-starter.version>1.1.1</mybatis-starter.version>
         <spring-boot.version>2.0.0.RELEASE</spring-boot.version>
         <junit.version>4.12</junit.version>
         <logback.version>1.2.3</logback.version>
         <slf4j.version>1.7.25</slf4j.version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <lombok.version>1.18.4</lombok.version>
-        <reflections.version>0.9.10</reflections.version>
         <aspectjweaver.version>1.8.6</aspectjweaver.version>
-        <validation-api.version>2.0.0.Final</validation-api.version>
+        <validation-api.version>2.0.1.Final</validation-api.version>
         <hibernate-validator.version>6.1.0.Final</hibernate-validator.version>
-        <javax.el-api.version>3.0.0</javax.el-api.version>
-        <javax.el.version>2.2.6</javax.el.version>
+        <!--        <javax.el-api.version>3.0.0</javax.el-api.version>-->
+        <!--        <javax.el.version>2.2.6</javax.el.version>-->
         <fastjson.version>1.2.60</fastjson.version>
         <commons-collections4.version>4.2</commons-collections4.version>
-<!--        <guava.version>28.1-jre</guava.version>-->
-        <guava.version>20.0</guava.version>
+        <guava.version>28.1-jre</guava.version>
+        <!--        <guava.version>20.0</guava.version>-->
 
         <revision>1.0-SNAPSHOT</revision>
         <maven_source_version>3.0.1</maven_source_version>
@@ -133,11 +131,11 @@
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate-validator.version}</version>
             </dependency>
-            <dependency>
-                <groupId>javax.el</groupId>
-                <artifactId>javax.el-api</artifactId>
-                <version>${javax.el-api.version}</version>
-            </dependency>
+            <!--            <dependency>-->
+            <!--                <groupId>javax.el</groupId>-->
+            <!--                <artifactId>javax.el-api</artifactId>-->
+            <!--                <version>${javax.el-api.version}</version>-->
+            <!--            </dependency>-->
 
             <dependency>
                 <groupId>com.alibaba</groupId>
