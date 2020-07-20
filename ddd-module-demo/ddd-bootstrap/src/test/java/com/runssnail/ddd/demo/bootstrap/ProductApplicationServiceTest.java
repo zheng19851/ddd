@@ -11,10 +11,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.application.command.handler.product.CreateProductCommandHandler;
-import com.runssnail.ddd.demo.application.command.interceptor.product.CreateProductInterceptor;
-import com.runssnail.ddd.demo.application.command.interceptor.product.Order2CreateProductInterceptor;
-import com.runssnail.ddd.demo.application.command.validator.CreateProductCommandValidator;
+import com.runssnail.ddd.demo.application.commandhandling.handler.product.CreateProductCommandHandler;
+import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.CreateProductInterceptor;
+import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.Order2CreateProductInterceptor;
+import com.runssnail.ddd.demo.application.commandhandling.validator.CreateProductCommandValidator;
 import com.runssnail.ddd.demo.client.api.ProductService;
 import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;

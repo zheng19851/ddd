@@ -1,13 +1,13 @@
-package com.runssnail.ddd.demo.application.command.interceptor.product;
-
-import com.runssnail.ddd.command.interceptor.CommandInterceptor;
-import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
+package com.runssnail.ddd.demo.application.commandhandling.interceptor.product;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.runssnail.ddd.command.interceptor.CommandInterceptor;
+import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
 
 /**
  * @author zhengwei

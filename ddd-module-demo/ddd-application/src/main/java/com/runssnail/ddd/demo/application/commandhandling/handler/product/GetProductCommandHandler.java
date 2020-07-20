@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.application.command.handler.product;
+package com.runssnail.ddd.demo.application.commandhandling.handler.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

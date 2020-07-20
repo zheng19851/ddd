@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.application.command.validator;
+package com.runssnail.ddd.demo.application.commandhandling.validator;
 
 import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;

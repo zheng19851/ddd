@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.application.eventhandler;
+package com.runssnail.ddd.demo.application.eventhandling;
 
 import org.springframework.stereotype.Component;
 

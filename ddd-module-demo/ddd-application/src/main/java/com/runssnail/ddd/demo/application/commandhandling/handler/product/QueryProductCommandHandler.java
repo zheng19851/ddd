@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.application.command.handler.product;
+package com.runssnail.ddd.demo.application.commandhandling.handler.product;
 
 import java.util.List;
 import java.util.stream.Collectors;
