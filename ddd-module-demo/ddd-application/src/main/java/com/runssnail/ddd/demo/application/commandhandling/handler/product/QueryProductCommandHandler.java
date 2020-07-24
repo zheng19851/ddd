@@ -7,7 +7,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.runssnail.ddd.command.handler.BaseCommandHandler;
+import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.demo.application.assembler.product.ProductAssembler;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;

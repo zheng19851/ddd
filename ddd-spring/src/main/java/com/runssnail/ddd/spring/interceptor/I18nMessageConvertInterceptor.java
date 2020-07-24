@@ -2,7 +2,7 @@ package com.runssnail.ddd.spring.interceptor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.runssnail.ddd.command.interceptor.GlobalCommandInterceptor;
+import com.runssnail.ddd.commandhandling.interceptor.GlobalCommandInterceptor;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.i18n.IMessageSource;

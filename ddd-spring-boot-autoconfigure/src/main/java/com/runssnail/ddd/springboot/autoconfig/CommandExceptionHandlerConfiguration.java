@@ -1,14 +1,14 @@
 package com.runssnail.ddd.springboot.autoconfig;
 
-import com.runssnail.ddd.command.handler.CommandExceptionHandler;
-
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.runssnail.ddd.command.handler.DefaultCommandExceptionHandler;
-import com.runssnail.ddd.command.handler.RethrowCommandExceptionHandler;
+import com.runssnail.ddd.commandhandling.handler.CommandExceptionHandler;
+import com.runssnail.ddd.commandhandling.handler.DefaultCommandExceptionHandler;
+import com.runssnail.ddd.commandhandling.handler.RethrowCommandExceptionHandler;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**

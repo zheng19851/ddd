@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.runssnail.ddd.command.interceptor.CommandInterceptor;
+import com.runssnail.ddd.commandhandling.interceptor.CommandInterceptor;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
 

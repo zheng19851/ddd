@@ -3,14 +3,14 @@ package com.runssnail.ddd.demo.application.commandhandling.handler.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.runssnail.ddd.command.handler.BaseCommandHandler;
+import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
 import com.runssnail.ddd.demo.domain.event.product.ProductUpdatedEvent;
 import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductRepository;
-import com.runssnail.ddd.event.EventBus;
+import com.runssnail.ddd.eventhandling.EventBus;
 
 /**
  * @author zhengwei

@@ -13,12 +13,12 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 
-import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.command.DefaultCommandBus;
-import com.runssnail.ddd.command.handler.CannotFindCommandHandlerException;
-import com.runssnail.ddd.command.handler.CommandExceptionHandler;
-import com.runssnail.ddd.command.handler.CommandHandler;
-import com.runssnail.ddd.command.interceptor.CommandInterceptor;
+import com.runssnail.ddd.commandhandling.CommandBus;
+import com.runssnail.ddd.commandhandling.DefaultCommandBus;
+import com.runssnail.ddd.commandhandling.handler.CannotFindCommandHandlerException;
+import com.runssnail.ddd.commandhandling.handler.CommandExceptionHandler;
+import com.runssnail.ddd.commandhandling.handler.CommandHandler;
+import com.runssnail.ddd.commandhandling.interceptor.CommandInterceptor;
 
 import lombok.extern.slf4j.Slf4j;
 

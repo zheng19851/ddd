@@ -3,7 +3,7 @@ package com.runssnail.ddd.demo.application.commandhandling.handler.product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.runssnail.ddd.command.handler.BaseCommandHandler;
+import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.assembler.product.ProductAssembler;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;

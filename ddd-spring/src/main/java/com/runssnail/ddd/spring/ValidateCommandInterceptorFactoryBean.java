@@ -1,5 +1,9 @@
 package com.runssnail.ddd.spring;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.collections4.MapUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
@@ -9,16 +13,13 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import com.runssnail.ddd.command.interceptor.GlobalCommandInterceptor;
-import com.runssnail.ddd.command.interceptor.ValidateCommandInterceptor;
-import com.runssnail.ddd.command.validator.CommandValidatorResolver;
-import com.runssnail.ddd.command.validator.DefaultCommandValidatorResolver;
+import com.runssnail.ddd.commandhandling.interceptor.GlobalCommandInterceptor;
+import com.runssnail.ddd.commandhandling.interceptor.ValidateCommandInterceptor;
+import com.runssnail.ddd.commandhandling.validator.CommandValidatorResolver;
+import com.runssnail.ddd.commandhandling.validator.DefaultCommandValidatorResolver;
 import com.runssnail.ddd.common.validator.CommandValidator;
 import com.runssnail.ddd.spring.interceptor.OrderedValidateCommandInterceptor;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**

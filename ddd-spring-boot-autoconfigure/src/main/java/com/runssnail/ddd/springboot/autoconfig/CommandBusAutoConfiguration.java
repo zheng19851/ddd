@@ -1,10 +1,10 @@
 package com.runssnail.ddd.springboot.autoconfig;
 
-import com.runssnail.ddd.command.CommandBus;
-import com.runssnail.ddd.spring.CommandBusFactoryBean;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import com.runssnail.ddd.commandhandling.CommandBus;
+import com.runssnail.ddd.spring.CommandBusFactoryBean;
 
 import lombok.extern.slf4j.Slf4j;
 

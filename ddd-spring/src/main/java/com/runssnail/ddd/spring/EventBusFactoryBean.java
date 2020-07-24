@@ -19,10 +19,10 @@ import org.springframework.core.annotation.AnnotationAwareOrderComparator;
 import org.springframework.stereotype.Component;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.runssnail.ddd.event.DefaultEventBus;
-import com.runssnail.ddd.event.EventBus;
-import com.runssnail.ddd.event.EventExceptionHandler;
-import com.runssnail.ddd.event.EventHandler;
+import com.runssnail.ddd.eventhandling.DefaultEventBus;
+import com.runssnail.ddd.eventhandling.EventBus;
+import com.runssnail.ddd.eventhandling.EventExceptionHandler;
+import com.runssnail.ddd.eventhandling.EventHandler;
 
 import lombok.extern.slf4j.Slf4j;
 

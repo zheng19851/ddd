@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.runssnail.ddd.command.CommandBus;
+import com.runssnail.ddd.commandhandling.CommandBus;
 import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;

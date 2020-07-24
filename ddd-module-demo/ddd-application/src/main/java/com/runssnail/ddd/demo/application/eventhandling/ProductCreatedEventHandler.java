@@ -3,7 +3,7 @@ package com.runssnail.ddd.demo.application.eventhandling;
 import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.demo.domain.event.product.ProductCreatedEvent;
-import com.runssnail.ddd.event.BaseEventHandler;
+import com.runssnail.ddd.eventhandling.BaseEventHandler;
 
 /**
  * @author zhengwei

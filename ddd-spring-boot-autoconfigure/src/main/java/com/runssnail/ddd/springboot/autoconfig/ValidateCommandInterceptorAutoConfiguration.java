@@ -1,10 +1,10 @@
 package com.runssnail.ddd.springboot.autoconfig;
 
-import com.runssnail.ddd.command.interceptor.ValidateCommandInterceptor;
-import com.runssnail.ddd.spring.ValidateCommandInterceptorFactoryBean;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
+import com.runssnail.ddd.commandhandling.interceptor.ValidateCommandInterceptor;
+import com.runssnail.ddd.spring.ValidateCommandInterceptorFactoryBean;
 
 /**
  * ValidateCommandInterceptor AutoConfiguration

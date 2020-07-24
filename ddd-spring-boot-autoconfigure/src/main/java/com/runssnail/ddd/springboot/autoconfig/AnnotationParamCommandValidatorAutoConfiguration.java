@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.runssnail.ddd.command.validator.AnnotationParamGlobalCommandValidator;
+import com.runssnail.ddd.commandhandling.validator.AnnotationParamGlobalCommandValidator;
 
 import lombok.extern.slf4j.Slf4j;
 

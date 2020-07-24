@@ -1,11 +1,11 @@
 package com.runssnail.ddd.spring.interceptor;
 
-import com.runssnail.ddd.command.interceptor.GlobalCommandInterceptor;
-import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.BaseResult;
-
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+
+import com.runssnail.ddd.commandhandling.interceptor.GlobalCommandInterceptor;
+import com.runssnail.ddd.common.command.Command;
+import com.runssnail.ddd.common.result.BaseResult;
 
 import lombok.extern.slf4j.Slf4j;
 
