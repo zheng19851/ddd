@@ -143,6 +143,7 @@ public class ProductCreatedEvent extends AbstractEvent {
 
 * ##### CommandBus（命令总线）
 分发Command到对应的CommandHandler里去处理业务
+![命令总线UML图](https://mmbiz.qpic.cn/mmbiz_png/IuUJiciaodp4cjurx93TrL8KyPFBtQaXcm2DOIicqKiau4rqysAmFM5S90mPXctum5E0hnabP7tccUM8rm1g57b30A/0?wx_fmt=png)
 
 ```
 @Component
@@ -166,7 +167,8 @@ public class ProductApplicationService {
 ```
 
 * ##### EventBus（事件总线）
-发布一个领域事件
+用来发布领域事件
+![事件总线UML图](https://mmbiz.qpic.cn/mmbiz_png/IuUJiciaodp4cjurx93TrL8KyPFBtQaXcmibuWZy32IUmFic1lY34ddfAqpRbfvlD7rp7zo93Q5ExJ78YAb7u525eA/0?wx_fmt=png)
 
 ```
   @Component
@@ -201,7 +203,7 @@ public class ProductApplicationService {
 ```
 
 * ##### CommandHandler（命令处理器）
-用来实现用例，一个用例对应一个CommandHandler，跟Command对应
+用来实现用例，一个Command对应一个CommandHandler
 
 ```
   @Component
@@ -250,7 +252,7 @@ public class CreateProductInterceptor implements CommandInterceptor<CreateProduc
 
 ```
 * ##### CommandValidator（命令验证器）
-用来验证Command参数或者业务前置校验
+用来验证Command参数完整性或者业务前置校验，默认支持Hibernate Validator
 ```
 @Component
 public class CreateProductCommandValidator implements CommandValidator<CreateProductCommand> {
