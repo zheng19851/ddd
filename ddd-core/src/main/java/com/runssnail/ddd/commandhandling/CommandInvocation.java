@@ -16,27 +16,56 @@ import com.runssnail.ddd.common.result.BaseResult;
 /**
  * 命令调用信息
  *
- * @param <T>
+ * @param <T> 结果类型
  * @author zhengwei
+ * @see Command
+ * @see CommandHandler
+ * @see CommandExceptionHandler
+ * @see CommandInterceptor
  */
-public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
+public class CommandInvocation<T extends BaseResult> {
     private static final Logger log = LoggerFactory.getLogger(CommandInvocation.class);
 
-    private C command;
+    /**
+     * 命令
+     */
+    private Command<T> command;
 
-    private CommandHandler<C, T> commandHandler;
+    /**
+     * 命令处理器
+     */
+    private CommandHandler<Command<T>, T> commandHandler;
 
+    /**
+     * 命令异常处理器
+     */
     private CommandExceptionHandler commandExceptionHandler;
 
+    /**
+     * 命令拦截器
+     */
     private Collection<CommandInterceptor> interceptors;
 
-    public CommandInvocation(C command, CommandHandler<C, T> commandHandler, CommandExceptionHandler commandExceptionHandler, Collection<CommandInterceptor> interceptors) {
+    /**
+     * 创建一个CommandInvocation
+     *
+     * @param command                 命令
+     * @param commandHandler          命令处理器
+     * @param commandExceptionHandler 命令异常处理器
+     * @param interceptors            命令拦截器
+     */
+    public CommandInvocation(Command<T> command, CommandHandler<Command<T>, T> commandHandler, CommandExceptionHandler commandExceptionHandler, Collection<CommandInterceptor> interceptors) {
         this.command = command;
         this.commandHandler = commandHandler;
         this.commandExceptionHandler = commandExceptionHandler;
         this.interceptors = interceptors;
     }
 
+    /**
+     * 调用命令
+     *
+     * @return
+     */
     public T invoke() {
         T result = null;
         try {
@@ -76,7 +105,8 @@ public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
             try {
                 interceptor.afterHandle(command, response);
             } catch (Exception e) {
-                throw new RuntimeException("postInterceptor error, command=" + command + ", interceptor=" + interceptor, e);
+                log.error("invoke afterHandle error, command={}, interceptor={}", command, interceptor, e);
+//                throw new RuntimeException("invoke afterHandle error, command=" + command + ", interceptor=" + interceptor, e);
             }
         }
 

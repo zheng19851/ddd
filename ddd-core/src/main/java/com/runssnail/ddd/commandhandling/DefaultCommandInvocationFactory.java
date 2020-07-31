@@ -13,11 +13,16 @@ import com.runssnail.ddd.common.result.BaseResult;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * DefaultCommandInvocationFactory
+ *
  * @author zhengwei
  */
 @Slf4j
 public class DefaultCommandInvocationFactory implements CommandInvocationFactory {
 
+    /**
+     * 命令处理器解析器
+     */
     private CommandHandlerResolver commandHandlerResolver;
 
     /**
@@ -25,6 +30,9 @@ public class DefaultCommandInvocationFactory implements CommandInvocationFactory
      */
     private CommandExceptionHandler commandExceptionHandler;
 
+    /**
+     * 命令拦截器解析器
+     */
     private CommandInterceptorResolver commandInterceptorResolver;
 
     public DefaultCommandInvocationFactory(CommandHandlerResolver commandHandlerResolver, CommandInterceptorResolver commandInterceptorResolver, CommandExceptionHandler commandExceptionHandler) {
@@ -34,8 +42,8 @@ public class DefaultCommandInvocationFactory implements CommandInvocationFactory
     }
 
     @Override
-    public <C extends Command<T>, T extends BaseResult> CommandInvocation<C, T> createCommandInvocation(Command<T> command) {
-        final CommandHandler<C, T> commandHandler = commandHandlerResolver.resolve(command);
+    public <T extends BaseResult> CommandInvocation<T> createCommandInvocation(Command<T> command) {
+        final CommandHandler<Command<T>, T> commandHandler = commandHandlerResolver.resolve(command);
 
         final List<CommandInterceptor> commandInterceptors = commandInterceptorResolver.resolveInterceptors(command.getClass());
         CommandInvocation ci = new CommandInvocation(command, commandHandler, this.commandExceptionHandler, commandInterceptors);
