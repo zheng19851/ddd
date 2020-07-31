@@ -132,7 +132,8 @@ public class EventBusFactoryBean implements FactoryBean<EventBus>, ApplicationCo
         }
 
         List<EventHandler> eventHandlers = new ArrayList<>(beansOfEventHandlers.values());
-        log.info("Find {} EventHandlers, {}", eventHandlers.size(), eventHandlers);
+
+        log.info("find {} EventHandler {}", eventHandlers.size(), eventHandlers);
 
         // 排序
         AnnotationAwareOrderComparator.sort(eventHandlers);

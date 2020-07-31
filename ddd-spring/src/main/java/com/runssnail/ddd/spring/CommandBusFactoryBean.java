@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * @author zhengwei
  * @date 2019-11-07 17:14
+ * @see CommandBus
  **/
 @Slf4j
 public class CommandBusFactoryBean implements FactoryBean<CommandBus>, ApplicationContextAware, InitializingBean {
@@ -109,7 +110,7 @@ public class CommandBusFactoryBean implements FactoryBean<CommandBus>, Applicati
             commandBus.registerCommandInterceptor(interceptor);
         }
 
-        log.info("find CommandInterceptor final commandInterceptors={}", interceptors);
+        log.info("find {} CommandInterceptor {}", interceptors.size(), interceptors);
 
     }
 
@@ -127,7 +128,7 @@ public class CommandBusFactoryBean implements FactoryBean<CommandBus>, Applicati
             commandBus.registerCommandHandler(commandHandler);
         }
 
-        log.info("find CommandHandler final {}", commandHandlers);
+        log.info("find {} CommandHandler {}", commandHandlers.size(), commandHandlers);
     }
 
     public boolean isDetectAllCommandHandlers() {

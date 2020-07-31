@@ -40,7 +40,7 @@ public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
     public T invoke() {
         T result = null;
         try {
-            invokePreInterceptors(command);
+            invokeCommandInterceptorsBeforeHandle(command);
 
             if (commandHandler instanceof TransactionCommandHandler) {
                 result = (T) ((TransactionCommandHandler) this.commandHandler).handleInTransaction(this.command);
@@ -52,22 +52,22 @@ public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
             result.setCode(BaseResult.SERVER_ERROR_CODE);
             commandExceptionHandler.onException(command, result, e);
         } finally {
-            invokePostInterceptors(command, result);
+            invokeCommandInterceptorsAfterHandle(command, result);
         }
         return result;
 
     }
 
     private T createResultInstance(Command<T> command) {
-        Class<T> responseClz = command.resultType();
+        Class<T> resultType = command.resultType();
         try {
-            return responseClz.newInstance();
+            return resultType.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Make sure exists No Args Constructor", e);
+            throw new RuntimeException("make sure exists no args constructor", e);
         }
     }
 
-    private void invokePostInterceptors(Command command, T response) {
+    private void invokeCommandInterceptorsAfterHandle(Command command, T response) {
         if (CollectionUtils.isEmpty(interceptors)) {
             return;
         }
@@ -76,13 +76,13 @@ public class CommandInvocation<C extends Command<T>, T extends BaseResult> {
             try {
                 interceptor.afterHandle(command, response);
             } catch (Exception e) {
-                log.error("postInterceptor error, command={}, interceptor={}", command, interceptor, e);
+                throw new RuntimeException("postInterceptor error, command=" + command + ", interceptor=" + interceptor, e);
             }
         }
 
     }
 
-    private void invokePreInterceptors(Command command) {
+    private void invokeCommandInterceptorsBeforeHandle(Command command) {
         if (CollectionUtils.isEmpty(interceptors)) {
             return;
         }
