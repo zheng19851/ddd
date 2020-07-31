@@ -1,9 +1,9 @@
 package com.runssnail.ddd.common.result;
 
 
-import com.runssnail.ddd.common.exception.ErrorCode;
-
 import java.util.List;
+
+import com.runssnail.ddd.common.exception.ErrorCode;
 
 /**
  * 分页查询返回结果对象
@@ -73,6 +73,45 @@ public class PagingResult<T> extends MultiResult<T> {
 
     public static <T> PagingResult<T> success(List<T> data) {
         return new PagingResult<>(SUCCESS_CODE, SUCCESS_MSG, data);
+    }
+
+    /**
+     * 成功
+     *
+     * @param data  数据
+     * @param total 总数
+     * @param pages 总的页数
+     * @param <T>
+     * @return
+     */
+    public static <T> PagingResult<T> success(List<T> data, Integer total, Integer pages) {
+        return new PagingResult<>(data, total, pages);
+    }
+
+    /**
+     * 成功
+     *
+     * @param data  数据
+     * @param total 总数
+     * @param <T>
+     * @return
+     */
+    public static <T> PagingResult<T> success(List<T> data, Integer total) {
+        return new PagingResult<>(data, total, 0);
+    }
+
+    /**
+     * 成功
+     *
+     * @param data    数据
+     * @param total   总的记录数
+     * @param pages   总的页数
+     * @param pageNum 第几页
+     * @param <T>
+     * @return 结果
+     */
+    public static <T> PagingResult<T> success(List<T> data, Integer total, Integer pages, Integer pageNum) {
+        return new PagingResult<>(data, total, pages, pageNum);
     }
 
     public static <T> PagingResult<T> create() {
