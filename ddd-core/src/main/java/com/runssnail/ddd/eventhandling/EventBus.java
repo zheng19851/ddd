@@ -9,6 +9,8 @@ import com.runssnail.ddd.common.event.Event;
  *
  * @author zhengwei
  * @date 2019/1/26 12:38 PM
+ * @see Event
+ * @see EventHandler
  **/
 public interface EventBus {
 
@@ -34,5 +36,11 @@ public interface EventBus {
      */
     <T extends Event> void registerHandler(EventHandler<T> handler);
 
+    /**
+     * 注册多个事件处理器(not threadsafe)
+     *
+     * @param handlers EventHandler
+     * @param <T>      Event
+     */
     <T extends Event> void registerHandlers(List<EventHandler<T>> handlers);
 }

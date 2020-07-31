@@ -1,10 +1,12 @@
 package com.runssnail.ddd.common.event;
 
-import com.runssnail.ddd.common.dto.BaseDTO;
-
 import java.util.Date;
 
+import com.runssnail.ddd.common.dto.BaseDTO;
+
 /**
+ * AbstractEvent
+ *
  * @author zhengwei
  * @date 2019/3/21 12:41 PM
  **/

@@ -10,6 +10,10 @@ import com.runssnail.ddd.common.result.BaseResult;
  *
  * @author zhengwei
  * @date 2019-11-04 15:35
+ * @see Command
+ * @see BaseResult
+ * @see CommandHandler
+ * @see CommandInterceptor
  **/
 public interface CommandBus {
 

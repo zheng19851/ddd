@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 
@@ -15,6 +13,8 @@ import com.runssnail.ddd.common.command.Command;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * DefaultCommandInterceptorResolver
+ *
  * @author zhengwei
  * @date 2019-11-06 13:03
  **/
@@ -33,7 +33,6 @@ public class DefaultCommandInterceptorResolver implements CommandInterceptorReso
      */
     private Map<Class, List<CommandInterceptor>> interceptorsMapping = new HashMap<>();
 
-    @PostConstruct
     public void init() {
     }
 

@@ -20,9 +20,9 @@ public class CreateProductCommandValidator implements CommandValidator<CreatePro
     }
 
     @Override
-    public void validate(CreateProductCommand createProductCommand) throws IllegalArgumentException, BizException {
-        Validate.notNull(createProductCommand);
-        Validate.notNull(createProductCommand.getName());
-        Validate.isTrue(createProductCommand.getName().length() <= 10);
+    public void validate(CreateProductCommand command) throws IllegalArgumentException, BizException {
+        Validate.notNull(command);
+        Validate.notNull(command.getName());
+        Validate.isTrue(command.getName().length() <= 10);
     }
 }

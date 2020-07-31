@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.result.BaseResult;
  * @author zhengwei
  * @date 2019-11-06 16:11
  **/
-public interface TransactionCommandHandler<C extends Command<T>, T extends BaseResult> extends CommandHandler<C, T> {
+public interface TransactionCommandHandler<C extends Command<R>, R extends BaseResult> extends CommandHandler<C, R> {
 
     /**
      * 处理command
@@ -17,6 +17,6 @@ public interface TransactionCommandHandler<C extends Command<T>, T extends BaseR
      * @param command command
      * @return 结果
      */
-    T handleInTransaction(C command);
+    R handleInTransaction(C command);
 
 }

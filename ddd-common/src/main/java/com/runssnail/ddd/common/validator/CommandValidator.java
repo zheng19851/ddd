@@ -1,7 +1,7 @@
 package com.runssnail.ddd.common.validator;
 
-import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.common.command.Command;
+import com.runssnail.ddd.common.exception.BizException;
 
 /**
  * 验证命令
@@ -23,9 +23,9 @@ public interface CommandValidator<T extends Command> {
     /**
      * 验证
      *
-     * @param t 需要验证的参数
+     * @param command 需要验证的参数
      * @throws IllegalArgumentException
      * @throws BizException
      */
-    void validate(T t) throws IllegalArgumentException, BizException;
+    void validate(T command) throws IllegalArgumentException, BizException;
 }

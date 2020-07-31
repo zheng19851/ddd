@@ -20,6 +20,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ValidateCommandInterceptor implements GlobalCommandInterceptor {
 
+    /**
+     * 命令验证器解析器
+     */
     private CommandValidatorResolver commandValidatorResolver;
 
     @Override

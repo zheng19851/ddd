@@ -21,7 +21,7 @@ public interface CommandValidatorResolver {
      * @param command 命令
      * @return Validator 命令验证器
      */
-    <C extends Command<T>, T extends Result> CommandValidator<C> resolve(Command<T> command);
+    <T extends Result> CommandValidator<Command<T>> resolve(Command<T> command);
 
     /**
      * 注册(运行时注册注意并发问题)
@@ -29,7 +29,7 @@ public interface CommandValidatorResolver {
      * @param validator 命令验证器
      * @param <C>
      */
-    <C extends Command> void registerValidator(CommandValidator<C> validator);
+    <T extends Result> void registerValidator(CommandValidator<Command<T>> validator);
 
     /**
      *

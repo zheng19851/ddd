@@ -9,12 +9,12 @@ import com.runssnail.ddd.common.result.BaseResult;
  * <p>
  * 支持排序
  *
- * @param <T> Result
+ * @param <R> Result
  * @author zhengwei
  * @see org.springframework.core.annotation.Order
  * @see org.springframework.core.Ordered
  */
-public interface CommandInterceptor<C extends Command<T>, T extends BaseResult> {
+public interface CommandInterceptor<C extends Command<R>, R extends BaseResult> {
 
     /**
      * 支持的命令类型，返回null表示是一个全局CommandInterceptor（拦截所有command）
@@ -36,5 +36,5 @@ public interface CommandInterceptor<C extends Command<T>, T extends BaseResult> 
      * @param command 命令
      * @param result  结果
      */
-    void afterHandle(C command, T result);
+    void afterHandle(C command, R result);
 }

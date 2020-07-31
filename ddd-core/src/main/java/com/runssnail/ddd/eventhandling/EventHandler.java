@@ -5,14 +5,12 @@ import java.util.concurrent.Executor;
 import com.runssnail.ddd.common.event.Event;
 
 /**
- *
  * handle event
- *
- * @see EventBus
- * @see Event
  *
  * @author zhengwei
  * @date 2019/1/25 11:37 AM
+ * @see EventBus
+ * @see Event
  **/
 public interface EventHandler<T extends Event> {
 
@@ -25,7 +23,7 @@ public interface EventHandler<T extends Event> {
 
     /**
      * 当前listener支持的事件类型
-     *
+     * <p>
      * 1、首先根据event type获取listener list
      * 2、根据support方法判断是否支持事件
      *

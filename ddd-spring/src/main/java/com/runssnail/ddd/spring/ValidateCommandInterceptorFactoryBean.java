@@ -23,6 +23,7 @@ import com.runssnail.ddd.spring.interceptor.OrderedValidateCommandInterceptor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
+ * ValidateCommandInterceptorFactoryBean
  *
  * @author zhengwei
  * @date 2019-11-07 17:56
@@ -75,7 +76,7 @@ public class ValidateCommandInterceptorFactoryBean implements FactoryBean<Global
             commandValidatorResolver.registerValidator(validator);
         }
 
-        log.info("find Validator final {}", validators);
+        log.info("find {} Validator final {}", validators.size(), validators);
 
         return commandValidatorResolver;
     }

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.runssnail.ddd.commandhandling.interceptor.GlobalCommandInterceptor;
 import com.runssnail.ddd.common.command.Command;
-import com.runssnail.ddd.common.result.Result;
+import com.runssnail.ddd.common.result.BaseResult;
 import com.runssnail.ddd.i18n.IMessageSource;
 import com.runssnail.ddd.i18n.MessageConverts;
 
@@ -20,11 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Getter
 @Setter
-public class I18nMessageConvertInterceptor implements GlobalCommandInterceptor<Command<Result>, Result> {
+public class I18nMessageConvertInterceptor implements GlobalCommandInterceptor<Command<BaseResult>, BaseResult> {
 
     @Autowired
     private IMessageSource messageSource;
 
+    /**
+     * 是否激活开关
+     */
     private boolean enabled = true;
 
     @Override
@@ -33,7 +36,7 @@ public class I18nMessageConvertInterceptor implements GlobalCommandInterceptor<C
     }
 
     @Override
-    public void afterHandle(Command command, Result result) {
+    public void afterHandle(Command command, BaseResult result) {
         if (!enabled) {
             return;
         }

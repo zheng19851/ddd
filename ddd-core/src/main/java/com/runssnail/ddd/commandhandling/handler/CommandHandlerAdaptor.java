@@ -11,7 +11,7 @@ import com.runssnail.ddd.eventhandling.EventBus;
  * @author zhengwei
  * @date 2019-11-06 16:30
  **/
-public abstract class CommandHandlerAdaptor<C extends Command<T>, T extends Result> implements TransactionCommandHandler<C, T>, CommandHandler<C, T> {
+public abstract class CommandHandlerAdaptor<C extends Command<R>, R extends Result> implements TransactionCommandHandler<C, R>, CommandHandler<C, R> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     protected EventBus eventBus;
@@ -24,22 +24,22 @@ public abstract class CommandHandlerAdaptor<C extends Command<T>, T extends Resu
     }
 
     @Override
-    public T handleInTransaction(C command) {
-        log.debug("command handleInTransaction start, command={}", command);
-        T resp = doHandleInTransaction(command);
-        log.debug("command handleInTransaction end, command={}, result={}", command, resp);
+    public R handleInTransaction(C command) {
+        log.info("command handleInTransaction start, command={}", command);
+        R resp = doHandleInTransaction(command);
+        log.info("command handleInTransaction end, command={}, result={}", command, resp);
         return resp;
     }
 
-    protected T doHandleInTransaction(C command) {
+    protected R doHandleInTransaction(C command) {
         return null;
     }
 
     @Override
-    public T handle(C command) {
-        log.debug("command handle start, command={}", command);
-        T resp = doHandle(command);
-        log.debug("command handle end, command={}, result={}", command, resp);
+    public R handle(C command) {
+        log.info("command handle start, command={}", command);
+        R resp = doHandle(command);
+        log.info("command handle end, command={}, result={}", command, resp);
         return resp;
     }
 
@@ -49,7 +49,7 @@ public abstract class CommandHandlerAdaptor<C extends Command<T>, T extends Resu
      * @param command command
      * @return 结果
      */
-    protected T doHandle(C command) {
+    protected R doHandle(C command) {
         return null;
     }
 }

@@ -18,7 +18,7 @@ public interface CommandHandlerResolver {
      * @return CommandHandler
      * @throws CannotFindCommandHandlerException
      */
-    <C extends Command<T>, T extends BaseResult> CommandHandler<C, T> resolve(Command<T> command) throws CannotFindCommandHandlerException;
+    <C extends Command<R>, R extends BaseResult> CommandHandler<C, R> resolve(Command<R> command) throws CannotFindCommandHandlerException;
 
     /**
      * 注册命令处理器(not threadsafe)

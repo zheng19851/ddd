@@ -5,6 +5,8 @@ import java.util.List;
 import com.runssnail.ddd.common.command.Command;
 
 /**
+ * CommandInterceptorResolver
+ *
  * @author zhengwei
  * @date 2019-11-06 13:02
  **/

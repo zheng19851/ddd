@@ -30,13 +30,13 @@ public class DefaultCommandValidatorResolver implements CommandValidatorResolver
     private List<GlobalCommandValidator> globalValidators = new ArrayList<>();
 
     @Override
-    public <C extends Command<T>, T extends Result> CommandValidator<C> resolve(Command<T> command) {
+    public <T extends Result> CommandValidator<Command<T>> resolve(Command<T> command) {
         Validate.notNull(command);
         return commandValidatorMapping.get(command.getClass());
     }
 
     @Override
-    public <C extends Command> void registerValidator(CommandValidator<C> validator) {
+    public <T extends Result> void registerValidator(CommandValidator<Command<T>> validator) {
         if (validator instanceof GlobalCommandValidator) {
             this.globalValidators.add((GlobalCommandValidator) validator);
             return;

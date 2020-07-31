@@ -7,19 +7,21 @@ import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.BaseResult;
 
 /**
+ * BaseCommandHandler
+ *
  * @author zhengwei
  * @date 2019/3/12 5:16 PM
  **/
-public abstract class BaseCommandHandler<C extends Command<T>, T extends BaseResult> implements CommandHandler<C, T> {
+public abstract class BaseCommandHandler<C extends Command<R>, R extends BaseResult> implements CommandHandler<C, R> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     public BaseCommandHandler() {
     }
 
     @Override
-    public T handle(C command) {
+    public R handle(C command) {
         log.debug("command handle start, command={}", command);
-        T resp = doHandle(command);
+        R resp = doHandle(command);
         log.debug("command handle end, command={}, result={}", command, resp);
         return resp;
     }
@@ -30,5 +32,5 @@ public abstract class BaseCommandHandler<C extends Command<T>, T extends BaseRes
      * @param command command
      * @return 结果
      */
-    protected abstract T doHandle(C command);
+    protected abstract R doHandle(C command);
 }

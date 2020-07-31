@@ -12,12 +12,12 @@ import com.runssnail.ddd.common.result.BaseResult;
  * <p>
  * 支持排序
  *
- * @param <T> Result
+ * @param <R> Result
  * @author zhengwei
  * @see org.springframework.core.annotation.Order
  * @see org.springframework.core.Ordered
  */
-public abstract class CommandInterceptorAdaptor<C extends Command<T>, T extends BaseResult> implements CommandInterceptor<C, T> {
+public abstract class CommandInterceptorAdaptor<C extends Command<R>, R extends BaseResult> implements CommandInterceptor<C, R> {
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
@@ -37,7 +37,7 @@ public abstract class CommandInterceptorAdaptor<C extends Command<T>, T extends 
      * @param result  结果
      */
     @Override
-    public void afterHandle(C command, T result) {
+    public void afterHandle(C command, R result) {
 
     }
 }

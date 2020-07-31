@@ -24,6 +24,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DefaultCommandBus implements CommandBus {
 
+    /**
+     * 命令处理器解析器
+     */
     private CommandHandlerResolver commandHandlerResolver = new DefaultCommandHandlerResolver();
 
     /**
@@ -31,14 +34,20 @@ public class DefaultCommandBus implements CommandBus {
      */
     private CommandExceptionHandler commandExceptionHandler;
 
+    /**
+     * 命令拦截器解析器
+     */
     private CommandInterceptorResolver commandInterceptorResolver = new DefaultCommandInterceptorResolver();
 
+    /**
+     * 命令调用信息工厂
+     */
     private CommandInvocationFactory commandInvocationFactory;
 
     @Override
     public <T extends BaseResult> T dispatch(Command<T> command) {
-        CommandInvocation commandInvocation = commandInvocationFactory.createCommandInvocation(command);
-        return (T) commandInvocation.invoke();
+        CommandInvocation<T> commandInvocation = commandInvocationFactory.createCommandInvocation(command);
+        return commandInvocation.invoke();
     }
 
     @Override

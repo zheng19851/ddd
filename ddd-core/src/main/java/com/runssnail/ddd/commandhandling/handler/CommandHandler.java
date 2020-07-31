@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.result.BaseResult;
  * @author zhengwei
  * @date 2019/3/12 3:41 PM
  **/
-public interface CommandHandler<C extends Command<T>, T extends BaseResult> {
+public interface CommandHandler<C extends Command<R>, R extends BaseResult> {
 
     /**
      * 是否支持当前命令
@@ -24,6 +24,6 @@ public interface CommandHandler<C extends Command<T>, T extends BaseResult> {
      * @param command command
      * @return 结果
      */
-    T handle(C command);
+    R handle(C command);
 
 }

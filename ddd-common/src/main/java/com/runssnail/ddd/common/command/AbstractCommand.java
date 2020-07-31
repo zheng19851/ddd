@@ -12,7 +12,7 @@ import com.runssnail.ddd.common.validator.CommandValidator;
 public abstract class AbstractCommand<T extends BaseResult> extends BaseDTO implements Command<T> {
 
     @Override
-    public void validate(CommandValidator validator) throws IllegalArgumentException, BizException {
+    public void validate(CommandValidator<Command<T>> validator) throws IllegalArgumentException, BizException {
         if (validator != null) {
             validator.validate(this);
         }
