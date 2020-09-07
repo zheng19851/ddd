@@ -16,6 +16,9 @@
         <module>ddd-spring-boot-autoconfigure</module>
         <module>ddd-spring-boot-starter</module>
         <module>ddd-module-demo</module>
+        <module>ddd-pipeline-api</module>
+        <module>ddd-pipeline-default</module>
+        <module>ddd-pipeline-definition-mysql</module>
     </modules>
 
     <name>ddd-parent</name>
@@ -60,10 +63,19 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <dependency>
+                <groupId>com.runssnail.ddd</groupId>
+                <artifactId>ddd-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.runssnail.ddd</groupId>
                 <artifactId>ddd-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.runssnail.ddd</groupId>
+                <artifactId>ddd-pipeline-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

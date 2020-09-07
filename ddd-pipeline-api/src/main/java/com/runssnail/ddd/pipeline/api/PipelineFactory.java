@@ -1,0 +1,20 @@
+package com.runssnail.ddd.pipeline.api;
+
+import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
+
+/**
+ * 创建运行域流程执行对象工厂
+ *
+ * @author zhengwei
+ */
+public interface PipelineFactory {
+
+    /**
+     * 创建运行域流程执行对象
+     *
+     * @param pd 定义
+     * @return 运行域流程执行对象
+     */
+    Pipeline create(PipelineDefinition pd);
+
+}
