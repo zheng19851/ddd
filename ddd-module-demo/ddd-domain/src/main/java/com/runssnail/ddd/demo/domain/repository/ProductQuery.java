@@ -3,7 +3,7 @@ package com.runssnail.ddd.demo.domain.repository;
 import lombok.Data;
 
 /**
- * @author zhengwei <zhengwei03@kuaishou.com>
+ * @author zhengwei
  * Created on 2020-05-31
  */
 @Data

@@ -54,7 +54,7 @@ public abstract class BasePhase implements Phase {
     /**
      *
      */
-    protected StepManager stepManager;
+    protected StepRepository stepRepository;
 
     /**
      * 拦截器
@@ -67,14 +67,14 @@ public abstract class BasePhase implements Phase {
     public BasePhase() {
     }
 
-    public BasePhase(String phaseId, List<String> steps, boolean parallel, StepManager stepManager) {
+    public BasePhase(String phaseId, List<String> steps, boolean parallel, StepRepository stepRepository) {
         Validate.notBlank(phaseId);
         Validate.notEmpty(steps);
-        Validate.notNull(stepManager);
+        Validate.notNull(stepRepository);
         this.phaseId = phaseId;
         this.steps = steps;
         this.parallel = parallel;
-        this.stepManager = stepManager;
+        this.stepRepository = stepRepository;
     }
 
     /**
@@ -112,7 +112,7 @@ public abstract class BasePhase implements Phase {
     }
 
     private void doSerial(Exchange exchange) {
-        List<Step> steps = stepManager.getSteps(this.steps);
+        List<Step> steps = stepRepository.getSteps(this.steps);
         for (Step step : steps) {
             step.execute(exchange);
         }
@@ -120,7 +120,7 @@ public abstract class BasePhase implements Phase {
 
     private void doParallel(Exchange exchange) throws ExecuteException {
 
-        List<Step> steps = stepManager.getSteps(this.steps);
+        List<Step> steps = stepRepository.getSteps(this.steps);
         Collection<Callable<Void>> tasks = new ArrayList<>(steps.size());
         for (Step step : steps) {
             tasks.add(() -> {
@@ -215,12 +215,12 @@ public abstract class BasePhase implements Phase {
         this.executor = executor;
     }
 
-    public StepManager getStepManager() {
-        return stepManager;
+    public StepRepository getStepRepository() {
+        return stepRepository;
     }
 
-    public void setStepManager(StepManager stepManager) {
-        this.stepManager = stepManager;
+    public void setStepRepository(StepRepository stepRepository) {
+        this.stepRepository = stepRepository;
     }
 
     public long getTimeout() {

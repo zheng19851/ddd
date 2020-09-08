@@ -6,14 +6,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.runssnail.ddd.pipeline.api.Step;
-import com.runssnail.ddd.pipeline.api.StepManager;
+import com.runssnail.ddd.pipeline.api.StepRepository;
 
 /**
  * 默认的步骤管理器
  *
  * @author zhengwei
  */
-public class DefaultStepManager implements StepManager {
+public class DefaultStepRepository implements StepRepository {
 
     /**
      *
@@ -23,7 +23,7 @@ public class DefaultStepManager implements StepManager {
     /**
      * Default constructor
      */
-    public DefaultStepManager() {
+    public DefaultStepRepository() {
     }
 
     /**

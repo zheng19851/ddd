@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface PhaseManager {
+public interface PhaseRepository {
 
     /**
      * 阶段执行对象

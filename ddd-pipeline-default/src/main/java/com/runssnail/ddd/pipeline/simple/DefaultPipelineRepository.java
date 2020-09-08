@@ -6,19 +6,19 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.runssnail.ddd.pipeline.api.Pipeline;
-import com.runssnail.ddd.pipeline.api.PipelineManager;
+import com.runssnail.ddd.pipeline.api.PipelineRepository;
 
 /**
  * @author zhengwei
  */
-public class DefaultPipelineManager implements PipelineManager {
+public class DefaultPipelineRepository implements PipelineRepository {
 
     private ConcurrentMap<String, Pipeline> pipelines = new ConcurrentHashMap<>();
 
     /**
      * Default constructor
      */
-    public DefaultPipelineManager() {
+    public DefaultPipelineRepository() {
     }
 
     /**

@@ -9,8 +9,12 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 import com.runssnail.ddd.pipeline.simple.grpc.GrpcStep;
 
 /**
+ * 步骤执行对象工厂
+ *
  * @author zhengwei
  * Created on 2020-09-08
+ * @see com.runssnail.ddd.pipeline.api.ParamMappingInterceptor
+ * @see GrpcStep
  */
 public class DefaultStepFactory implements StepFactory {
 
@@ -28,6 +32,9 @@ public class DefaultStepFactory implements StepFactory {
     }
 
     private List<Interceptor> createInterceptors(StepDefinition sd) {
+
+        // todo 根据参数映射创建拦截器
+
         return null;
     }
 }

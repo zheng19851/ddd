@@ -6,12 +6,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 import com.runssnail.ddd.pipeline.api.Phase;
-import com.runssnail.ddd.pipeline.api.PhaseManager;
+import com.runssnail.ddd.pipeline.api.PhaseRepository;
 
 /**
  * @author zhengwei
  */
-public class DefaultPhaseManager implements PhaseManager {
+public class DefaultPhaseRepository implements PhaseRepository {
 
     /**
      *
@@ -21,7 +21,7 @@ public class DefaultPhaseManager implements PhaseManager {
     /**
      * Default constructor
      */
-    public DefaultPhaseManager() {
+    public DefaultPhaseRepository() {
     }
 
     /**

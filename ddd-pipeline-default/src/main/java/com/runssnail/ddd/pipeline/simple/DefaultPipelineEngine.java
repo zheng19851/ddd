@@ -10,15 +10,15 @@ import com.runssnail.ddd.pipeline.api.DefaultPipelineErrorHandler;
 import com.runssnail.ddd.pipeline.api.Exchange;
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseFactory;
-import com.runssnail.ddd.pipeline.api.PhaseManager;
+import com.runssnail.ddd.pipeline.api.PhaseRepository;
 import com.runssnail.ddd.pipeline.api.Pipeline;
 import com.runssnail.ddd.pipeline.api.PipelineEngine;
 import com.runssnail.ddd.pipeline.api.PipelineErrorHandler;
 import com.runssnail.ddd.pipeline.api.PipelineFactory;
-import com.runssnail.ddd.pipeline.api.PipelineManager;
+import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactory;
-import com.runssnail.ddd.pipeline.api.StepManager;
+import com.runssnail.ddd.pipeline.api.StepRepository;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinitionRepository;
@@ -52,7 +52,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
     /**
      *
      */
-    private PipelineManager pipelineManager;
+    private PipelineRepository pipelineRepository;
 
     /**
      *
@@ -61,11 +61,11 @@ public class DefaultPipelineEngine implements PipelineEngine {
 
     private PhaseFactory phaseFactory;
 
-    private PhaseManager phaseManager;
+    private PhaseRepository phaseRepository;
 
     private StepFactory stepFactory;
 
-    private StepManager stepManager;
+    private StepRepository stepRepository;
 
     /**
      * Default constructor
@@ -97,7 +97,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
         for (Map.Entry<String, PipelineDefinition> entry : pipelineDefinitions.entrySet()) {
             PipelineDefinition pd = entry.getValue();
             Pipeline pipeline = pipelineFactory.create(pd);
-            pipelineManager.add(pipeline);
+            pipelineRepository.add(pipeline);
             initPhases(pd.getPhaseDefinitions());
         }
 
@@ -107,7 +107,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
     private void initPhases(List<PhaseDefinition> phaseDefinitions) {
         for (PhaseDefinition phaseDefinition : phaseDefinitions) {
             Phase phase = this.phaseFactory.create(phaseDefinition);
-            this.phaseManager.add(phase);
+            this.phaseRepository.add(phase);
             initSteps(phaseDefinition.getStepDefinitions());
         }
     }
@@ -115,7 +115,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
     private void initSteps(List<StepDefinition> stepDefinitions) {
         for (StepDefinition stepDefinition : stepDefinitions) {
             Step step = this.stepFactory.create(stepDefinition);
-            this.stepManager.add(step);
+            this.stepRepository.add(step);
         }
     }
 
@@ -123,7 +123,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
         Set<Map.Entry<String, PipelineDefinition>> entries = pipelineDefinitions.entrySet();
         for (Map.Entry<String, PipelineDefinition> entry : entries) {
             String pipelineId = entry.getKey();
-            if (pipelineManager.contains(pipelineId)) {
+            if (pipelineRepository.contains(pipelineId)) {
                 throw new RuntimeException("pipeline id duplicated '" + pipelineId + "'");
             }
         }
@@ -142,7 +142,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
      */
     @Override
     public Pipeline getPipeline(String pipelineId) {
-        return pipelineManager.getPipeline(pipelineId);
+        return pipelineRepository.getPipeline(pipelineId);
     }
 
     /**
@@ -150,7 +150,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
      */
     @Override
     public List<Pipeline> getAllPipelines() {
-        return this.pipelineManager.getAllPipelines();
+        return this.pipelineRepository.getAllPipelines();
     }
 
     @Override

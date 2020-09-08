@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface StepManager {
+public interface StepRepository {
 
     /**
      * 步骤执行对象

@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import com.runssnail.ddd.pipeline.api.Interceptor;
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseFactory;
-import com.runssnail.ddd.pipeline.api.StepManager;
+import com.runssnail.ddd.pipeline.api.StepRepository;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 
 /**
@@ -17,11 +17,11 @@ import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
  */
 public class DefaultPhaseFactory implements PhaseFactory {
 
-    private StepManager stepManager;
+    private StepRepository stepRepository;
 
     @Override
     public Phase create(PhaseDefinition pd) {
-        DefaultPhase phase = new DefaultPhase(pd.getPhaseId(), pd.getSteps(), pd.isParallel(), this.stepManager);
+        DefaultPhase phase = new DefaultPhase(pd.getPhaseId(), pd.getSteps(), pd.isParallel(), this.stepRepository);
         phase.setTimeout(pd.getTimeout());
         if (pd.isParallel()) {
             ExecutorService executor = createExecutor(pd);

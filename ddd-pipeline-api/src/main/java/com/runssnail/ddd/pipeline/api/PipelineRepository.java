@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface PipelineManager {
+public interface PipelineRepository {
 
     /**
      * 所有流程执行对象

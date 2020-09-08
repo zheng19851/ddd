@@ -30,15 +30,15 @@ public abstract class BasePipeline implements Pipeline {
     /**
      *
      */
-    private PhaseManager phaseManager;
+    private PhaseRepository phaseRepository;
 
-    public BasePipeline(String pipelineId, List<String> phases, PhaseManager phaseManager) {
+    public BasePipeline(String pipelineId, List<String> phases, PhaseRepository phaseRepository) {
         Validate.notBlank(pipelineId);
         Validate.notEmpty(phases);
-        Validate.notNull(phaseManager);
+        Validate.notNull(phaseRepository);
         this.pipelineId = pipelineId;
         this.phases = phases;
-        this.phaseManager = phaseManager;
+        this.phaseRepository = phaseRepository;
     }
 
     /**
@@ -61,7 +61,7 @@ public abstract class BasePipeline implements Pipeline {
      * @param exchange
      */
     protected void doExecute(Exchange exchange) {
-        List<Phase> phases = phaseManager.getPhases(this.phases);
+        List<Phase> phases = phaseRepository.getPhases(this.phases);
         for (Phase phase : phases) {
             phase.execute(exchange);
         }

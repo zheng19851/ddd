@@ -3,7 +3,7 @@ package com.runssnail.ddd.demo.domain.exception;
 import com.runssnail.ddd.common.exception.ErrorCode;
 
 /**
- * @author zhengwei <zhengwei03@kuaishou.com>
+ * @author zhengwei
  * Created on 2020-05-31
  */
 public enum ProductErrorCode implements ErrorCode {

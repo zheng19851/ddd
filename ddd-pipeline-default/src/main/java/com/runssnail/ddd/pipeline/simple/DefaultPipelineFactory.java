@@ -1,6 +1,6 @@
 package com.runssnail.ddd.pipeline.simple;
 
-import com.runssnail.ddd.pipeline.api.PhaseManager;
+import com.runssnail.ddd.pipeline.api.PhaseRepository;
 import com.runssnail.ddd.pipeline.api.Pipeline;
 import com.runssnail.ddd.pipeline.api.PipelineFactory;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
@@ -19,7 +19,7 @@ public class DefaultPipelineFactory implements PipelineFactory {
     /**
      *
      */
-    private PhaseManager phaseManager;
+    private PhaseRepository phaseRepository;
 
     /**
      * @param pd
@@ -27,7 +27,7 @@ public class DefaultPipelineFactory implements PipelineFactory {
      */
     @Override
     public Pipeline create(PipelineDefinition pd) {
-        DefaultPipeline defaultPipeline = new DefaultPipeline(pd.getPipelineId(), pd.getPhases(), this.phaseManager);
+        DefaultPipeline defaultPipeline = new DefaultPipeline(pd.getPipelineId(), pd.getPhases(), this.phaseRepository);
         return defaultPipeline;
     }
 
