@@ -1,6 +1,8 @@
 package com.runssnail.ddd.pipeline.api.exception;
 
 /**
+ * 执行异常
+ *
  * @author zhengwei
  * Created on 2020-09-08
  */

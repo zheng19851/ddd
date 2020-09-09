@@ -2,7 +2,7 @@ package com.runssnail.ddd.pipeline;
 
 import org.junit.Test;
 
-import com.runssnail.ddd.pipeline.simple.DefaultPipelineEngine;
+import com.runssnail.ddd.pipeline.api.DefaultPipelineEngine;
 
 /**
  * @author zhengwei

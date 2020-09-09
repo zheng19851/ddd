@@ -10,14 +10,18 @@ import java.util.Map;
 public interface PhaseDefinitionRepository {
 
     /**
-     * @return
+     * 阶段定义
+     *
+     * @return 阶段定义
      */
     Map<String, PhaseDefinition> getPhaseDefinitions();
 
     /**
-     * @param name
-     * @return
+     * 阶段定义
+     *
+     * @param phaseId 阶段唯一标识
+     * @return 阶段定义
      */
-    PhaseDefinition get(String name);
+    PhaseDefinition get(String phaseId);
 
 }

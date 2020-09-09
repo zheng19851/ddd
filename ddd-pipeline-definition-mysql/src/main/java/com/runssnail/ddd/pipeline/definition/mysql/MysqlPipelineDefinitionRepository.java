@@ -1,5 +1,6 @@
 package com.runssnail.ddd.pipeline.definition.mysql;
 
+import java.util.List;
 import java.util.Map;
 
 import com.runssnail.ddd.pipeline.api.metadata.BasePipelineDefinitionRepository;
@@ -28,12 +29,20 @@ public class MysqlPipelineDefinitionRepository extends BasePipelineDefinitionRep
         return null;
     }
 
+    @Override
+    public List<PipelineDefinition> getPipelineDefinitions(boolean onlyEnabled, long updateTimeStart) {
+
+        // todo 待实现
+        // 如果PipelineDefinition被删除了，那么Phase就不用加载了
+        return null;
+    }
+
     /**
-     * @param name
+     * @param pipelineId
      * @return
      */
     @Override
-    public PipelineDefinition get(String name) {
+    public PipelineDefinition get(String pipelineId) {
         // TODO implement here
         return null;
     }

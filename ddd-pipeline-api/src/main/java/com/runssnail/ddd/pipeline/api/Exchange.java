@@ -22,9 +22,14 @@ public class Exchange {
     private Map<String, Object> attributes = new HashMap<>();
 
     /**
-     * 数据
+     * 请求数据
      */
-    private Object body;
+    private Object requestBody;
+
+    /**
+     * 响应数据
+     */
+    private Object responseBody;
 
     /**
      * 异常
@@ -77,12 +82,20 @@ public class Exchange {
         this.attributes = attributes;
     }
 
-    public Object getBody() {
-        return body;
+    public Object getRequestBody() {
+        return requestBody;
     }
 
-    public void setBody(Object body) {
-        this.body = body;
+    public void setRequestBody(Object requestBody) {
+        this.requestBody = requestBody;
+    }
+
+    public Object getResponseBody() {
+        return responseBody;
+    }
+
+    public void setResponseBody(Object responseBody) {
+        this.responseBody = responseBody;
     }
 
     public Throwable getThrowable() {

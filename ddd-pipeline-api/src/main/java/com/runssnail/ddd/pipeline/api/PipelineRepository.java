@@ -8,7 +8,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface PipelineRepository {
+public interface PipelineRepository extends Lifecycle {
 
     /**
      * 所有流程执行对象
@@ -62,5 +62,11 @@ public interface PipelineRepository {
      */
     List<Pipeline> removeAll(List<String> pipelineIds);
 
+    /**
+     * 是否存在
+     *
+     * @param pipelineId 唯一标识
+     * @return
+     */
     boolean contains(String pipelineId);
 }

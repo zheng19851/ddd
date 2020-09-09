@@ -1,5 +1,6 @@
 package com.runssnail.ddd.pipeline.api.metadata;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,16 +11,27 @@ import java.util.Map;
 public interface PipelineDefinitionRepository {
 
     /**
-     * key=name
+     * key=pipelineId 唯一标识
      *
      * @return
      */
     Map<String, PipelineDefinition> getPipelineDefinitions();
 
     /**
-     * @param name
+     * 查询流程定义
+     *
+     * @param onlyEnabled     只包含有效的
+     * @param updateTimeStart 最新更新时间-开始
      * @return
      */
-    PipelineDefinition get(String name);
+    List<PipelineDefinition> getPipelineDefinitions(boolean onlyEnabled, long updateTimeStart);
+
+    /**
+     * 流程定义
+     *
+     * @param pipelineId 唯一标识
+     * @return 流程定义
+     */
+    PipelineDefinition get(String pipelineId);
 
 }

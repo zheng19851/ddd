@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface PipelineEngine {
+public interface PipelineEngine extends Lifecycle {
 
     /**
      * 获取流程执行对象
@@ -28,9 +28,9 @@ public interface PipelineEngine {
      * 异常处理器
      *
      * @param handler 异常处理器
-     * @see DefaultPipelineErrorHandler
+     * @see DefaultPipelineExceptionHandler
      */
-    void setPipelineErrorHandler(PipelineErrorHandler handler);
+    void setPipelineExceptionHandler(PipelineExceptionHandler handler);
 
     /**
      * 执行

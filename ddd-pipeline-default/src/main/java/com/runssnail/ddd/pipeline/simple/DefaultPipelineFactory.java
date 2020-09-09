@@ -3,9 +3,12 @@ package com.runssnail.ddd.pipeline.simple;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
 import com.runssnail.ddd.pipeline.api.Pipeline;
 import com.runssnail.ddd.pipeline.api.PipelineFactory;
+import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
 
 /**
+ * 默认的流程执行对象工厂
+ *
  * @author zhengwei
  */
 public class DefaultPipelineFactory implements PipelineFactory {
@@ -26,9 +29,16 @@ public class DefaultPipelineFactory implements PipelineFactory {
      * @return
      */
     @Override
-    public Pipeline create(PipelineDefinition pd) {
+    public Pipeline create(PipelineDefinition pd) throws PipelineDefinitionException {
         DefaultPipeline defaultPipeline = new DefaultPipeline(pd.getPipelineId(), pd.getPhases(), this.phaseRepository);
         return defaultPipeline;
     }
 
+    public PhaseRepository getPhaseRepository() {
+        return phaseRepository;
+    }
+
+    public void setPhaseRepository(PhaseRepository phaseRepository) {
+        this.phaseRepository = phaseRepository;
+    }
 }

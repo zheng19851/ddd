@@ -5,7 +5,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 /**
  * 参数映射拦截器
  *
- * @author zhengwei <zhengwei03@kuaishou.com>
+ * @author zhengwei
  * Created on 2020-09-09
  */
 public class ParamMappingInterceptor implements Interceptor {

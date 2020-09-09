@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepRepository;
 
@@ -14,6 +17,8 @@ import com.runssnail.ddd.pipeline.api.StepRepository;
  * @author zhengwei
  */
 public class DefaultStepRepository implements StepRepository {
+
+    private static final Logger log = LoggerFactory.getLogger(DefaultStepRepository.class);
 
     /**
      *
@@ -85,6 +90,7 @@ public class DefaultStepRepository implements StepRepository {
      */
     @Override
     public Step remove(String stepId) {
+        log.info("remove Step {}", stepId);
         return this.steps.remove(stepId);
     }
 
@@ -94,6 +100,7 @@ public class DefaultStepRepository implements StepRepository {
      */
     @Override
     public List<Step> removeAll(List<String> stepIds) {
+        log.info("removeAll Step {}", stepIds);
         List<Step> removedList = new ArrayList<>(stepIds.size());
         for (String name : stepIds) {
             Step step = this.steps.remove(name);

@@ -1,5 +1,6 @@
 package com.runssnail.ddd.pipeline.api;
 
+import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 
 /**
@@ -15,7 +16,8 @@ public interface StepFactory {
      *
      * @param sd 步骤定义
      * @return 步骤执行对象
+     * @throws StepDefinitionException
      */
-    Step create(StepDefinition sd);
+    Step create(StepDefinition sd) throws StepDefinitionException;
 
 }
