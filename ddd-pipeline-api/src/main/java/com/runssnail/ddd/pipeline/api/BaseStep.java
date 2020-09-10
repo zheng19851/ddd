@@ -16,7 +16,12 @@ public abstract class BaseStep implements Step {
     /**
      * 唯一标识
      */
-    private String stepId;
+    protected String stepId;
+
+    /**
+     * 超时时间，单位毫秒
+     */
+    protected long timeout;
 
     /**
      * 拦截器
@@ -90,5 +95,13 @@ public abstract class BaseStep implements Step {
 
     public void setInterceptors(List<Interceptor> interceptors) {
         this.interceptors = interceptors;
+    }
+
+    public long getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(long timeout) {
+        this.timeout = timeout;
     }
 }

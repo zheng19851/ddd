@@ -1,13 +1,8 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.api;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 
-import com.runssnail.ddd.pipeline.api.ExecutorFactory;
-import com.runssnail.ddd.pipeline.api.Interceptor;
-import com.runssnail.ddd.pipeline.api.Phase;
-import com.runssnail.ddd.pipeline.api.PhaseFactory;
-import com.runssnail.ddd.pipeline.api.StepRepository;
 import com.runssnail.ddd.pipeline.api.exception.PhaseDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 

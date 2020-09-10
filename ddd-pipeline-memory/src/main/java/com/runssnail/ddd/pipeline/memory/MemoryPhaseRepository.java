@@ -1,9 +1,12 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.memory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
@@ -11,7 +14,8 @@ import com.runssnail.ddd.pipeline.api.PhaseRepository;
 /**
  * @author zhengwei
  */
-public class DefaultPhaseRepository implements PhaseRepository {
+public class MemoryPhaseRepository implements PhaseRepository {
+    private static final Logger log = LoggerFactory.getLogger(MemoryPhaseRepository.class);
 
     /**
      *
@@ -21,7 +25,7 @@ public class DefaultPhaseRepository implements PhaseRepository {
     /**
      * Default constructor
      */
-    public DefaultPhaseRepository() {
+    public MemoryPhaseRepository() {
     }
 
     /**
@@ -31,8 +35,8 @@ public class DefaultPhaseRepository implements PhaseRepository {
     @Override
     public List<Phase> getPhases(List<String> phaseIds) {
         List<Phase> phases = new ArrayList<>(phaseIds.size());
-        for (String name : phaseIds) {
-            Phase phase = this.getPhase(name);
+        for (String phaseId : phaseIds) {
+            Phase phase = this.getPhase(phaseId);
             if (phase != null) {
                 phases.add(phase);
             }
@@ -53,15 +57,8 @@ public class DefaultPhaseRepository implements PhaseRepository {
      * @param phase
      */
     @Override
-    public void update(Phase phase) {
-        this.phases.put(phase.getPhaseId(), phase);
-    }
-
-    /**
-     * @param phase
-     */
-    @Override
-    public void add(Phase phase) {
+    public void save(Phase phase) {
+        log.info("save Phase {}", phase.getPhaseId());
         this.phases.put(phase.getPhaseId(), phase);
     }
 
@@ -69,9 +66,9 @@ public class DefaultPhaseRepository implements PhaseRepository {
      * @param phases
      */
     @Override
-    public void addAll(List<Phase> phases) {
+    public void saveAll(List<Phase> phases) {
         for (Phase phase : phases) {
-            this.add(phase);
+            this.save(phase);
         }
     }
 
@@ -81,6 +78,7 @@ public class DefaultPhaseRepository implements PhaseRepository {
      */
     @Override
     public Phase remove(String phaseId) {
+        log.info("remove Phase {}", phaseId);
         return this.phases.remove(phaseId);
     }
 
@@ -90,9 +88,10 @@ public class DefaultPhaseRepository implements PhaseRepository {
      */
     @Override
     public List<Phase> removeAll(List<String> phaseIds) {
+        log.info("removeAll Phase {}", phaseIds);
         List<Phase> removedList = new ArrayList<>(phaseIds.size());
-        for (String name : phaseIds) {
-            Phase phase = this.phases.remove(name);
+        for (String phaseId : phaseIds) {
+            Phase phase = this.phases.remove(phaseId);
             if (phase != null) {
                 removedList.add(phase);
             }
@@ -100,4 +99,13 @@ public class DefaultPhaseRepository implements PhaseRepository {
         return removedList;
     }
 
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void close() {
+
+    }
 }

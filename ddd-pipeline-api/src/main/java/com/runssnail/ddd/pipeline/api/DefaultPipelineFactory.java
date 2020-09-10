@@ -1,8 +1,5 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.api;
 
-import com.runssnail.ddd.pipeline.api.PhaseRepository;
-import com.runssnail.ddd.pipeline.api.Pipeline;
-import com.runssnail.ddd.pipeline.api.PipelineFactory;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
 

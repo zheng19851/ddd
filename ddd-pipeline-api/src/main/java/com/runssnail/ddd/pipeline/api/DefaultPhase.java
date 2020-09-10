@@ -1,10 +1,6 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.api;
 
 import java.util.List;
-
-import com.runssnail.ddd.pipeline.api.BasePhase;
-import com.runssnail.ddd.pipeline.api.Phase;
-import com.runssnail.ddd.pipeline.api.StepRepository;
 
 /**
  * @author zhengwei

@@ -158,7 +158,7 @@ public abstract class BasePhase implements Phase {
                     try {
                         future.get();
                         log.debug("execute step end, pipeline:{}, phase:{}, step:{}({}), result:{}", pipelineId, this.phaseId, stepId,
-                                stepName, exchange.getResponseBody());
+                                stepName, exchange.getBody());
                     } catch (InterruptedException | ExecutionException e) {
 //                        log.warn("execute step error, pipeline:{}, phase:{}, step:{}",
 //                                exchange.getPipelineId(), this.phaseId, step.getClass().getCanonicalName(), e);

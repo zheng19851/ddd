@@ -1,4 +1,4 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.memory;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactory;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
-import com.runssnail.ddd.pipeline.simple.grpc.GrpcStep;
+import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
 
 /**
  * 步骤执行对象工厂
@@ -32,7 +32,8 @@ public class DefaultStepFactory implements StepFactory {
         }
 
         if (step == null) {
-            throw new StepDefinitionException(sd.getStepId(), "create Step fail, type=" + sd.getStepType());
+            String msg = "create Step fail, stepId=" + sd.getStepId() + ", type=" + sd.getStepType();
+            throw new StepDefinitionException(sd.getStepId(), msg);
         }
 
         return step;

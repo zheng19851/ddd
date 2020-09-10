@@ -6,6 +6,8 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.runssnail.ddd.pipeline.api.exception.PipelineExecuteErrorCode;
+
 
 /**
  * 默认的流程引擎
@@ -56,12 +58,15 @@ public class DefaultPipelineEngine implements PipelineEngine {
 
     @Override
     public void execute(Exchange exchange) {
+        Validate.notNull(exchange, "Exchange is required");
         Pipeline pipeline = this.getPipeline(exchange.getPipelineId());
         if (pipeline == null) {
-            // todo 不存在，设置错误码
             log.warn("cannot find the Pipeline {}", exchange.getPipelineId());
+            exchange.setErrorCode(PipelineExecuteErrorCode.PIPELINE_NOT_EXISTS.getErrorCode());
+            exchange.setErrorMsg(PipelineExecuteErrorCode.PIPELINE_NOT_EXISTS.getErrorMsg());
             return;
         }
+
         try {
             pipeline.execute(exchange);
         } catch (Exception e) {

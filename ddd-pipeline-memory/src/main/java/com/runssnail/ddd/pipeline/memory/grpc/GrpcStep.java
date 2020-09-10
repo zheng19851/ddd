@@ -1,4 +1,4 @@
-package com.runssnail.ddd.pipeline.simple.grpc;
+package com.runssnail.ddd.pipeline.memory.grpc;
 
 import org.apache.commons.lang3.Validate;
 
@@ -23,11 +23,6 @@ public class GrpcStep extends BaseStep {
      * 方法名
      */
     private String method;
-
-    /**
-     * 超时时间，单位毫秒
-     */
-    private long timeout;
 
     public GrpcStep(String stepId, String fullName, String method) {
         super(stepId);
@@ -59,13 +54,5 @@ public class GrpcStep extends BaseStep {
 
     public void setMethod(String method) {
         this.method = method;
-    }
-
-    public long getTimeout() {
-        return timeout;
-    }
-
-    public void setTimeout(long timeout) {
-        this.timeout = timeout;
     }
 }

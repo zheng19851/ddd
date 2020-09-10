@@ -1,9 +1,6 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.api;
 
 import java.util.List;
-
-import com.runssnail.ddd.pipeline.api.BasePipeline;
-import com.runssnail.ddd.pipeline.api.PhaseRepository;
 
 /**
  * 默认的流程执行对象

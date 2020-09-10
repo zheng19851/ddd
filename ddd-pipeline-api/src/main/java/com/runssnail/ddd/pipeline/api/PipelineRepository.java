@@ -30,21 +30,14 @@ public interface PipelineRepository extends Lifecycle {
      *
      * @param pipelines 流程执行对象
      */
-    void addAll(List<Pipeline> pipelines);
+    void saveAll(List<Pipeline> pipelines);
 
     /**
      * 添加
      *
      * @param pipeline 流程执行对象
      */
-    void add(Pipeline pipeline);
-
-    /**
-     * 更新
-     *
-     * @param pipeline 流程执行对象
-     */
-    void update(Pipeline pipeline);
+    void save(Pipeline pipeline);
 
     /**
      * 删除

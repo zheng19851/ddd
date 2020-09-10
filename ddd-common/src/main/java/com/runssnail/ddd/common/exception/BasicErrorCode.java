@@ -4,6 +4,11 @@ package com.runssnail.ddd.common.exception;
 public enum BasicErrorCode implements ErrorCode {
 
     /**
+     * 成功
+     */
+    SUCCESS(200, "ok"),
+
+    /**
      * 参数异常
      */
     PARAMS_ERROR(400, "params.illegal"),

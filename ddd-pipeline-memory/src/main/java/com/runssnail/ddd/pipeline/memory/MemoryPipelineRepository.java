@@ -1,10 +1,9 @@
-package com.runssnail.ddd.pipeline.simple;
+package com.runssnail.ddd.pipeline.memory;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +12,7 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.runssnail.ddd.pipeline.api.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseFactory;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
@@ -22,6 +22,7 @@ import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactory;
 import com.runssnail.ddd.pipeline.api.StepRepository;
+import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
@@ -35,12 +36,11 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
  *
  * @author zhengwei
  */
-public class DefaultPipelineRepository implements PipelineRepository {
+public class MemoryPipelineRepository implements PipelineRepository {
+    private static final Logger log = LoggerFactory.getLogger(MemoryPipelineRepository.class);
 
-    private static final Logger log = LoggerFactory.getLogger(DefaultPipelineRepository.class);
-
-    private static final long DEFAULT_SCHEDULED_PERIOD = 10000L;
-    private static final int DEFAULT_CORE_POOL_SIZE = 1;
+    private static final long DEFAULT_SCHEDULED_PERIOD = Constants.DEFAULT_SCHEDULED_PERIOD;
+    private static final int DEFAULT_CORE_POOL_SIZE = Constants.DEFAULT_CORE_POOL_SIZE;
 
     /**
      * key=pipelineId
@@ -70,15 +70,17 @@ public class DefaultPipelineRepository implements PipelineRepository {
      */
     private ScheduledExecutorService scheduledExecutorService;
 
+    private ExecutorFactory executorFactory;
+
     /**
      * 当前更新的流程定义最新时间
      */
-    private volatile long lastPipelineUpdateTime;
+    private volatile long lastUpdateTime;
 
     /**
      * Default constructor
      */
-    public DefaultPipelineRepository() {
+    public MemoryPipelineRepository() {
     }
 
     /**
@@ -94,9 +96,9 @@ public class DefaultPipelineRepository implements PipelineRepository {
      * @param pipelines
      */
     @Override
-    public void addAll(List<Pipeline> pipelines) {
+    public void saveAll(List<Pipeline> pipelines) {
         for (Pipeline pipeline : pipelines) {
-            this.add(pipeline);
+            this.save(pipeline);
         }
     }
 
@@ -104,18 +106,9 @@ public class DefaultPipelineRepository implements PipelineRepository {
      * @param pipeline
      */
     @Override
-    public void add(Pipeline pipeline) {
-        log.info("add Pipeline {}", pipeline.getPipelineId());
+    public void save(Pipeline pipeline) {
+        log.info("save Pipeline {}", pipeline.getPipelineId());
         pipelines.put(pipeline.getPipelineId(), pipeline);
-    }
-
-    /**
-     * @param pipeline
-     */
-    @Override
-    public void update(Pipeline pipeline) {
-        log.info("update Pipeline {}", pipeline.getPipelineId());
-        this.pipelines.put(pipeline.getPipelineId(), pipeline);
     }
 
     /**
@@ -136,8 +129,8 @@ public class DefaultPipelineRepository implements PipelineRepository {
     public List<Pipeline> removeAll(List<String> pipelineIds) {
         log.info("removeAll Pipeline {}", pipelineIds);
         List<Pipeline> removedList = new ArrayList<>(pipelineIds.size());
-        for (String name : pipelineIds) {
-            Pipeline pipeline = this.pipelines.remove(name);
+        for (String pipelineId : pipelineIds) {
+            Pipeline pipeline = this.remove(pipelineId);
             if (pipeline != null) {
                 removedList.add(pipeline);
             }
@@ -164,9 +157,10 @@ public class DefaultPipelineRepository implements PipelineRepository {
         Validate.notNull(this.stepFactory, "stepFactory is required");
         Validate.notNull(this.stepRepository, "stepRepository is required");
 
+        log.info("init start");
         refreshPipelines(true);
-
         initRefreshThread();
+        log.info("init end");
     }
 
     private void initRefreshThread() {
@@ -175,7 +169,7 @@ public class DefaultPipelineRepository implements PipelineRepository {
 
     private void initRefreshPipelineDefinitionThread() {
         // todo 参数配置化，指定线程工厂
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool(DEFAULT_CORE_POOL_SIZE);
+        ScheduledExecutorService executor = executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshPipeline");
 
         // 每隔一段时间去刷新
         // todo period参数配置化
@@ -200,9 +194,9 @@ public class DefaultPipelineRepository implements PipelineRepository {
     }
 
     private void refreshPipelines(boolean onlyEnabled) {
-        List<PipelineDefinition> pipelineDefinitions = pipelineDefinitionRepository.getPipelineDefinitions(onlyEnabled, this.lastPipelineUpdateTime);
+        List<PipelineDefinition> pipelineDefinitions = pipelineDefinitionRepository.getPipelineDefinitions(onlyEnabled, this.lastUpdateTime);
         if (CollectionUtils.isEmpty(pipelineDefinitions)) {
-            log.warn("Cannot find any pipelineDefinitions, lastPipelineUpdateTime={}", lastPipelineUpdateTime);
+            log.warn("Cannot find any pipelineDefinitions, lastPipelineUpdateTime={}", lastUpdateTime);
             return;
         }
 
@@ -213,12 +207,11 @@ public class DefaultPipelineRepository implements PipelineRepository {
 
         for (PipelineDefinition pd : pipelineDefinitions) {
             if (pd.isRemoved()) {
-
-                // 如果Phase是不能重用的，那么存在内存泄漏问题
+                // 如果Phase是不能重用的，那么删除Pipeline的同时需要删除Phase，否则存在内存泄漏问题
                 this.remove(pd.getPipelineId());
             } else {
                 Pipeline pipeline = pipelineFactory.create(pd);
-                this.add(pipeline);
+                this.save(pipeline);
                 refreshPhases(pd.getPhaseDefinitions());
             }
 
@@ -237,14 +230,12 @@ public class DefaultPipelineRepository implements PipelineRepository {
     }
 
     private void resetLastPipelineUpdateTime(List<PipelineDefinition> pipelineDefinitions) {
-        long max = this.lastPipelineUpdateTime;
         for (PipelineDefinition pipelineDefinition : pipelineDefinitions) {
-            if (pipelineDefinition.getUpdateTime() > max) {
-                max = pipelineDefinition.getUpdateTime();
+            if (pipelineDefinition.getUpdateTime() > this.lastUpdateTime) {
+                lastUpdateTime = pipelineDefinition.getUpdateTime();
             }
         }
 
-        this.lastPipelineUpdateTime = max;
     }
 
     private void refreshPhases(List<PhaseDefinition> phaseDefinitions) {
@@ -258,7 +249,7 @@ public class DefaultPipelineRepository implements PipelineRepository {
                 phaseRepository.remove(phaseDefinition.getPhaseId());
             } else {
                 Phase phase = this.phaseFactory.create(phaseDefinition);
-                this.phaseRepository.add(phase);
+                this.phaseRepository.save(phase);
                 refreshSteps(phaseDefinition.getStepDefinitions());
             }
         }
@@ -277,7 +268,7 @@ public class DefaultPipelineRepository implements PipelineRepository {
                 stepRepository.remove(stepDefinition.getStepId());
             } else {
                 Step step = this.stepFactory.create(stepDefinition);
-                this.stepRepository.add(step);
+                this.stepRepository.save(step);
             }
 
         }
@@ -359,5 +350,13 @@ public class DefaultPipelineRepository implements PipelineRepository {
 
     public void setScheduledExecutorService(ScheduledExecutorService scheduledExecutorService) {
         this.scheduledExecutorService = scheduledExecutorService;
+    }
+
+    public ExecutorFactory getExecutorFactory() {
+        return executorFactory;
+    }
+
+    public void setExecutorFactory(ExecutorFactory executorFactory) {
+        this.executorFactory = executorFactory;
     }
 }

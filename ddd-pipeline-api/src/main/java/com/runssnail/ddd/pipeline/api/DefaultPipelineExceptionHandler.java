@@ -4,6 +4,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.pipeline.api.json.Json;
 
 /**
@@ -21,7 +22,15 @@ public class DefaultPipelineExceptionHandler implements PipelineExceptionHandler
     public void onException(Exchange exchange, Throwable t) {
         printLog(exchange, t);
         exchange.setThrowable(t);
+        setErrorCode(exchange, t);
+    }
+
+    private void setErrorCode(Exchange exchange, Throwable t) {
+        exchange.setErrorMsg(BasicErrorCode.SYS_ERROR.getErrorMsg());
+        exchange.setErrorCode(BasicErrorCode.SYS_ERROR.getErrorCode());
+
         // todo 设置错误码
+
     }
 
     private void printLog(Exchange exchange, Throwable t) {
@@ -35,8 +44,8 @@ public class DefaultPipelineExceptionHandler implements PipelineExceptionHandler
 
         String format = "execute pipeline error(%s), request=%s, result=%s, exceptionMsg=%s";
         String requestString = json.toJson(exchange.getRequestBody());
-        String responseString = json.toJson(exchange.getResponseBody());
-        String msg = String.format(format, simpleName, requestString, responseString, rootCauseMessage);
+        String body = json.toJson(exchange.getBody());
+        String msg = String.format(format, simpleName, requestString, body, rootCauseMessage);
         return msg;
     }
 }

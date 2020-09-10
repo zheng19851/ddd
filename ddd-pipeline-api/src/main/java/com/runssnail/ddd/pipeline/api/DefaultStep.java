@@ -1,7 +1,4 @@
-package com.runssnail.ddd.pipeline.simple;
-
-import com.runssnail.ddd.pipeline.api.BaseStep;
-import com.runssnail.ddd.pipeline.api.Exchange;
+package com.runssnail.ddd.pipeline.api;
 
 /**
  * 默认的步骤执行对象

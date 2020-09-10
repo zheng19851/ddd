@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface PhaseRepository {
+public interface PhaseRepository extends Lifecycle {
 
     /**
      * 阶段执行对象
@@ -26,25 +26,18 @@ public interface PhaseRepository {
     Phase getPhase(String phaseId);
 
     /**
-     * 更新
+     * 保存
      *
      * @param phase 阶段执行对象
      */
-    void update(Phase phase);
+    void save(Phase phase);
 
     /**
-     * 添加
-     *
-     * @param phase 阶段执行对象
-     */
-    void add(Phase phase);
-
-    /**
-     * 添加
+     * 保存
      *
      * @param phases 阶段执行对象
      */
-    void addAll(List<Phase> phases);
+    void saveAll(List<Phase> phases);
 
     /**
      * 删除

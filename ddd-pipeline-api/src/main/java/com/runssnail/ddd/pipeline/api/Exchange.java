@@ -1,6 +1,6 @@
 package com.runssnail.ddd.pipeline.api;
 
-import java.util.HashMap;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -9,100 +9,58 @@ import java.util.Map;
  *
  * @author zhengwei
  */
-public class Exchange {
+public interface Exchange extends Serializable {
 
     /**
-     * 流程名称（唯一标识）
-     */
-    private String pipelineId;
-
-    /**
-     * 扩展属性，可以保存执行过程中间数据
-     */
-    private Map<String, Object> attributes = new HashMap<>();
-
-    /**
-     * 请求数据
-     */
-    private Object requestBody;
-
-    /**
-     * 响应数据
-     */
-    private Object responseBody;
-
-    /**
-     * 异常
-     */
-    private Throwable throwable;
-
-    public boolean isSuccess() {
-        return throwable == null;
-    }
-
-    public int getErrorCode() {
-        // todo 待实现
-        return 1;
-    }
-
-    public String getErrorMsg() {
-        // todo 待实现
-        return null;
-    }
-
-    /**
-     * @param name
-     * @param value
-     */
-    public void setAttribute(String name, Object value) {
-        attributes.put(name, value);
-    }
-
-    /**
-     * @param name
+     * 是否成功
+     *
      * @return
      */
-    public Object getAttribute(String name) {
-        return this.attributes.get(name);
-    }
+    boolean isSuccess();
 
-    public String getPipelineId() {
-        return pipelineId;
-    }
+    int getErrorCode();
 
-    public void setPipelineId(String pipelineId) {
-        this.pipelineId = pipelineId;
-    }
+    void setErrorCode(int errorCode);
 
-    public Map<String, Object> getAttributes() {
-        return attributes;
-    }
+    String getErrorMsg();
 
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
-    }
+    void setErrorMsg(String errorMsg);
 
-    public Object getRequestBody() {
-        return requestBody;
-    }
+    /**
+     * 属性
+     *
+     * @param name  属性名
+     * @param value 属性值
+     */
+    void setAttribute(String name, Object value);
 
-    public void setRequestBody(Object requestBody) {
-        this.requestBody = requestBody;
-    }
+    /**
+     * 属性值
+     *
+     * @param name 属性名
+     * @return
+     */
+    Object getAttribute(String name);
 
-    public Object getResponseBody() {
-        return responseBody;
-    }
+    /**
+     * 流程唯一标识
+     *
+     * @return
+     */
+    String getPipelineId();
 
-    public void setResponseBody(Object responseBody) {
-        this.responseBody = responseBody;
-    }
+    Map<String, Object> getAttributes();
 
-    public Throwable getThrowable() {
-        return throwable;
-    }
+    Object getRequestBody();
 
-    public void setThrowable(Throwable throwable) {
-        this.throwable = throwable;
-    }
+    void setRequestBody(Object requestBody);
+
+    Object getBody();
+
+    void setBody(Object body);
+
+    Throwable getThrowable();
+
+    void setThrowable(Throwable throwable);
+
 }

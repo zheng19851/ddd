@@ -7,7 +7,7 @@ import java.util.List;
  *
  * @author zhengwei
  */
-public interface StepRepository {
+public interface StepRepository extends Lifecycle {
 
     /**
      * 步骤执行对象
@@ -26,25 +26,18 @@ public interface StepRepository {
     Step getStep(String stepId);
 
     /**
-     * 更新
+     * 保存
      *
      * @param step 步骤执行对象
      */
-    void update(Step step);
+    void save(Step step);
 
     /**
-     * 添加
-     *
-     * @param step 步骤执行对象
-     */
-    void add(Step step);
-
-    /**
-     * 添加
+     * 保存
      *
      * @param steps 步骤执行对象
      */
-    void addAll(List<Step> steps);
+    void saveAll(List<Step> steps);
 
     /**
      * 删除
