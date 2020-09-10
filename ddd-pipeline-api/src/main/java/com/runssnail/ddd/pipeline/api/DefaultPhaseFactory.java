@@ -39,7 +39,7 @@ public class DefaultPhaseFactory implements PhaseFactory {
     }
 
     private ExecutorService createExecutor(PhaseDefinition pd) {
-        return executorFactory.create(pd.getCorePoolSize(), pd.getMaxPoolSize(), pd.getQueue(), pd.getQueueSize(), "Phase");
+        return executorFactory.create(pd.getCorePoolSize(), pd.getMaxPoolSize(), pd.getQueue(), pd.getQueueSize(), "PhaseExecutor");
     }
 
     public StepRepository getStepRepository() {

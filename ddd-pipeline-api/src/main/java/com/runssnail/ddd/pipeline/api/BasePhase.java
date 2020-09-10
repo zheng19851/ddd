@@ -67,6 +67,14 @@ public abstract class BasePhase implements Phase {
     public BasePhase() {
     }
 
+    /**
+     * 创建阶段
+     *
+     * @param phaseId        阶段唯一标识
+     * @param steps          步骤标识
+     * @param parallel       是否支持并行
+     * @param stepRepository 步骤仓储
+     */
     public BasePhase(String phaseId, List<String> steps, boolean parallel, StepRepository stepRepository) {
         Validate.notBlank(phaseId);
         Validate.notEmpty(steps);

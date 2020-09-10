@@ -49,6 +49,11 @@ public interface Exchange extends Serializable {
      */
     String getPipelineId();
 
+    /**
+     * 属性
+     *
+     * @return
+     */
     Map<String, Object> getAttributes();
 
     Object getRequestBody();

@@ -1,10 +1,14 @@
 package com.runssnail.ddd.pipeline.api;
 
+import java.net.SocketTimeoutException;
+import java.util.concurrent.TimeoutException;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.common.exception.BasicErrorCode;
+import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 import com.runssnail.ddd.pipeline.api.json.Json;
 
 /**
@@ -29,7 +33,24 @@ public class DefaultPipelineExceptionHandler implements PipelineExceptionHandler
         exchange.setErrorMsg(BasicErrorCode.SYS_ERROR.getErrorMsg());
         exchange.setErrorCode(BasicErrorCode.SYS_ERROR.getErrorCode());
 
-        // todo 设置错误码
+        Throwable rootCause = ExceptionUtils.getRootCause(t);
+        if (rootCause instanceof IllegalArgumentException) {
+            exchange.setErrorCode(BasicErrorCode.PARAMS_ERROR.getErrorCode());
+            exchange.setErrorMsg(rootCause.getMessage());
+        } else if (rootCause instanceof ExecuteException) {
+            ExecuteException e = (ExecuteException) rootCause;
+            exchange.setErrorCode(e.getErrorCode());
+            exchange.setErrorMsg(e.getErrorMsg());
+        } else if (rootCause instanceof TimeoutException) {
+            exchange.setErrorCode(BasicErrorCode.TIMEOUT.getErrorCode());
+            exchange.setErrorMsg(BasicErrorCode.TIMEOUT.getErrorMsg());
+        } else if (rootCause instanceof SocketTimeoutException) {
+            exchange.setErrorCode(BasicErrorCode.SOCKET_TIMEOUT.getErrorCode());
+            exchange.setErrorMsg(BasicErrorCode.SOCKET_TIMEOUT.getErrorMsg());
+        } else {
+            exchange.setErrorCode(BasicErrorCode.SYS_ERROR.getErrorCode());
+            exchange.setErrorMsg(BasicErrorCode.SYS_ERROR.getErrorMsg());
+        }
 
     }
 
@@ -47,5 +68,13 @@ public class DefaultPipelineExceptionHandler implements PipelineExceptionHandler
         String body = json.toJson(exchange.getBody());
         String msg = String.format(format, simpleName, requestString, body, rootCauseMessage);
         return msg;
+    }
+
+    public Json getJson() {
+        return json;
+    }
+
+    public void setJson(Json json) {
+        this.json = json;
     }
 }

@@ -19,6 +19,13 @@ public enum BasicErrorCode implements ErrorCode {
     SYS_ERROR(500, "system.error"),
 
     /**
+     * 超时
+     */
+    TIMEOUT(504, "timeout"),
+
+    SOCKET_TIMEOUT(50402, "timeout.socket"),
+
+    /**
      * 并发冲突（数据已过期）
      */
     CONCURRENCY_CONFLICT(600, "concurrency.conflict"),

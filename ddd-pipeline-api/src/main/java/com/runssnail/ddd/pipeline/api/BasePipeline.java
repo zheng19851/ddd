@@ -11,6 +11,22 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  */
 public abstract class BasePipeline implements Pipeline {
 
+
+    /**
+     * 流程唯一标识
+     */
+    protected String pipelineId;
+
+    /**
+     * 阶段唯一标识
+     */
+    protected List<String> phases;
+
+    /**
+     *
+     */
+    protected PhaseRepository phaseRepository;
+
     /**
      * Default constructor
      */
@@ -18,20 +34,12 @@ public abstract class BasePipeline implements Pipeline {
     }
 
     /**
-     * 流程唯一标识
-     */
-    private String pipelineId;
-
-    /**
-     * 阶段唯一标识
-     */
-    private List<String> phases;
-
-    /**
+     * 创建流程执行对象
      *
+     * @param pipelineId      流程唯一标识
+     * @param phases          阶段标识
+     * @param phaseRepository 阶段仓储
      */
-    private PhaseRepository phaseRepository;
-
     public BasePipeline(String pipelineId, List<String> phases, PhaseRepository phaseRepository) {
         Validate.notBlank(pipelineId);
         Validate.notEmpty(phases);
