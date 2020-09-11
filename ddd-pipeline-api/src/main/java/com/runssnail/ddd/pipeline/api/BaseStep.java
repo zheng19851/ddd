@@ -23,6 +23,8 @@ public abstract class BaseStep implements Step {
      */
     protected long timeout;
 
+    protected StepErrorHandler stepErrorHandler;
+
     /**
      * 拦截器
      */
@@ -48,9 +50,13 @@ public abstract class BaseStep implements Step {
      */
     @Override
     public void execute(Exchange exchange) {
-        beforeExecuteIfNecessary(exchange);
-        this.doExecute(exchange);
-        afterExecuteIfNecessary(exchange);
+        try {
+            beforeExecuteIfNecessary(exchange);
+            this.doExecute(exchange);
+            afterExecuteIfNecessary(exchange);
+        } catch (Exception e) {
+            this.stepErrorHandler.onException(exchange.getPipelineId(), this, exchange, e);
+        }
     }
 
     protected void afterExecuteIfNecessary(Exchange exchange) {
@@ -84,6 +90,31 @@ public abstract class BaseStep implements Step {
      * @throws ExecuteException
      */
     protected abstract void doExecute(Exchange exchange) throws ExecuteException;
+
+    @Override
+    public StepErrorHandler getStepErrorHandler() {
+        return this.stepErrorHandler;
+    }
+
+    @Override
+    public void init() {
+        initErrorHandler();
+    }
+
+    private void initErrorHandler() {
+        if (this.stepErrorHandler == null) {
+            this.stepErrorHandler = new DefaultStepErrorHandler();
+        }
+    }
+
+    @Override
+    public void close() {
+
+    }
+
+    public void setStepErrorHandler(StepErrorHandler stepErrorHandler) {
+        this.stepErrorHandler = stepErrorHandler;
+    }
 
     public void setStepId(String stepId) {
         this.stepId = stepId;

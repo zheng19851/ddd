@@ -6,7 +6,7 @@ package com.runssnail.ddd.pipeline.api;
  * @author zhengwei
  * Created on 2020-09-08
  */
-public interface PipelineExceptionHandler {
+public interface PipelineErrorHandler {
 
     /**
      * 处理异常

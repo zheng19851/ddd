@@ -7,7 +7,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  *
  * @author zhengwei
  */
-public interface Step {
+public interface Step extends Lifecycle {
 
     /**
      * 执行步骤
@@ -23,5 +23,12 @@ public interface Step {
      * @return 唯一标识
      */
     String getStepId();
+
+    /**
+     * 步骤错误处理器
+     *
+     * @return
+     */
+    StepErrorHandler getStepErrorHandler();
 
 }

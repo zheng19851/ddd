@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -15,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
-import com.runssnail.ddd.pipeline.api.exception.PhaseExecuteException;
 
 /**
  * 阶段
@@ -23,7 +21,6 @@ import com.runssnail.ddd.pipeline.api.exception.PhaseExecuteException;
  * @author zhengwei
  */
 public abstract class BasePhase implements Phase {
-
     protected final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
@@ -45,6 +42,8 @@ public abstract class BasePhase implements Phase {
      * 超时，单位毫秒
      */
     protected long timeout;
+
+    protected PhaseErrorHandler phaseErrorHandler;
 
     /**
      * 线程池
@@ -133,6 +132,7 @@ public abstract class BasePhase implements Phase {
         for (Step step : steps) {
             tasks.add(() -> {
                 step.execute(exchange);
+                // 不需要返回什么数据
                 return null;
             });
         }
@@ -146,13 +146,9 @@ public abstract class BasePhase implements Phase {
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            //log.warn("Thread is Interrupted, exchange={}", exchange, e);
-            String msg = "Thread is Interrupted, pipeline:" + pipelineId + ", phase:" + this.phaseId + ", steps:" + this.steps;
-            throw new PhaseExecuteException(this.phaseId, msg, e);
+            this.phaseErrorHandler.onException(this, exchange, e);
         } catch (Exception e) {
-            //log.warn("Thread execute error, exchange={}", exchange, e);
-            String msg = "Thread execute error, pipeline:" + pipelineId + ", phase:" + this.phaseId + ", steps:" + this.steps;
-            throw new PhaseExecuteException(this.phaseId, msg, e);
+            this.phaseErrorHandler.onException(this, exchange, e);
         }
 
         if (CollectionUtils.isNotEmpty(futures)) {
@@ -160,31 +156,41 @@ public abstract class BasePhase implements Phase {
                 Future<Void> future = futures.get(i);
                 final Step step = steps.get(i);
                 final String stepId = step.getStepId();
-                //Exception stepException = null;
                 if (future.isDone() && !future.isCancelled()) {
                     String stepName = step.getClass().getCanonicalName();
                     try {
                         future.get();
                         log.debug("execute step end, pipeline:{}, phase:{}, step:{}({}), result:{}", pipelineId, this.phaseId, stepId,
                                 stepName, exchange.getBody());
-                    } catch (InterruptedException | ExecutionException e) {
-//                        log.warn("execute step error, pipeline:{}, phase:{}, step:{}",
-//                                exchange.getPipelineId(), this.phaseId, step.getClass().getCanonicalName(), e);
-                        String msg = "execute step error, pipeline:" + pipelineId + ", phase:" + this.phaseId + ", step:" + stepId + "(" + stepName + ")";
-                        throw new PhaseExecuteException(this.phaseId, msg, e);
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                        step.getStepErrorHandler().onException(this.phaseId, step, exchange, e);
                     } catch (Exception e) {
-                        String msg = "execute step error, pipeline:" + pipelineId + ", phase:" + this.phaseId + ", step:" + stepId + "(" + stepName + ")";
-//                        log.warn("execute step error, pipeline:{}, phase:{}, step:{}",
-//                                exchange.getPipelineId(), this.phaseId, step.getClass().getCanonicalName(), e);
-                        throw new PhaseExecuteException(this.phaseId, msg, e);
+                        step.getStepErrorHandler().onException(this.phaseId, step, exchange, e);
                     }
                 } else {
                     //stepException = executorExc != null ? executorExc : new CancellationException("task is cancelled");
 //                    log.warn("execute canceled, pipeline:{}, phase:{}", exchange.getPipelineId(), this.phaseId);
-                    throw new PhaseExecuteException(this.phaseId, "task is cancelled, pipeline:" + pipelineId + ", phase:" + this.phaseId + ", step:" + stepId);
+                    step.getStepErrorHandler().onException(this.phaseId, step, exchange, "step execute canceled");
                 }
             }
         }
+
+    }
+
+    @Override
+    public void init() {
+        initErrorHandler();
+    }
+
+    protected void initErrorHandler() {
+        if (this.phaseErrorHandler == null) {
+            this.phaseErrorHandler = new DefaultPhaseErrorHandler();
+        }
+    }
+
+    @Override
+    public void close() {
 
     }
 
@@ -200,6 +206,7 @@ public abstract class BasePhase implements Phase {
         this.phaseId = phaseId;
     }
 
+    @Override
     public List<String> getSteps() {
         return steps;
     }

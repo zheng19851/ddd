@@ -1,5 +1,7 @@
 package com.runssnail.ddd.pipeline.api;
 
+import java.util.List;
+
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 
 /**
@@ -7,7 +9,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  *
  * @author zhengwei
  */
-public interface Phase {
+public interface Phase extends Lifecycle {
 
     /**
      * 执行
@@ -23,6 +25,13 @@ public interface Phase {
      * @return 唯一标识
      */
     String getPhaseId();
+
+    /**
+     * 步骤唯一标识
+     *
+     * @return
+     */
+    List<String> getSteps();
 
     /**
      * 是否并行

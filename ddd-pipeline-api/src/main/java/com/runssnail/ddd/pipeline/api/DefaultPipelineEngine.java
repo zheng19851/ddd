@@ -20,7 +20,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
     /**
      * 流程异常处理器
      */
-    private PipelineExceptionHandler pipelineExceptionHandler;
+    private PipelineErrorHandler pipelineErrorHandler;
 
     /**
      *
@@ -51,8 +51,8 @@ public class DefaultPipelineEngine implements PipelineEngine {
     }
 
     private void initPipelineExceptionHandler() {
-        if (this.pipelineExceptionHandler == null) {
-            this.pipelineExceptionHandler = new DefaultPipelineExceptionHandler();
+        if (this.pipelineErrorHandler == null) {
+            this.pipelineErrorHandler = new DefaultPipelineErrorHandler();
         }
     }
 
@@ -70,7 +70,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
         try {
             pipeline.execute(exchange);
         } catch (Exception e) {
-            this.pipelineExceptionHandler.onException(exchange, e);
+            this.pipelineErrorHandler.onException(exchange, e);
         }
 
     }
@@ -95,12 +95,13 @@ public class DefaultPipelineEngine implements PipelineEngine {
     }
 
     @Override
-    public void setPipelineExceptionHandler(PipelineExceptionHandler handler) {
-        this.pipelineExceptionHandler = handler;
+    public void setPipelineErrorHandler(PipelineErrorHandler handler) {
+        this.pipelineErrorHandler = handler;
     }
 
-    public PipelineExceptionHandler getPipelineExceptionHandler() {
-        return pipelineExceptionHandler;
+    @Override
+    public PipelineErrorHandler getPipelineErrorHandler() {
+        return pipelineErrorHandler;
     }
 
     public PipelineRepository getPipelineRepository() {

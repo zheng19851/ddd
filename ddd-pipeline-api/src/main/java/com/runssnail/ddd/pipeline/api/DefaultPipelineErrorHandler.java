@@ -17,8 +17,8 @@ import com.runssnail.ddd.pipeline.api.json.Json;
  * @author zhengwei
  * Created on 2020-09-08
  */
-public class DefaultPipelineExceptionHandler implements PipelineExceptionHandler {
-    private final static Logger log = LoggerFactory.getLogger(DefaultPipelineExceptionHandler.class);
+public class DefaultPipelineErrorHandler implements PipelineErrorHandler {
+    private final static Logger log = LoggerFactory.getLogger(DefaultPipelineErrorHandler.class);
 
     private Json json;
 
