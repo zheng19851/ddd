@@ -9,7 +9,7 @@ import java.util.Map;
  *
  * @author zhengwei
  */
-public interface Exchange extends Serializable {
+public interface Exchange<T> extends Serializable {
 
     /**
      * 是否成功
@@ -77,16 +77,31 @@ public interface Exchange extends Serializable {
     Map<String, Object> getAttributes();
 
     /**
-     * 中间保存的数据
+     * 数据
      *
-     * @return
+     * @return 数据
      */
-    Object getBody();
+    T getBody();
 
-    void setBody(Object body);
+    /**
+     * 数据
+     *
+     * @param body 数据
+     */
+    void setBody(T body);
 
+    /**
+     * 异常
+     *
+     * @return 异常
+     */
     Throwable getThrowable();
 
+    /**
+     * 异常
+     *
+     * @param throwable 异常
+     */
     void setThrowable(Throwable throwable);
 
 }

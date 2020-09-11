@@ -3,6 +3,9 @@ package com.runssnail.ddd.pipeline.api;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 
@@ -12,6 +15,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  * @author zhengwei
  */
 public abstract class BaseStep implements Step {
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
      * 唯一标识
@@ -39,12 +43,24 @@ public abstract class BaseStep implements Step {
     public BaseStep() {
     }
 
+    /**
+     * 创建
+     *
+     * @param stepId       步骤唯一标识
+     * @param interceptors 拦截器
+     */
     public BaseStep(String stepId, List<Interceptor> interceptors) {
-        this.stepId = stepId;
+        this(stepId);
         this.interceptors = interceptors;
     }
 
+    /**
+     * 创建
+     *
+     * @param stepId 步骤唯一标识
+     */
     public BaseStep(String stepId) {
+        Validate.notBlank(stepId, "stepId is required");
         this.stepId = stepId;
     }
 
@@ -53,13 +69,17 @@ public abstract class BaseStep implements Step {
      */
     @Override
     public void execute(Exchange exchange) {
+        log.info("execute step start {}", this.stepId);
         try {
             beforeExecuteIfNecessary(exchange);
+            log.info("execute step start(doExecute) {}", this.stepId);
             this.doExecute(exchange);
+            log.info("execute step end(doExecute) {}", this.stepId);
             afterExecuteIfNecessary(exchange);
         } catch (Exception e) {
             this.stepErrorHandler.onException(exchange.getPipelineId(), this, exchange, e);
         }
+        log.info("execute step end {}", this.stepId);
     }
 
     protected void afterExecuteIfNecessary(Exchange exchange) {
@@ -101,10 +121,16 @@ public abstract class BaseStep implements Step {
 
     @Override
     public void init() {
+        log.info("init step start {}", this.stepId);
+        doInit();
+        log.info("init step end {}", this.stepId);
+    }
+
+    protected void doInit() {
         initErrorHandler();
     }
 
-    private void initErrorHandler() {
+    protected void initErrorHandler() {
         if (this.stepErrorHandler == null) {
             this.stepErrorHandler = new DefaultStepErrorHandler();
         }

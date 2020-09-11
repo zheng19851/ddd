@@ -11,7 +11,7 @@ import com.runssnail.ddd.common.exception.BasicErrorCode;
  *
  * @author zhengwei
  */
-public class DefaultExchange implements Exchange {
+public class DefaultExchange<T> implements Exchange<T> {
     private static final long serialVersionUID = 2409035761108469697L;
 
     /**
@@ -27,7 +27,7 @@ public class DefaultExchange implements Exchange {
     /**
      * 中间数据
      */
-    private Object body;
+    private T body;
 
     /**
      * 异常
@@ -90,12 +90,12 @@ public class DefaultExchange implements Exchange {
     }
 
     @Override
-    public Object getBody() {
+    public T getBody() {
         return body;
     }
 
     @Override
-    public void setBody(Object body) {
+    public void setBody(T body) {
         this.body = body;
     }
 

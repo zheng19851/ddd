@@ -3,6 +3,8 @@ package com.runssnail.ddd.pipeline.api;
 import java.util.List;
 
 import org.apache.commons.lang3.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 
@@ -10,7 +12,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  * @author zhengwei
  */
 public abstract class BasePipeline implements Pipeline {
-
+    protected final Logger log = LoggerFactory.getLogger(getClass());
 
     /**
      * 流程唯一标识
@@ -64,7 +66,9 @@ public abstract class BasePipeline implements Pipeline {
      */
     @Override
     public void execute(Exchange exchange) throws ExecuteException {
+        log.info("execute pipeline start {}", this.pipelineId);
         this.doExecute(exchange);
+        log.info("execute pipeline end {}", this.pipelineId);
     }
 
     /**

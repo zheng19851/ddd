@@ -73,8 +73,8 @@ public abstract class BasePhase implements Phase {
      * 创建阶段
      *
      * @param phaseId        阶段唯一标识
-     * @param steps          步骤标识
-     * @param parallel       是否支持并行
+     * @param steps          步骤唯一标识
+     * @param parallel       是否并行执行
      * @param stepRepository 步骤仓储
      */
     public BasePhase(String phaseId, List<String> steps, boolean parallel, StepRepository stepRepository) {

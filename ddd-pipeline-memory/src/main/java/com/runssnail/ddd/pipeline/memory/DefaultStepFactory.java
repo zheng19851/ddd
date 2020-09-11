@@ -15,7 +15,6 @@ import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
  *
  * @author zhengwei
  * Created on 2020-09-08
- * @see com.runssnail.ddd.pipeline.api.ParamMappingInterceptor
  * @see GrpcStep
  */
 public class DefaultStepFactory implements StepFactory {
@@ -28,7 +27,7 @@ public class DefaultStepFactory implements StepFactory {
     @Override
     public Step create(StepDefinition sd) throws StepDefinitionException {
 
-        // todo 后续可以优化成SPI机制
+        // todo 后续可以优化成SPI机制，key=type，value=具体的实现
         Step step = null;
         if ("grpc".equalsIgnoreCase(sd.getStepType())) {
             step = createGrpcStep(sd);
@@ -68,9 +67,7 @@ public class DefaultStepFactory implements StepFactory {
     }
 
     private List<Interceptor> createInterceptors(StepDefinition sd) {
-
-        // todo 根据参数映射创建拦截器
-
+        // 预留
         return null;
     }
 }

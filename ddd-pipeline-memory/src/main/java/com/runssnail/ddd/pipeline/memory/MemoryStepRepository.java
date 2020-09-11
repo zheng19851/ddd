@@ -35,7 +35,7 @@ public class MemoryStepRepository implements StepRepository {
     private long scheduledPeriod = DEFAULT_SCHEDULED_PERIOD;
 
     /**
-     *
+     * 步骤本地缓存
      */
     public ConcurrentMap<String, Step> steps = new ConcurrentHashMap<>();
 
@@ -152,8 +152,10 @@ public class MemoryStepRepository implements StepRepository {
     }
 
     private void refreshSteps() {
+        // 保存当前更新时间
+        long lastUpdateTime = this.lastUpdateTime;
         log.info("refreshSteps start, lastUpdateTime={}", lastUpdateTime);
-        List<StepDefinition> stepDefinitions = stepDefinitionRepository.getStepDefinitions(this.lastUpdateTime);
+        List<StepDefinition> stepDefinitions = stepDefinitionRepository.getStepDefinitions(lastUpdateTime);
         if (CollectionUtils.isEmpty(stepDefinitions)) {
             log.warn("refreshSteps skipped, cannot find any stepDefinitions, lastUpdateTime={}", lastUpdateTime);
             return;
@@ -173,7 +175,7 @@ public class MemoryStepRepository implements StepRepository {
             }
         }
 
-        log.info("refreshSteps end, find {} StepDefinition, {}", stepDefinitions.size(), stepDefinitions);
+        log.info("refreshSteps end, find {} StepDefinition, [{}->{}], {}", stepDefinitions.size(), lastUpdateTime, this.lastUpdateTime, stepDefinitions);
     }
 
     private void initRefreshThread() {

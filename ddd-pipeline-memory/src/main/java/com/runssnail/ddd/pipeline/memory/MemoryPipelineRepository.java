@@ -218,9 +218,11 @@ public class MemoryPipelineRepository implements PipelineRepository {
     }
 
     private void refreshPipelines(boolean onlyEnabled) {
-        List<PipelineDefinition> pipelineDefinitions = pipelineDefinitionRepository.getPipelineDefinitions(onlyEnabled, this.lastUpdateTime);
+        // 保存当前更新时间
+        long lastUpdateTime = this.lastUpdateTime;
+        List<PipelineDefinition> pipelineDefinitions = pipelineDefinitionRepository.getPipelineDefinitions(onlyEnabled, lastUpdateTime);
         if (CollectionUtils.isEmpty(pipelineDefinitions)) {
-            log.warn("Cannot find any pipelineDefinitions, lastPipelineUpdateTime={}", lastUpdateTime);
+            log.warn("Cannot find any pipelineDefinitions, lastUpdateTime={}", lastUpdateTime);
             return;
         }
 
@@ -244,7 +246,7 @@ public class MemoryPipelineRepository implements PipelineRepository {
         this.validate();
         resetLastPipelineUpdateTime(pipelineDefinitions);
 
-        log.info("refreshPipelines end, find {} PipelineDefinition, {}", pipelineDefinitions.size(), pipelineDefinitions);
+        log.info("refreshPipelines end, find {}, [{}->{}], {}", pipelineDefinitions.size(), lastUpdateTime, this.lastUpdateTime, pipelineDefinitions);
     }
 
     /**
@@ -268,6 +270,8 @@ public class MemoryPipelineRepository implements PipelineRepository {
             return;
         }
 
+        log.info("refreshPhases start, find {} PhaseDefinition", phaseDefinitions.size());
+
         for (PhaseDefinition phaseDefinition : phaseDefinitions) {
             if (phaseDefinition.isRemoved()) {
                 phaseRepository.remove(phaseDefinition.getPhaseId());
@@ -287,6 +291,8 @@ public class MemoryPipelineRepository implements PipelineRepository {
             return;
         }
 
+        log.info("refreshSteps start, find {} stepDefinitions", stepDefinitions.size());
+
         for (StepDefinition stepDefinition : stepDefinitions) {
             if (stepDefinition.isRemoved()) {
                 stepRepository.remove(stepDefinition.getStepId());
@@ -294,8 +300,8 @@ public class MemoryPipelineRepository implements PipelineRepository {
                 Step step = this.stepFactory.create(stepDefinition);
                 this.stepRepository.save(step);
             }
-
         }
+        log.info("refreshSteps end, find {} stepDefinitions", stepDefinitions.size());
     }
 
     /**

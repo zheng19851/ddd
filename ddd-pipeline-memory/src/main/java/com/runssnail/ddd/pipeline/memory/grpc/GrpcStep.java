@@ -1,5 +1,7 @@
 package com.runssnail.ddd.pipeline.memory.grpc;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.Validate;
 
 import com.runssnail.ddd.pipeline.api.BaseStep;
@@ -50,10 +52,14 @@ public class GrpcStep extends BaseStep {
     @Override
     protected void doExecute(Exchange exchange) throws ExecuteException {
 
-        // todo 根据参数映射，从上下文里获取对应的请求参数
+        // todo 根据参数映射，从上下文里获取对应的请求参数，并组装成gRPC请求参数
 
+        Map<String, Object> body = (Map<String, Object>) exchange.getBody();
 
-        // todo 调grpc服务
+        // todo 调gRPC服务
+
+        // 将grpc结果设置到上下文中
+
     }
 
     public String getBizDef() {
