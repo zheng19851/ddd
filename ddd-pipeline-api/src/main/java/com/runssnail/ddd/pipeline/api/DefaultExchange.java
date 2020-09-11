@@ -25,11 +25,6 @@ public class DefaultExchange implements Exchange {
     private Map<String, Object> attributes = new HashMap<>();
 
     /**
-     * 原始请求数据
-     */
-    private Object requestBody;
-
-    /**
      * 中间数据
      */
     private Object body;
@@ -92,16 +87,6 @@ public class DefaultExchange implements Exchange {
 
     public void setAttributes(Map<String, Object> attributes) {
         this.attributes = attributes;
-    }
-
-    @Override
-    public Object getRequestBody() {
-        return requestBody;
-    }
-
-    @Override
-    public void setRequestBody(Object requestBody) {
-        this.requestBody = requestBody;
     }
 
     @Override

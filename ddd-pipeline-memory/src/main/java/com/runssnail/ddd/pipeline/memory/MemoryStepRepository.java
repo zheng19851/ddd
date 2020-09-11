@@ -34,8 +34,14 @@ public class MemoryStepRepository implements StepRepository {
      */
     public ConcurrentMap<String, Step> steps = new ConcurrentHashMap<>();
 
+    /**
+     * 步骤定义仓储
+     */
     private StepDefinitionRepository stepDefinitionRepository;
 
+    /**
+     * 步骤执行对象工厂
+     */
     private StepFactory stepFactory;
 
     /**
@@ -43,6 +49,9 @@ public class MemoryStepRepository implements StepRepository {
      */
     private ScheduledExecutorService scheduledExecutorService;
 
+    /**
+     * 线程池创建工厂
+     */
     private ExecutorFactory executorFactory;
 
     /**
@@ -163,14 +172,16 @@ public class MemoryStepRepository implements StepRepository {
     }
 
     private void initRefreshThread() {
-        // todo 参数配置化，指定线程工厂
-        ScheduledExecutorService executor = this.executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshSteps");
+        if (this.scheduledExecutorService == null) {
+            // todo 参数配置化，指定线程工厂
+            ScheduledExecutorService executor = this.executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshSteps");
 
-        // 每隔一段时间去刷新
-        // todo period参数配置化
-        executor.scheduleAtFixedRate(new RefreshStepDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
-        this.scheduledExecutorService = executor;
-        log.info("initRefreshThread end");
+            // 每隔一段时间去刷新
+            // todo period参数配置化
+            executor.scheduleAtFixedRate(new RefreshStepDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
+            this.scheduledExecutorService = executor;
+            log.info("initRefreshThread end");
+        }
 
     }
 

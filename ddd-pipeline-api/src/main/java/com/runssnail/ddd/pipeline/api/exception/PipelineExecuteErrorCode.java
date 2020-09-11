@@ -13,7 +13,7 @@ public enum PipelineExecuteErrorCode implements ErrorCode {
     /**
      * 不存在
      */
-    PIPELINE_NOT_EXISTS(10000, "流程不存在");
+    PIPELINE_NOT_EXISTS(40000, "流程不存在");
 
     private int errorCode;
 

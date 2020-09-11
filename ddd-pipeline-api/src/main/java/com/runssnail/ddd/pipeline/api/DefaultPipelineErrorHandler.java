@@ -63,10 +63,9 @@ public class DefaultPipelineErrorHandler implements PipelineErrorHandler {
         String simpleName = rootCause.getClass().getSimpleName();
         String rootCauseMessage = ExceptionUtils.getMessage(rootCause);
 
-        String format = "execute pipeline error(%s), request=%s, result=%s, exceptionMsg=%s";
-        String requestString = json.toJson(exchange.getRequestBody());
+        String format = "execute pipeline error(%s), result=%s, exceptionMsg=%s";
         String body = json.toJson(exchange.getBody());
-        String msg = String.format(format, simpleName, requestString, body, rootCauseMessage);
+        String msg = String.format(format, simpleName, body, rootCauseMessage);
         return msg;
     }
 

@@ -26,6 +26,12 @@
             <groupId>com.runssnail.ddd</groupId>
             <artifactId>ddd-pipeline-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.runssnail.ddd</groupId>
+            <artifactId>ddd-pipeline-definition-mysql</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 </project>

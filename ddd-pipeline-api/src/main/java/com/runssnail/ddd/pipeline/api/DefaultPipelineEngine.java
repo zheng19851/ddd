@@ -40,7 +40,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
     public void init() {
         Validate.notNull(this.pipelineRepository, "PipelineRepository is required");
 
-        initPipelineExceptionHandler();
+        initPipelineErrorHandler();
 
         log.info("pipeline engine init end");
     }
@@ -50,7 +50,7 @@ public class DefaultPipelineEngine implements PipelineEngine {
 
     }
 
-    private void initPipelineExceptionHandler() {
+    private void initPipelineErrorHandler() {
         if (this.pipelineErrorHandler == null) {
             this.pipelineErrorHandler = new DefaultPipelineErrorHandler();
         }

@@ -13,7 +13,7 @@ public class DefaultStepDefinition extends BaseDefinition implements StepDefinit
     private String stepId;
 
     /**
-     * 类型，grpc/http
+     * 类型，grpc/http/bean
      */
     private String stepType;
 

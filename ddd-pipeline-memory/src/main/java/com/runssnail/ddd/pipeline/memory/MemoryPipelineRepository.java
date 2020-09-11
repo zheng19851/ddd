@@ -53,16 +53,28 @@ public class MemoryPipelineRepository implements PipelineRepository {
     private PipelineDefinitionRepository pipelineDefinitionRepository;
 
     /**
-     *
+     * 流程工厂
      */
     private PipelineFactory pipelineFactory;
 
+    /**
+     * 阶段工厂
+     */
     private PhaseFactory phaseFactory;
 
+    /**
+     * 阶段仓储
+     */
     private PhaseRepository phaseRepository;
 
+    /**
+     * 步骤工厂
+     */
     private StepFactory stepFactory;
 
+    /**
+     * 阶段仓储
+     */
     private StepRepository stepRepository;
 
     /**
@@ -70,6 +82,9 @@ public class MemoryPipelineRepository implements PipelineRepository {
      */
     private ScheduledExecutorService scheduledExecutorService;
 
+    /**
+     * 线程创建工厂
+     */
     private ExecutorFactory executorFactory;
 
     /**
@@ -112,7 +127,7 @@ public class MemoryPipelineRepository implements PipelineRepository {
     }
 
     /**
-     * @param pipelineId
+     * @param pipelineId 流程唯一标识
      * @return
      */
     @Override
@@ -122,7 +137,7 @@ public class MemoryPipelineRepository implements PipelineRepository {
     }
 
     /**
-     * @param pipelineIds
+     * @param pipelineIds 流程唯一标识
      * @return
      */
     @Override
@@ -168,13 +183,18 @@ public class MemoryPipelineRepository implements PipelineRepository {
     }
 
     private void initRefreshPipelineDefinitionThread() {
-        // todo 参数配置化，指定线程工厂
-        ScheduledExecutorService executor = executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshPipeline");
 
-        // 每隔一段时间去刷新
-        // todo period参数配置化
-        executor.scheduleAtFixedRate(new RefreshPipelineDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
-        this.scheduledExecutorService = executor;
+        if (this.scheduledExecutorService == null) {
+            // todo 参数配置化，指定线程工厂
+            ScheduledExecutorService executor = executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshPipeline");
+
+            // 每隔一段时间去刷新
+            // todo period参数配置化
+            executor.scheduleAtFixedRate(new RefreshPipelineDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
+            this.scheduledExecutorService = executor;
+            log.info("init RefreshPipelineDefinitionThread end");
+        }
+
     }
 
     private class RefreshPipelineDefinitionTask implements Runnable {

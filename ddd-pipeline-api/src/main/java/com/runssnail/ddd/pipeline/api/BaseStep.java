@@ -23,6 +23,9 @@ public abstract class BaseStep implements Step {
      */
     protected long timeout;
 
+    /**
+     * 错误处理器
+     */
     protected StepErrorHandler stepErrorHandler;
 
     /**

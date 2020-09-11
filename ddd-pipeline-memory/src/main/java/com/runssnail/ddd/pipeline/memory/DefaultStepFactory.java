@@ -7,6 +7,7 @@ import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactory;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
+import com.runssnail.ddd.pipeline.memory.bean.BeanStep;
 import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
 
 /**
@@ -22,13 +23,19 @@ public class DefaultStepFactory implements StepFactory {
     /**
      * 默认的超时时间，单位毫秒
      */
-    public static final long DEFAULT_TIMEOUT = 3000;
+    public static final long DEFAULT_TIMEOUT = 5000;
 
     @Override
     public Step create(StepDefinition sd) throws StepDefinitionException {
         Step step = null;
         if ("grpc".equalsIgnoreCase(sd.getStepType())) {
             step = createGrpcStep(sd);
+        } else if ("bean".equalsIgnoreCase(sd.getStepType())) {
+            return createBeanStep(sd);
+        }
+
+        if (step != null) {
+            step.init();
         }
 
         if (step == null) {
@@ -39,14 +46,17 @@ public class DefaultStepFactory implements StepFactory {
         return step;
     }
 
+    private BeanStep createBeanStep(StepDefinition sd) {
+        BeanStep beanStep = new BeanStep(sd.getStepId());
+        return beanStep;
+    }
+
     private GrpcStep createGrpcStep(StepDefinition sd) {
         String fullName = sd.getAttribute("grpc.fullName");
         String method = sd.getAttribute("grpc.method");
         long timeout = sd.getAttrLongValue("grpc.timeout", DEFAULT_TIMEOUT);
         GrpcStep grpcStep = new GrpcStep(sd.getStepId(), fullName, method);
         grpcStep.setTimeout(timeout);
-
-        // todo 设置参数映射配置
 
         List<Interceptor> interceptors = createInterceptors(sd);
         grpcStep.setInterceptors(interceptors);

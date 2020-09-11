@@ -56,10 +56,11 @@ public interface Exchange extends Serializable {
      */
     Map<String, Object> getAttributes();
 
-    Object getRequestBody();
-
-    void setRequestBody(Object requestBody);
-
+    /**
+     * 中间保存的数据
+     *
+     * @return
+     */
     Object getBody();
 
     void setBody(Object body);
