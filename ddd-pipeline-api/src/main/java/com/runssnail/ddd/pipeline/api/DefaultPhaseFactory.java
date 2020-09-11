@@ -14,15 +14,21 @@ import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
  */
 public class DefaultPhaseFactory implements PhaseFactory {
 
+    /**
+     * 步骤仓储
+     */
     private StepRepository stepRepository;
 
+    /**
+     * 线程池工厂
+     */
     private ExecutorFactory executorFactory;
 
     @Override
     public Phase create(PhaseDefinition pd) throws PhaseDefinitionException {
         DefaultPhase phase = new DefaultPhase(pd.getPhaseId(), pd.getSteps(), pd.isParallel(), this.stepRepository);
+        phase.setTimeout(pd.getTimeout());
         if (pd.isParallel()) {
-            phase.setTimeout(pd.getTimeout());
             ExecutorService executor = createExecutor(pd);
             phase.setExecutor(executor);
         }
@@ -39,7 +45,7 @@ public class DefaultPhaseFactory implements PhaseFactory {
     }
 
     private ExecutorService createExecutor(PhaseDefinition pd) {
-        return executorFactory.create(pd.getCorePoolSize(), pd.getMaxPoolSize(), pd.getQueue(), pd.getQueueSize(), "PhaseExecutor");
+        return executorFactory.create(pd.getCorePoolSize(), pd.getMaxPoolSize(), pd.getQueue(), pd.getQueueSize(), "Phase");
     }
 
     public StepRepository getStepRepository() {

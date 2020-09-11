@@ -7,7 +7,7 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
  *
  * @author zhengwei
  */
-public interface Pipeline {
+public interface Pipeline extends Lifecycle {
 
     /**
      * 执行流程

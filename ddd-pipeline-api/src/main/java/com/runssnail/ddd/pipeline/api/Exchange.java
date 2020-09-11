@@ -18,12 +18,32 @@ public interface Exchange extends Serializable {
      */
     boolean isSuccess();
 
+    /**
+     * 错误码
+     *
+     * @return
+     */
     int getErrorCode();
 
+    /**
+     * 错误码
+     *
+     * @param errorCode 错误码
+     */
     void setErrorCode(int errorCode);
 
+    /**
+     * 错误信息
+     *
+     * @return 错误信息
+     */
     String getErrorMsg();
 
+    /**
+     * 错误信息
+     *
+     * @param errorMsg 错误信息
+     */
     void setErrorMsg(String errorMsg);
 
     /**

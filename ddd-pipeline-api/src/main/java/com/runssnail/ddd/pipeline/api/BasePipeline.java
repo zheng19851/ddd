@@ -23,7 +23,7 @@ public abstract class BasePipeline implements Pipeline {
     protected List<String> phases;
 
     /**
-     *
+     * 阶段仓储
      */
     protected PhaseRepository phaseRepository;
 
@@ -47,6 +47,16 @@ public abstract class BasePipeline implements Pipeline {
         this.pipelineId = pipelineId;
         this.phases = phases;
         this.phaseRepository = phaseRepository;
+    }
+
+    @Override
+    public void init() {
+
+    }
+
+    @Override
+    public void close() {
+
     }
 
     /**
@@ -73,7 +83,5 @@ public abstract class BasePipeline implements Pipeline {
         for (Phase phase : phases) {
             phase.execute(exchange);
         }
-
     }
-
 }

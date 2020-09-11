@@ -1,5 +1,7 @@
 package com.runssnail.ddd.pipeline.memory;
 
+import static com.runssnail.ddd.pipeline.api.constant.Constants.DEFAULT_SCHEDULED_CORE_POOL_SIZE;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -39,8 +41,10 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 public class MemoryPipelineRepository implements PipelineRepository {
     private static final Logger log = LoggerFactory.getLogger(MemoryPipelineRepository.class);
 
-    private static final long DEFAULT_SCHEDULED_PERIOD = Constants.DEFAULT_SCHEDULED_PERIOD;
-    private static final int DEFAULT_CORE_POOL_SIZE = Constants.DEFAULT_CORE_POOL_SIZE;
+    /**
+     * 调度周期，单位毫秒
+     */
+    private long scheduledPeriod = Constants.DEFAULT_SCHEDULED_PERIOD;
 
     /**
      * key=pipelineId
@@ -185,12 +189,12 @@ public class MemoryPipelineRepository implements PipelineRepository {
     private void initRefreshPipelineDefinitionThread() {
 
         if (this.scheduledExecutorService == null) {
-            // todo 参数配置化，指定线程工厂
-            ScheduledExecutorService executor = executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshPipeline");
+            // todo 参数配置化
+            ScheduledExecutorService executor = executorFactory.createScheduled(DEFAULT_SCHEDULED_CORE_POOL_SIZE, "RefreshPipeline");
 
             // 每隔一段时间去刷新
             // todo period参数配置化
-            executor.scheduleAtFixedRate(new RefreshPipelineDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(new RefreshPipelineDefinitionTask(), scheduledPeriod, scheduledPeriod, TimeUnit.SECONDS);
             this.scheduledExecutorService = executor;
             log.info("init RefreshPipelineDefinitionThread end");
         }

@@ -1,6 +1,6 @@
 package com.runssnail.ddd.pipeline.memory;
 
-import static com.runssnail.ddd.pipeline.api.constant.Constants.DEFAULT_CORE_POOL_SIZE;
+import static com.runssnail.ddd.pipeline.api.constant.Constants.DEFAULT_SCHEDULED_CORE_POOL_SIZE;
 import static com.runssnail.ddd.pipeline.api.constant.Constants.DEFAULT_SCHEDULED_PERIOD;
 
 import java.util.ArrayList;
@@ -28,6 +28,11 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinitionRepository;
  */
 public class MemoryStepRepository implements StepRepository {
     private static final Logger log = LoggerFactory.getLogger(MemoryStepRepository.class);
+
+    /**
+     * 调度周期，单位毫秒
+     */
+    private long scheduledPeriod = DEFAULT_SCHEDULED_PERIOD;
 
     /**
      *
@@ -173,12 +178,12 @@ public class MemoryStepRepository implements StepRepository {
 
     private void initRefreshThread() {
         if (this.scheduledExecutorService == null) {
-            // todo 参数配置化，指定线程工厂
-            ScheduledExecutorService executor = this.executorFactory.createScheduled(DEFAULT_CORE_POOL_SIZE, "RefreshSteps");
+            // todo 参数配置化
+            ScheduledExecutorService executor = this.executorFactory.createScheduled(DEFAULT_SCHEDULED_CORE_POOL_SIZE, "RefreshSteps");
 
             // 每隔一段时间去刷新
             // todo period参数配置化
-            executor.scheduleAtFixedRate(new RefreshStepDefinitionTask(), DEFAULT_SCHEDULED_PERIOD, DEFAULT_SCHEDULED_PERIOD, TimeUnit.SECONDS);
+            executor.scheduleAtFixedRate(new RefreshStepDefinitionTask(), scheduledPeriod, scheduledPeriod, TimeUnit.SECONDS);
             this.scheduledExecutorService = executor;
             log.info("initRefreshThread end");
         }
@@ -234,5 +239,13 @@ public class MemoryStepRepository implements StepRepository {
 
     public void setExecutorFactory(ExecutorFactory executorFactory) {
         this.executorFactory = executorFactory;
+    }
+
+    public long getScheduledPeriod() {
+        return scheduledPeriod;
+    }
+
+    public void setScheduledPeriod(long scheduledPeriod) {
+        this.scheduledPeriod = scheduledPeriod;
     }
 }

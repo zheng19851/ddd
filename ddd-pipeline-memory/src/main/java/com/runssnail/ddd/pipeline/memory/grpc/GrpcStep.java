@@ -15,6 +15,11 @@ import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 public class GrpcStep extends BaseStep {
 
     /**
+     * 业务定义
+     */
+    private String bizDef;
+
+    /**
      * 包名+类名
      */
     private String fullName;
@@ -24,10 +29,20 @@ public class GrpcStep extends BaseStep {
      */
     private String method;
 
-    public GrpcStep(String stepId, String fullName, String method) {
+    /**
+     * 创建GrpcStep
+     *
+     * @param stepId   步骤唯一标识
+     * @param bizDef   业务定义
+     * @param fullName 报名/类名（这个是在proto里定义的）
+     * @param method   方法名
+     */
+    public GrpcStep(String stepId, String bizDef, String fullName, String method) {
         super(stepId);
+        Validate.notBlank(bizDef, "bizDef is required");
         Validate.notBlank(fullName, "fullName is required");
         Validate.notBlank(method, "method is required");
+        this.bizDef = bizDef;
         this.fullName = fullName;
         this.method = method;
     }
@@ -37,7 +52,16 @@ public class GrpcStep extends BaseStep {
 
         // todo 根据参数映射，从上下文里获取对应的请求参数
 
+
         // todo 调grpc服务
+    }
+
+    public String getBizDef() {
+        return bizDef;
+    }
+
+    public void setBizDef(String bizDef) {
+        this.bizDef = bizDef;
     }
 
     public String getFullName() {

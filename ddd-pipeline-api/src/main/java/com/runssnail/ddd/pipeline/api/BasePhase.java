@@ -43,6 +43,9 @@ public abstract class BasePhase implements Phase {
      */
     protected long timeout;
 
+    /**
+     * 异常处理器
+     */
     protected PhaseErrorHandler phaseErrorHandler;
 
     /**
@@ -51,7 +54,7 @@ public abstract class BasePhase implements Phase {
     protected ExecutorService executor;
 
     /**
-     *
+     * 步骤仓储
      */
     protected StepRepository stepRepository;
 
@@ -118,13 +121,24 @@ public abstract class BasePhase implements Phase {
         }
     }
 
-    private void doSerial(Exchange exchange) {
+    /**
+     * 串行执行
+     *
+     * @param exchange
+     */
+    private void doSerial(Exchange exchange) throws ExecuteException {
         List<Step> steps = stepRepository.getSteps(this.steps);
         for (Step step : steps) {
             step.execute(exchange);
         }
     }
 
+    /**
+     * 并行执行
+     *
+     * @param exchange
+     * @throws ExecuteException
+     */
     private void doParallel(Exchange exchange) throws ExecuteException {
         final String pipelineId = exchange.getPipelineId();
         List<Step> steps = stepRepository.getSteps(this.steps);
@@ -169,8 +183,6 @@ public abstract class BasePhase implements Phase {
                         step.getStepErrorHandler().onException(this.phaseId, step, exchange, e);
                     }
                 } else {
-                    //stepException = executorExc != null ? executorExc : new CancellationException("task is cancelled");
-//                    log.warn("execute canceled, pipeline:{}, phase:{}", exchange.getPipelineId(), this.phaseId);
                     step.getStepErrorHandler().onException(this.phaseId, step, exchange, "step execute canceled");
                 }
             }
@@ -180,6 +192,12 @@ public abstract class BasePhase implements Phase {
 
     @Override
     public void init() {
+        log.info("phase init start {}", this.phaseId);
+        doInit();
+        log.info("phase init end {}", this.phaseId);
+    }
+
+    protected void doInit() {
         initErrorHandler();
     }
 
@@ -191,7 +209,9 @@ public abstract class BasePhase implements Phase {
 
     @Override
     public void close() {
-
+        if (this.executor != null) {
+            this.executor.shutdown();
+        }
     }
 
     /**

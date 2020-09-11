@@ -27,6 +27,8 @@ public class DefaultStepFactory implements StepFactory {
 
     @Override
     public Step create(StepDefinition sd) throws StepDefinitionException {
+
+        // todo 后续可以优化成SPI机制
         Step step = null;
         if ("grpc".equalsIgnoreCase(sd.getStepType())) {
             step = createGrpcStep(sd);
@@ -39,7 +41,7 @@ public class DefaultStepFactory implements StepFactory {
         }
 
         if (step == null) {
-            String msg = "create Step fail, stepId=" + sd.getStepId() + ", type=" + sd.getStepType();
+            String msg = "create Step fail(type unsupported), stepId=" + sd.getStepId() + ", type=" + sd.getStepType();
             throw new StepDefinitionException(sd.getStepId(), msg);
         }
 
@@ -52,10 +54,11 @@ public class DefaultStepFactory implements StepFactory {
     }
 
     private GrpcStep createGrpcStep(StepDefinition sd) {
+        String bizDef = sd.getAttribute("grpc.bizDef");
         String fullName = sd.getAttribute("grpc.fullName");
         String method = sd.getAttribute("grpc.method");
         long timeout = sd.getAttrLongValue("grpc.timeout", DEFAULT_TIMEOUT);
-        GrpcStep grpcStep = new GrpcStep(sd.getStepId(), fullName, method);
+        GrpcStep grpcStep = new GrpcStep(sd.getStepId(), bizDef, fullName, method);
         grpcStep.setTimeout(timeout);
 
         List<Interceptor> interceptors = createInterceptors(sd);

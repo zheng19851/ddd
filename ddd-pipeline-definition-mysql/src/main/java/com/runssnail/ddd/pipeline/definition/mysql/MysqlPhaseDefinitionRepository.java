@@ -8,7 +8,7 @@ import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 /**
  * 阶段定义
  *
- * @author zhengwei <zhengwei03@kuaishou.com>
+ * @author zhengwei
  * Created on 2020-09-10
  */
 public class MysqlPhaseDefinitionRepository extends BasePhaseDefinitionRepository {
