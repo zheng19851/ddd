@@ -77,6 +77,22 @@ public interface Exchange<T> extends Serializable {
     Map<String, Object> getAttributes();
 
     /**
+     * 原始请求数据
+     *
+     * @return 原始请求数据
+     */
+    Map<String, Object> getRequest();
+
+    /**
+     * 从body or request or attribute 中获取name对应的值
+     * 优先级 body > request > attribute
+     *
+     * @param name 属性名
+     * @return 属性值
+     */
+    Object getValue(String name);
+
+    /**
      * 数据
      *
      * @return 数据

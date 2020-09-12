@@ -58,7 +58,10 @@ public class DefaultPipelineEngine implements PipelineEngine {
 
     @Override
     public void execute(Exchange exchange) {
-        Validate.notNull(exchange, "Exchange is required");
+        Validate.notNull(exchange, "exchange is required");
+        Validate.notBlank(exchange.getPipelineId(), "exchange.pipelineId is required");
+        Validate.notNull(exchange.getBody(), "exchange.body is required");
+
         Pipeline pipeline = this.getPipeline(exchange.getPipelineId());
         if (pipeline == null) {
             log.warn("cannot find the Pipeline {}", exchange.getPipelineId());

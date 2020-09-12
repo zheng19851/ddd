@@ -5,6 +5,8 @@ import com.runssnail.ddd.pipeline.api.Exchange;
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 
 /**
+ * BeanStep
+ *
  * @author zhengwei
  * Created on 2020-09-11
  */
@@ -17,5 +19,6 @@ public class BeanStep extends BaseStep {
     @Override
     protected void doExecute(Exchange exchange) throws ExecuteException {
         System.out.println("bean test");
+        exchange.setAttribute("tag", "bean");
     }
 }

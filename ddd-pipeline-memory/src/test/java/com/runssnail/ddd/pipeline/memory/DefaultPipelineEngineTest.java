@@ -1,7 +1,8 @@
 package com.runssnail.ddd.pipeline.memory;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.junit.Test;
 
@@ -34,14 +35,19 @@ public class DefaultPipelineEngineTest {
 
         DefaultExchange exchange = new DefaultExchange();
         exchange.setPipelineId("test123");
-        Map<String, Object> body = new HashMap<>();
+        ConcurrentMap<String, Object> body = new ConcurrentHashMap<>();
         body.put("name", "zw");
         exchange.setBody(body);
         pipelineEngine.execute(exchange);
 
-        System.out.println(exchange.getErrorCode());
-        System.out.println(exchange.getBody());
+        Map<String, Object> response = exchange.getBody();
 
+        System.out.println(exchange.getErrorCode());
+        System.out.println(exchange.getAttributes());
+        System.out.println(response);
+
+        assert response.containsKey("name");
+        assert "zw".equalsIgnoreCase(response.get("name").toString());
         pipelineEngine.close();
     }
 
