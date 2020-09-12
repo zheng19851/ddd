@@ -13,9 +13,10 @@ public interface TerminateStrategyFactory {
     /**
      * 创建中断策略
      *
-     * @param strategy 策略
+     * @param strategy 策略 {@link TerminateStrategyEnum}
      * @return 中断策略
      * @throws PipelineDefinitionException
+     * @see TerminateStrategyEnum
      */
     TerminateStrategy create(String strategy) throws PipelineDefinitionException;
 }

@@ -1,5 +1,9 @@
 package com.runssnail.ddd.pipeline.api.terminate;
 
+import static com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyEnum.ABORT;
+import static com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyEnum.LOGGING;
+import static com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyEnum.values;
+
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 
 /**
@@ -11,10 +15,14 @@ import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 public class DefaultTerminateStrategyFactory implements TerminateStrategyFactory {
     @Override
     public TerminateStrategy create(String strategy) throws PipelineDefinitionException {
-        if ("abort".equalsIgnoreCase(strategy)) {
+        if (ABORT.name().equalsIgnoreCase(strategy)) {
             return new AbortTerminateStrategy();
         }
 
-        throw new PipelineDefinitionException("terminate strategy is unsupported '" + strategy + "'");
+        if (LOGGING.name().equalsIgnoreCase(strategy)) {
+            return new LoggingTerminateStrategy();
+        }
+
+        throw new PipelineDefinitionException("terminate strategy is unsupported '" + strategy + "', use " + values());
     }
 }
