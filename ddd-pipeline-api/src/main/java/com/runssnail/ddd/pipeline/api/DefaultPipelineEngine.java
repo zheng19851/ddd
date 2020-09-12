@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.PipelineExecuteErrorCode;
+import com.runssnail.ddd.pipeline.api.terminate.AbortTerminateStrategy;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 
@@ -24,9 +25,14 @@ public class DefaultPipelineEngine implements PipelineEngine {
     private PipelineErrorHandler pipelineErrorHandler;
 
     /**
-     *
+     * 流程执行对象仓储
      */
     private PipelineRepository pipelineRepository;
+
+    /**
+     * 中断策略
+     */
+    private TerminateStrategy terminateStrategy;
 
     /**
      * Default constructor
@@ -42,8 +48,15 @@ public class DefaultPipelineEngine implements PipelineEngine {
         Validate.notNull(this.pipelineRepository, "PipelineRepository is required");
 
         initPipelineErrorHandler();
+        initTerminateStrategy();
 
         log.info("pipeline engine init end");
+    }
+
+    private void initTerminateStrategy() {
+        if (this.terminateStrategy == null) {
+            this.terminateStrategy = new AbortTerminateStrategy();
+        }
     }
 
     @Override
@@ -71,16 +84,29 @@ public class DefaultPipelineEngine implements PipelineEngine {
             return;
         }
 
-        TerminateStrategy terminateStrategy = pipeline.getTerminateStrategy();
-        if (terminateStrategy != null) {
-            exchange.setTerminateStrategy(terminateStrategy);
-        }
+        TerminateStrategy terminateStrategy = resolveTerminateStrategy(pipeline);
+        exchange.setTerminateStrategy(terminateStrategy);
         try {
             pipeline.execute(exchange);
         } catch (Exception e) {
             this.pipelineErrorHandler.onException(exchange, e);
         }
 
+    }
+
+    /**
+     * 决定使用哪个TerminateStrategy
+     *
+     * @param pipeline 流程执行对象
+     * @return
+     */
+    private TerminateStrategy resolveTerminateStrategy(Pipeline pipeline) {
+        TerminateStrategy terminateStrategy = pipeline.getTerminateStrategy();
+        if (terminateStrategy != null) {
+            return terminateStrategy;
+        }
+
+        return this.terminateStrategy;
     }
 
     /**
@@ -118,5 +144,13 @@ public class DefaultPipelineEngine implements PipelineEngine {
 
     public void setPipelineRepository(PipelineRepository pipelineRepository) {
         this.pipelineRepository = pipelineRepository;
+    }
+
+    public TerminateStrategy getTerminateStrategy() {
+        return terminateStrategy;
+    }
+
+    public void setTerminateStrategy(TerminateStrategy terminateStrategy) {
+        this.terminateStrategy = terminateStrategy;
     }
 }

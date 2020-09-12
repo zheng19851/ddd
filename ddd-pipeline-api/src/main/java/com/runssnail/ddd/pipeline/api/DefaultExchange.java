@@ -8,7 +8,6 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.lang3.Validate;
 
 import com.runssnail.ddd.common.exception.BasicErrorCode;
-import com.runssnail.ddd.pipeline.api.terminate.AbortTerminateStrategy;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
@@ -176,13 +175,6 @@ public class DefaultExchange implements Exchange<ConcurrentMap<String, Object>> 
 
     @Override
     public void init() {
-        initTerminateStrategy();
-    }
-
-    private void initTerminateStrategy() {
-        if (this.terminateStrategy == null) {
-            this.terminateStrategy = new AbortTerminateStrategy();
-        }
     }
 
     @Override
