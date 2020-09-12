@@ -70,6 +70,7 @@ public abstract class BaseStep implements Step {
     @Override
     public void execute(Exchange exchange) {
         log.info("execute step start {}", this.stepId);
+        long start = System.currentTimeMillis();
         try {
             beforeExecuteIfNecessary(exchange);
             log.info("execute step start(doExecute) {}", this.stepId);
@@ -78,8 +79,9 @@ public abstract class BaseStep implements Step {
             afterExecuteIfNecessary(exchange);
         } catch (Exception e) {
             this.stepErrorHandler.onException(exchange.getPipelineId(), this, exchange, e);
+        } finally {
+            log.info("execute step end {}, cost {} ms", this.stepId, (System.currentTimeMillis() - start));
         }
-        log.info("execute step end {}", this.stepId);
     }
 
     protected void afterExecuteIfNecessary(Exchange exchange) {

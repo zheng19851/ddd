@@ -8,7 +8,7 @@ import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
  *
  * @author zhengwei
  */
-public interface PipelineFactory {
+public interface PipelineFactory extends Lifecycle {
 
     /**
      * 创建运行域流程执行对象

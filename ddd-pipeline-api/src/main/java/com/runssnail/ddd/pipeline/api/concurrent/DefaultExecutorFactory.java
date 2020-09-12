@@ -1,4 +1,4 @@
-package com.runssnail.ddd.pipeline.api;
+package com.runssnail.ddd.pipeline.api.concurrent;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -12,8 +12,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.runssnail.ddd.pipeline.api.concurrent.NamedThreadFactory;
 
 /**
  * 默认的线程池工厂

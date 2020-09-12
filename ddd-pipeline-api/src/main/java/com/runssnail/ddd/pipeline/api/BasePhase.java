@@ -92,9 +92,16 @@ public abstract class BasePhase implements Phase {
      */
     @Override
     public void execute(Exchange exchange) throws ExecuteException {
-        beforeExecuteIfNecessary(exchange);
-        doExecute(exchange);
-        afterExecuteIfNecessary(exchange);
+        log.info("execute phase start {}", this.phaseId);
+        long start = System.currentTimeMillis();
+        try {
+            beforeExecuteIfNecessary(exchange);
+            doExecute(exchange);
+            afterExecuteIfNecessary(exchange);
+        } finally {
+            log.info("execute phase start {}, cost {} ms", this.phaseId, (System.currentTimeMillis() - start));
+        }
+
     }
 
     protected void afterExecuteIfNecessary(Exchange exchange) {

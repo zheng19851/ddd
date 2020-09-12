@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.PipelineExecuteErrorCode;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 
 /**
@@ -70,6 +71,10 @@ public class DefaultPipelineEngine implements PipelineEngine {
             return;
         }
 
+        TerminateStrategy terminateStrategy = pipeline.getTerminateStrategy();
+        if (terminateStrategy != null) {
+            exchange.setTerminateStrategy(terminateStrategy);
+        }
         try {
             pipeline.execute(exchange);
         } catch (Exception e) {

@@ -20,8 +20,8 @@ public class DefaultStepErrorHandler implements StepErrorHandler {
         String stepName = step.getClass().getCanonicalName();
         String exceptionMsg = ExceptionUtils.getRootCauseMessage(t);
         String msg = exceptionMsg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", step:" + stepId + "(" + stepName + ")";
-        throw new StepExecuteException(pipelineId, phaseId, stepId, msg, t);
-
+//        throw new StepExecuteException(pipelineId, phaseId, stepId, msg, t);
+        exchange.getTerminateStrategy().onTerminate(new StepExecuteException(pipelineId, phaseId, stepId, msg, t));
     }
 
     @Override
@@ -30,6 +30,7 @@ public class DefaultStepErrorHandler implements StepErrorHandler {
         String stepId = step.getStepId();
         String stepName = step.getClass().getCanonicalName();
         String finalMsg = msg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", step:" + stepId + "(" + stepName + ")";
-        throw new StepExecuteException(pipelineId, phaseId, stepId, finalMsg);
+//        throw new StepExecuteException(pipelineId, phaseId, stepId, finalMsg);
+        exchange.getTerminateStrategy().onTerminate(new StepExecuteException(pipelineId, phaseId, stepId, finalMsg));
     }
 }

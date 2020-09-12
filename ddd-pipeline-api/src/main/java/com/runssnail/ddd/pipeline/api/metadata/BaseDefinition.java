@@ -71,7 +71,7 @@ public abstract class BaseDefinition implements Definition {
      */
     @Override
     public String getAttribute(String name, String defaultValue) {
-        if (this.attributes.containsKey(name)) {
+        if (this.attributes != null && this.attributes.containsKey(name)) {
             return this.attributes.get(name);
         }
         return defaultValue;

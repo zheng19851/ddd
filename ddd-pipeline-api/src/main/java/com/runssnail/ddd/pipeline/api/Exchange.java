@@ -1,7 +1,8 @@
 package com.runssnail.ddd.pipeline.api;
 
-import java.io.Serializable;
 import java.util.Map;
+
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * 执行上下文参数
@@ -9,7 +10,7 @@ import java.util.Map;
  *
  * @author zhengwei
  */
-public interface Exchange<T> extends Serializable {
+public interface Exchange<T> extends Lifecycle {
 
     /**
      * 是否成功
@@ -120,4 +121,17 @@ public interface Exchange<T> extends Serializable {
      */
     void setThrowable(Throwable throwable);
 
+    /**
+     * 中断策略
+     *
+     * @return 中断策略
+     */
+    TerminateStrategy getTerminateStrategy();
+
+    /**
+     * 设置中断策略
+     *
+     * @param strategy 中断策略
+     */
+    void setTerminateStrategy(TerminateStrategy strategy);
 }

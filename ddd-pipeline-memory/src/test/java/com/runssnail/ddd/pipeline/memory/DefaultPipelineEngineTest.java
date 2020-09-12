@@ -7,14 +7,14 @@ import java.util.concurrent.ConcurrentMap;
 import org.junit.Test;
 
 import com.runssnail.ddd.pipeline.api.DefaultExchange;
-import com.runssnail.ddd.pipeline.api.DefaultExecutorFactory;
 import com.runssnail.ddd.pipeline.api.DefaultPhaseFactory;
 import com.runssnail.ddd.pipeline.api.DefaultPipelineEngine;
 import com.runssnail.ddd.pipeline.api.DefaultPipelineFactory;
-import com.runssnail.ddd.pipeline.api.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
 import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.StepFactory;
+import com.runssnail.ddd.pipeline.api.concurrent.DefaultExecutorFactory;
+import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinitionRepository;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinitionRepository;
 import com.runssnail.ddd.pipeline.definition.mysql.MysqlStepDefinitionRepository;
@@ -38,6 +38,8 @@ public class DefaultPipelineEngineTest {
         ConcurrentMap<String, Object> body = new ConcurrentHashMap<>();
         body.put("name", "zw");
         exchange.setBody(body);
+
+        exchange.init();
         pipelineEngine.execute(exchange);
 
         Map<String, Object> response = exchange.getBody();
@@ -57,6 +59,8 @@ public class DefaultPipelineEngineTest {
         PhaseRepository phaseRepository = new MemoryPhaseRepository();
         DefaultPipelineFactory pipelineFactory = new DefaultPipelineFactory();
         pipelineFactory.setPhaseRepository(phaseRepository);
+        pipelineFactory.init();
+
         ExecutorFactory executorFactory = new DefaultExecutorFactory();
         MemoryStepRepository stepRepository = new MemoryStepRepository();
 

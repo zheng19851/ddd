@@ -16,12 +16,13 @@ import com.runssnail.ddd.pipeline.api.exception.PhaseExecuteException;
 public class DefaultPhaseErrorHandler implements PhaseErrorHandler {
 
     @Override
-    public void onException(Phase phase, Exchange context, Throwable t) throws ExecuteException {
-        String pipelineId = context.getPipelineId();
+    public void onException(Phase phase, Exchange exchange, Throwable t) throws ExecuteException {
+        String pipelineId = exchange.getPipelineId();
         String phaseId = phase.getPhaseId();
         List<String> steps = phase.getSteps();
         String exceptionMsg = ExceptionUtils.getRootCauseMessage(t);
         String msg = exceptionMsg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", steps:" + steps;
-        throw new PhaseExecuteException(phaseId, msg, t);
+//        throw new PhaseExecuteException(phaseId, msg, t);
+        exchange.getTerminateStrategy().onTerminate(new PhaseExecuteException(phaseId, msg, t));
     }
 }

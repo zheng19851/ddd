@@ -10,6 +10,10 @@ public class PipelineDefinitionException extends DefinitionException {
 
     private String pipelineId;
 
+    public PipelineDefinitionException(String msg) {
+        super(msg);
+    }
+
     public PipelineDefinitionException(Throwable e) {
         super(e);
     }

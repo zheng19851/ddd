@@ -14,7 +14,6 @@ import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.runssnail.ddd.pipeline.api.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseFactory;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
@@ -24,6 +23,7 @@ import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactory;
 import com.runssnail.ddd.pipeline.api.StepRepository;
+import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;

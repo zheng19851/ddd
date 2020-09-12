@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * @author zhengwei
@@ -28,6 +29,11 @@ public abstract class BasePipeline implements Pipeline {
      * 阶段仓储
      */
     protected PhaseRepository phaseRepository;
+
+    /**
+     * 中断策略
+     */
+    protected TerminateStrategy terminateStrategy;
 
     /**
      * Default constructor
@@ -67,8 +73,12 @@ public abstract class BasePipeline implements Pipeline {
     @Override
     public void execute(Exchange exchange) throws ExecuteException {
         log.info("execute pipeline start {}", this.pipelineId);
-        this.doExecute(exchange);
-        log.info("execute pipeline end {}", this.pipelineId);
+        long start = System.currentTimeMillis();
+        try {
+            this.doExecute(exchange);
+        } finally {
+            log.info("execute pipeline end {}, cost {} ms", this.pipelineId, (System.currentTimeMillis() - start));
+        }
     }
 
     /**
@@ -87,5 +97,22 @@ public abstract class BasePipeline implements Pipeline {
         for (Phase phase : phases) {
             phase.execute(exchange);
         }
+    }
+
+    public PhaseRepository getPhaseRepository() {
+        return phaseRepository;
+    }
+
+    public void setPhaseRepository(PhaseRepository phaseRepository) {
+        this.phaseRepository = phaseRepository;
+    }
+
+    @Override
+    public TerminateStrategy getTerminateStrategy() {
+        return terminateStrategy;
+    }
+
+    public void setTerminateStrategy(TerminateStrategy terminateStrategy) {
+        this.terminateStrategy = terminateStrategy;
     }
 }

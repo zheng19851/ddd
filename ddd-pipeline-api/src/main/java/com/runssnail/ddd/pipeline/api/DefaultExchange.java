@@ -8,6 +8,8 @@ import java.util.concurrent.ConcurrentMap;
 import org.apache.commons.lang3.Validate;
 
 import com.runssnail.ddd.common.exception.BasicErrorCode;
+import com.runssnail.ddd.pipeline.api.terminate.AbortTerminateStrategy;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * 执行上下文参数
@@ -42,6 +44,11 @@ public class DefaultExchange implements Exchange<ConcurrentMap<String, Object>> 
      * 异常
      */
     private Throwable throwable;
+
+    /**
+     * 中断策略
+     */
+    private TerminateStrategy terminateStrategy;
 
     private int errorCode = BasicErrorCode.SUCCESS.getErrorCode();
 
@@ -119,6 +126,11 @@ public class DefaultExchange implements Exchange<ConcurrentMap<String, Object>> 
     }
 
     @Override
+    public TerminateStrategy getTerminateStrategy() {
+        return this.terminateStrategy;
+    }
+
+    @Override
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
     }
@@ -155,5 +167,26 @@ public class DefaultExchange implements Exchange<ConcurrentMap<String, Object>> 
 
     public void setRequest(Map<String, Object> request) {
         this.request = request;
+    }
+
+    @Override
+    public void setTerminateStrategy(TerminateStrategy terminateStrategy) {
+        this.terminateStrategy = terminateStrategy;
+    }
+
+    @Override
+    public void init() {
+        initTerminateStrategy();
+    }
+
+    private void initTerminateStrategy() {
+        if (this.terminateStrategy == null) {
+            this.terminateStrategy = new AbortTerminateStrategy();
+        }
+    }
+
+    @Override
+    public void close() {
+
     }
 }
