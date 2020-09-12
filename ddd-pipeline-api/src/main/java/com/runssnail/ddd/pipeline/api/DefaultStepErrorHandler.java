@@ -21,7 +21,7 @@ public class DefaultStepErrorHandler implements StepErrorHandler {
         String exceptionMsg = ExceptionUtils.getRootCauseMessage(t);
         String msg = exceptionMsg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", step:" + stepId + "(" + stepName + ")";
 //        throw new StepExecuteException(pipelineId, phaseId, stepId, msg, t);
-        exchange.getTerminateStrategy().onTerminate(new StepExecuteException(pipelineId, phaseId, stepId, msg, t));
+        exchange.getTerminateStrategy().onTerminate(exchange, new StepExecuteException(pipelineId, phaseId, stepId, msg, t));
     }
 
     @Override
@@ -31,6 +31,6 @@ public class DefaultStepErrorHandler implements StepErrorHandler {
         String stepName = step.getClass().getCanonicalName();
         String finalMsg = msg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", step:" + stepId + "(" + stepName + ")";
 //        throw new StepExecuteException(pipelineId, phaseId, stepId, finalMsg);
-        exchange.getTerminateStrategy().onTerminate(new StepExecuteException(pipelineId, phaseId, stepId, finalMsg));
+        exchange.getTerminateStrategy().onTerminate(exchange, new StepExecuteException(pipelineId, phaseId, stepId, finalMsg));
     }
 }

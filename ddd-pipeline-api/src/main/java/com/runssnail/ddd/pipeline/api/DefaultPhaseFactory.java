@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
+import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PhaseDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 
@@ -46,7 +47,9 @@ public class DefaultPhaseFactory implements PhaseFactory {
     }
 
     private ExecutorService createExecutor(PhaseDefinition pd) {
-        return executorFactory.create(pd.getCorePoolSize(), pd.getMaxPoolSize(), pd.getQueue(), pd.getQueueSize(), "Phase");
+        int corePoolSize = pd.getCorePoolSize() > 0 ? pd.getCorePoolSize() : Constants.DEFAULT_CORE_POOL_SIZE;
+        int maxPoolSize = pd.getMaxPoolSize() > 0 ? pd.getMaxPoolSize() : Constants.DEFAULT_MAX_POOL_SIZE;
+        return executorFactory.create(corePoolSize, maxPoolSize, pd.getQueue(), pd.getQueueSize(), "Phase");
     }
 
     public StepRepository getStepRepository() {

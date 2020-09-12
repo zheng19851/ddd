@@ -23,6 +23,6 @@ public class DefaultPhaseErrorHandler implements PhaseErrorHandler {
         String exceptionMsg = ExceptionUtils.getRootCauseMessage(t);
         String msg = exceptionMsg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", steps:" + steps;
 //        throw new PhaseExecuteException(phaseId, msg, t);
-        exchange.getTerminateStrategy().onTerminate(new PhaseExecuteException(phaseId, msg, t));
+        exchange.getTerminateStrategy().onTerminate(exchange, new PhaseExecuteException(phaseId, msg, t));
     }
 }

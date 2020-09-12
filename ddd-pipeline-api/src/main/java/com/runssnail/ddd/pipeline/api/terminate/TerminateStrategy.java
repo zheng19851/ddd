@@ -1,5 +1,6 @@
 package com.runssnail.ddd.pipeline.api.terminate;
 
+import com.runssnail.ddd.pipeline.api.Exchange;
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 
 /**
@@ -13,8 +14,9 @@ public interface TerminateStrategy {
     /**
      * 处理中断
      *
-     * @param t 异常
+     * @param exchange 交换器上下文
+     * @param t        异常
      * @throws ExecuteException
      */
-    void onTerminate(Throwable t) throws ExecuteException;
+    void onTerminate(Exchange exchange, Throwable t) throws ExecuteException;
 }
