@@ -40,6 +40,7 @@ public class DefaultPipelineEngineTest {
         exchange.setBody(body);
 
         exchange.init();
+
         pipelineEngine.execute(exchange);
 
         Map<String, Object> response = exchange.getBody();

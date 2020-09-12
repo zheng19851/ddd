@@ -13,6 +13,13 @@ import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 public interface Exchange<T> extends Lifecycle {
 
     /**
+     * exchange id
+     *
+     * @return
+     */
+    String getExchangeId();
+
+    /**
      * 是否成功
      *
      * @return
