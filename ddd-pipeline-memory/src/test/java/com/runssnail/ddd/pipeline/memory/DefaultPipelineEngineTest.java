@@ -12,11 +12,12 @@ import com.runssnail.ddd.pipeline.api.DefaultPipelineEngine;
 import com.runssnail.ddd.pipeline.api.DefaultPipelineFactory;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
 import com.runssnail.ddd.pipeline.api.PipelineRepository;
-import com.runssnail.ddd.pipeline.api.StepFactory;
+import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.concurrent.DefaultExecutorFactory;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinitionRepository;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinitionRepository;
+import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 import com.runssnail.ddd.pipeline.definition.mysql.MysqlStepDefinitionRepository;
 
 /**
@@ -68,10 +69,14 @@ public class DefaultPipelineEngineTest {
         DefaultPhaseFactory phaseFactory = new DefaultPhaseFactory();
         phaseFactory.setExecutorFactory(executorFactory);
         phaseFactory.setStepRepository(stepRepository);
+
+        StepFactoryRepository stepFactoryRepository = createStepFactoryRepository();
+
         StepFactory stepFactory = new DefaultStepFactory();
         StepDefinitionRepository stepDefinitionRepository = new MysqlStepDefinitionRepository();
         stepRepository.setStepDefinitionRepository(stepDefinitionRepository);
-        stepRepository.setStepFactory(stepFactory);
+//        stepRepository.setStepFactory(stepFactory);
+        stepRepository.setStepFactoryRepository(stepFactoryRepository);
 
         stepRepository.setExecutorFactory(executorFactory);
 
@@ -79,11 +84,18 @@ public class DefaultPipelineEngineTest {
         pipelineRepository.setPipelineFactory(pipelineFactory);
         pipelineRepository.setPhaseFactory(phaseFactory);
         pipelineRepository.setPhaseRepository(phaseRepository);
-        pipelineRepository.setStepFactory(stepFactory);
+//        pipelineRepository.setStepFactory(stepFactory);
+        pipelineRepository.setStepFactoryRepository(stepFactoryRepository);
         pipelineRepository.setStepRepository(stepRepository);
         pipelineRepository.setExecutorFactory(executorFactory);
 
         pipelineRepository.init();
         return pipelineRepository;
+    }
+
+    private DefaultStepFactoryRepository createStepFactoryRepository() {
+        DefaultStepFactoryRepository defaultStepFactoryRepository = new DefaultStepFactoryRepository();
+        defaultStepFactoryRepository.init();
+        return defaultStepFactoryRepository;
     }
 }

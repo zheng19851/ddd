@@ -6,7 +6,6 @@ import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
-import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyFactory;
 
 /**
  * 默认的流程执行对象工厂
@@ -50,14 +49,6 @@ public class DefaultPipelineFactory extends BaseFactory implements PipelineFacto
 
     public void setPhaseRepository(PhaseRepository phaseRepository) {
         this.phaseRepository = phaseRepository;
-    }
-
-    public TerminateStrategyFactory getTerminateStrategyFactory() {
-        return terminateStrategyFactory;
-    }
-
-    public void setTerminateStrategyFactory(TerminateStrategyFactory terminateStrategyFactory) {
-        this.terminateStrategyFactory = terminateStrategyFactory;
     }
 
 }

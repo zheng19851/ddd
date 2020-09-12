@@ -15,11 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.Step;
-import com.runssnail.ddd.pipeline.api.StepFactory;
+import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.StepRepository;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
+import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinitionRepository;
+import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 
 /**
  * 默认的步骤管理器
@@ -45,9 +47,9 @@ public class MemoryStepRepository implements StepRepository {
     private StepDefinitionRepository stepDefinitionRepository;
 
     /**
-     * 步骤执行对象工厂
+     * StepFactory仓储
      */
-    private StepFactory stepFactory;
+    private StepFactoryRepository stepFactoryRepository;
 
     /**
      * 定时刷新缓存用
@@ -161,17 +163,21 @@ public class MemoryStepRepository implements StepRepository {
             return;
         }
 
-        for (StepDefinition stepDefinition : stepDefinitions) {
-            if (stepDefinition.isRemoved()) {
-                this.remove(stepDefinition.getStepId());
+        for (StepDefinition sd : stepDefinitions) {
+            if (sd.isRemoved()) {
+                this.remove(sd.getStepId());
             } else {
-                Step step = stepFactory.create(stepDefinition);
+                StepFactory stepFactory = this.stepFactoryRepository.getStepFactory(sd.getStepType());
+                if (stepFactory == null) {
+                    throw new StepDefinitionException("Cannot find StepFactory stepId=" + sd.getStepId() + ", type=" + sd.getStepType());
+                }
+                Step step = stepFactory.create(sd);
                 if (step != null) {
                     this.save(step);
                 }
             }
-            if (stepDefinition.getUpdateTime() > this.lastUpdateTime) {
-                this.lastUpdateTime = stepDefinition.getUpdateTime();
+            if (sd.getUpdateTime() > this.lastUpdateTime) {
+                this.lastUpdateTime = sd.getUpdateTime();
             }
         }
 
@@ -219,14 +225,6 @@ public class MemoryStepRepository implements StepRepository {
         this.stepDefinitionRepository = stepDefinitionRepository;
     }
 
-    public StepFactory getStepFactory() {
-        return stepFactory;
-    }
-
-    public void setStepFactory(StepFactory stepFactory) {
-        this.stepFactory = stepFactory;
-    }
-
     public ScheduledExecutorService getScheduledExecutorService() {
         return scheduledExecutorService;
     }
@@ -249,5 +247,13 @@ public class MemoryStepRepository implements StepRepository {
 
     public void setScheduledPeriod(long scheduledPeriod) {
         this.scheduledPeriod = scheduledPeriod;
+    }
+
+    public StepFactoryRepository getStepFactoryRepository() {
+        return stepFactoryRepository;
+    }
+
+    public void setStepFactoryRepository(StepFactoryRepository stepFactoryRepository) {
+        this.stepFactoryRepository = stepFactoryRepository;
     }
 }

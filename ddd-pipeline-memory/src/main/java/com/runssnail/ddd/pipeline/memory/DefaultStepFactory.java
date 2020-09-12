@@ -7,10 +7,10 @@ import org.apache.commons.lang3.StringUtils;
 import com.runssnail.ddd.pipeline.api.BaseFactory;
 import com.runssnail.ddd.pipeline.api.Interceptor;
 import com.runssnail.ddd.pipeline.api.Step;
-import com.runssnail.ddd.pipeline.api.StepFactory;
 import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
+import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 import com.runssnail.ddd.pipeline.memory.bean.BeanStep;
 import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
@@ -32,7 +32,7 @@ public class DefaultStepFactory extends BaseFactory implements StepFactory {
     @Override
     public Step create(StepDefinition definition) throws StepDefinitionException {
 
-        // todo 后续可以优化成SPI机制，key=type，value=具体的实现
+        // todo 后续可以优化成SPI机制，key=type，value=具体的StepFactory
         Step step = null;
         if ("grpc".equalsIgnoreCase(definition.getStepType())) {
             step = createGrpcStep(definition);

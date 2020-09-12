@@ -21,15 +21,17 @@ import com.runssnail.ddd.pipeline.api.Pipeline;
 import com.runssnail.ddd.pipeline.api.PipelineFactory;
 import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.Step;
-import com.runssnail.ddd.pipeline.api.StepFactory;
+import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.StepRepository;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
+import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinitionRepository;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
+import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 
 /**
  * DefaultPipelineRepository
@@ -72,9 +74,9 @@ public class MemoryPipelineRepository implements PipelineRepository {
     private PhaseRepository phaseRepository;
 
     /**
-     * 步骤工厂
+     * StepFactory仓储
      */
-    private StepFactory stepFactory;
+    private StepFactoryRepository stepFactoryRepository;
 
     /**
      * 阶段仓储
@@ -173,7 +175,7 @@ public class MemoryPipelineRepository implements PipelineRepository {
         Validate.notNull(this.pipelineFactory, "pipelineFactory is required");
         Validate.notNull(this.phaseFactory, "phaseFactory is required");
         Validate.notNull(this.phaseRepository, "phaseRepository is required");
-        Validate.notNull(this.stepFactory, "stepFactory is required");
+        Validate.notNull(this.stepFactoryRepository, "stepFactoryRepository is required");
         Validate.notNull(this.stepRepository, "stepRepository is required");
 
         log.info("init start");
@@ -293,11 +295,15 @@ public class MemoryPipelineRepository implements PipelineRepository {
 
         log.info("refreshSteps start, find {} stepDefinitions", stepDefinitions.size());
 
-        for (StepDefinition stepDefinition : stepDefinitions) {
-            if (stepDefinition.isRemoved()) {
-                stepRepository.remove(stepDefinition.getStepId());
+        for (StepDefinition sd : stepDefinitions) {
+            if (sd.isRemoved()) {
+                stepRepository.remove(sd.getStepId());
             } else {
-                Step step = this.stepFactory.create(stepDefinition);
+                StepFactory stepFactory = stepFactoryRepository.getStepFactory(sd.getStepType());
+                if (stepFactory == null) {
+                    throw new StepDefinitionException("Cannot find StepFactory stepId=" + sd.getStepId() + ", type=" + sd.getStepType());
+                }
+                Step step = stepFactory.create(sd);
                 this.stepRepository.save(step);
             }
         }
@@ -358,14 +364,6 @@ public class MemoryPipelineRepository implements PipelineRepository {
         this.phaseRepository = phaseRepository;
     }
 
-    public StepFactory getStepFactory() {
-        return stepFactory;
-    }
-
-    public void setStepFactory(StepFactory stepFactory) {
-        this.stepFactory = stepFactory;
-    }
-
     public StepRepository getStepRepository() {
         return stepRepository;
     }
@@ -388,5 +386,13 @@ public class MemoryPipelineRepository implements PipelineRepository {
 
     public void setExecutorFactory(ExecutorFactory executorFactory) {
         this.executorFactory = executorFactory;
+    }
+
+    public StepFactoryRepository getStepFactoryRepository() {
+        return stepFactoryRepository;
+    }
+
+    public void setStepFactoryRepository(StepFactoryRepository stepFactoryRepository) {
+        this.stepFactoryRepository = stepFactoryRepository;
     }
 }

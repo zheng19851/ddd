@@ -1,5 +1,7 @@
-package com.runssnail.ddd.pipeline.api;
+package com.runssnail.ddd.pipeline.api.spi;
 
+import com.runssnail.ddd.pipeline.api.Lifecycle;
+import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 
