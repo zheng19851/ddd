@@ -6,6 +6,7 @@ import org.apache.commons.lang3.exception.ExceptionUtils;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
 import com.runssnail.ddd.pipeline.api.exception.PhaseExecuteException;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * DefaultPhaseErrorHandler
@@ -23,6 +24,16 @@ public class DefaultPhaseErrorHandler implements PhaseErrorHandler {
         String exceptionMsg = ExceptionUtils.getRootCauseMessage(t);
         String msg = exceptionMsg + ", pipeline:" + pipelineId + ", phase:" + phaseId + ", steps:" + steps;
 //        throw new PhaseExecuteException(phaseId, msg, t);
-        exchange.getTerminateStrategy().onTerminate(exchange, new PhaseExecuteException(phaseId, msg, t));
+
+        TerminateStrategy terminateStrategy = resolveTerminateStrategy(phase, exchange);
+        terminateStrategy.onTerminate(exchange, new PhaseExecuteException(phaseId, msg, t));
+    }
+
+    private TerminateStrategy resolveTerminateStrategy(Phase phase, Exchange exchange) {
+        TerminateStrategy terminateStrategy = phase.getTerminateStrategy();
+        if (terminateStrategy != null) {
+            return terminateStrategy;
+        }
+        return exchange.getTerminateStrategy();
     }
 }

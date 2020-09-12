@@ -16,4 +16,9 @@ public abstract class Constants {
 
     public static final int DEFAULT_CORE_POOL_SIZE = (Runtime.getRuntime().availableProcessors() * 2) + 1;
     public static final int DEFAULT_MAX_POOL_SIZE = DEFAULT_CORE_POOL_SIZE;
+
+    /**
+     * 属性名
+     */
+    public static final String ATTRIBUTE_TERMINATE_STRATEGY = "terminate.strategy";
 }

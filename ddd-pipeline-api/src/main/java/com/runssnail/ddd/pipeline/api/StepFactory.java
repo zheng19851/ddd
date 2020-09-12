@@ -9,7 +9,7 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
  * @author zhengwei
  * Created on 2020-09-06
  */
-public interface StepFactory {
+public interface StepFactory extends Lifecycle {
 
     /**
      * 步骤执行对象

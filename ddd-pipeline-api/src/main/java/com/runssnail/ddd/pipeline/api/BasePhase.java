@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * 阶段
@@ -62,6 +63,11 @@ public abstract class BasePhase implements Phase {
      * 拦截器
      */
     private List<Interceptor> interceptors;
+
+    /**
+     * 中断策略
+     */
+    protected TerminateStrategy terminateStrategy;
 
     /**
      * Default constructor
@@ -281,5 +287,22 @@ public abstract class BasePhase implements Phase {
 
     public void setInterceptors(List<Interceptor> interceptors) {
         this.interceptors = interceptors;
+    }
+
+    public PhaseErrorHandler getPhaseErrorHandler() {
+        return phaseErrorHandler;
+    }
+
+    public void setPhaseErrorHandler(PhaseErrorHandler phaseErrorHandler) {
+        this.phaseErrorHandler = phaseErrorHandler;
+    }
+
+    @Override
+    public TerminateStrategy getTerminateStrategy() {
+        return terminateStrategy;
+    }
+
+    public void setTerminateStrategy(TerminateStrategy terminateStrategy) {
+        this.terminateStrategy = terminateStrategy;
     }
 }

@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * 步骤
@@ -30,12 +31,17 @@ public abstract class BaseStep implements Step {
     /**
      * 错误处理器
      */
-    protected StepErrorHandler stepErrorHandler;
+    private StepErrorHandler stepErrorHandler;
 
     /**
      * 拦截器
      */
     private List<Interceptor> interceptors;
+
+    /**
+     * 中断策略
+     */
+    private TerminateStrategy terminateStrategy;
 
     /**
      * Default constructor
@@ -165,5 +171,15 @@ public abstract class BaseStep implements Step {
 
     public void setTimeout(long timeout) {
         this.timeout = timeout;
+    }
+
+    @Override
+    public TerminateStrategy getTerminateStrategy() {
+        return terminateStrategy;
+    }
+
+    @Override
+    public void setTerminateStrategy(TerminateStrategy terminateStrategy) {
+        this.terminateStrategy = terminateStrategy;
     }
 }

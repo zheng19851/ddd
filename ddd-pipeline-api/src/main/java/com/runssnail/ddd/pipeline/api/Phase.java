@@ -3,6 +3,7 @@ package com.runssnail.ddd.pipeline.api;
 import java.util.List;
 
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
+import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
  * 阶段执行对象
@@ -18,6 +19,13 @@ public interface Phase extends Lifecycle {
      * @throws ExecuteException
      */
     void execute(Exchange exchange) throws ExecuteException;
+
+    /**
+     * 中断策略
+     *
+     * @return 中断策略
+     */
+    TerminateStrategy getTerminateStrategy();
 
     /**
      * 唯一标识

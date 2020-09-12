@@ -2,9 +2,9 @@ package com.runssnail.ddd.pipeline.api;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinition;
-import com.runssnail.ddd.pipeline.api.terminate.DefaultTerminateStrategyFactory;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyFactory;
 
@@ -13,18 +13,12 @@ import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategyFactory;
  *
  * @author zhengwei
  */
-public class DefaultPipelineFactory implements PipelineFactory {
-
+public class DefaultPipelineFactory extends BaseFactory implements PipelineFactory {
 
     /**
      * 阶段仓储
      */
     private PhaseRepository phaseRepository;
-
-    /**
-     * 中断策略工厂
-     */
-    private TerminateStrategyFactory terminateStrategyFactory;
 
     /**
      * Default constructor
@@ -41,29 +35,13 @@ public class DefaultPipelineFactory implements PipelineFactory {
         DefaultPipeline defaultPipeline = new DefaultPipeline(pd.getPipelineId(), pd.getPhases(), this.phaseRepository);
 
         // 中断策略
-        String strategy = pd.getAttribute("terminate.strategy");
+        String strategy = pd.getAttribute(Constants.ATTRIBUTE_TERMINATE_STRATEGY);
         if (StringUtils.isNotBlank(strategy)) {
             TerminateStrategy terminateStrategy = terminateStrategyFactory.create(strategy);
             defaultPipeline.setTerminateStrategy(terminateStrategy);
         }
 
         return defaultPipeline;
-    }
-
-    @Override
-    public void init() {
-        initTerminateStrategyFactory();
-    }
-
-    private void initTerminateStrategyFactory() {
-        if (this.terminateStrategyFactory == null) {
-            this.terminateStrategyFactory = new DefaultTerminateStrategyFactory();
-        }
-    }
-
-    @Override
-    public void close() {
-
     }
 
     public PhaseRepository getPhaseRepository() {

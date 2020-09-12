@@ -9,7 +9,7 @@ import com.runssnail.ddd.pipeline.api.metadata.PhaseDefinition;
  * @author zhengwei
  * Created on 2020-09-06
  */
-public interface PhaseFactory {
+public interface PhaseFactory extends Lifecycle {
 
     /**
      * 创建Phase
