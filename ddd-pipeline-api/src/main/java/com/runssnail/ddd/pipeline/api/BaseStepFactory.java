@@ -1,12 +1,11 @@
-package com.runssnail.ddd.pipeline.api.spi;
+package com.runssnail.ddd.pipeline.api;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.runssnail.ddd.pipeline.api.BaseFactory;
-import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
+import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**

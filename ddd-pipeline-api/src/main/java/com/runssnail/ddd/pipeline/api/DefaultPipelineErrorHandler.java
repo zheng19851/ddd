@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.pipeline.api.exception.ExecuteException;
-import com.runssnail.ddd.pipeline.api.json.Json;
+import com.runssnail.ddd.pipeline.api.spi.Json;
 
 /**
  * 默认的异常处理器

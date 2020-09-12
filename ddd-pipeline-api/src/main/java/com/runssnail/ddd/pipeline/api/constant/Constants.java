@@ -21,4 +21,9 @@ public abstract class Constants {
      * 属性名
      */
     public static final String ATTRIBUTE_TERMINATE_STRATEGY = "terminate.strategy";
+
+    /**
+     * 单位秒
+     */
+    public static final long DEFAULT_KEEP_ALIVE_TIME = 60;
 }

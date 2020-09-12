@@ -2,11 +2,11 @@ package com.runssnail.ddd.pipeline.memory.grpc;
 
 import java.util.List;
 
+import com.runssnail.ddd.pipeline.api.BaseStepFactory;
 import com.runssnail.ddd.pipeline.api.Interceptor;
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
-import com.runssnail.ddd.pipeline.api.spi.BaseStepFactory;
 import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 
 /**

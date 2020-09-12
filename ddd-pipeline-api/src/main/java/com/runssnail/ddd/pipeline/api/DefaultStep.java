@@ -6,6 +6,7 @@ package com.runssnail.ddd.pipeline.api;
  * @author zhengwei
  * Created on 2020-09-08
  */
+@Deprecated
 public class DefaultStep extends BaseStep {
 
     @Override

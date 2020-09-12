@@ -1,5 +1,7 @@
 package com.runssnail.ddd.pipeline.api.concurrent;
 
+import static com.runssnail.ddd.pipeline.api.constant.Constants.DEFAULT_KEEP_ALIVE_TIME;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -25,8 +27,8 @@ public class DefaultExecutorFactory implements ExecutorFactory {
     @Override
     public ExecutorService create(int corePoolSize, int maxPoolSize, String queue, int queueSize, String threadNamePrefix) {
         BlockingQueue<Runnable> workQueue = createQueue(queue, queueSize);
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, 60, TimeUnit.SECONDS, workQueue,
-                new NamedThreadFactory(threadNamePrefix), new RejectedHandler());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, DEFAULT_KEEP_ALIVE_TIME,
+                TimeUnit.SECONDS, workQueue, new NamedThreadFactory(threadNamePrefix), new RejectedHandler());
         return executor;
     }
 

@@ -13,11 +13,16 @@ import com.runssnail.ddd.common.exception.BasicErrorCode;
 import com.runssnail.ddd.pipeline.api.terminate.TerminateStrategy;
 
 /**
+ * BaseExchange
+ *
  * @author zhengwei
  * Created on 2020-09-12
  */
 public abstract class BaseExchange implements Exchange<ConcurrentMap<String, Object>> {
 
+    /**
+     * exchangeId 相当于请求ID
+     */
     private String exchangeId;
 
     /**
@@ -38,7 +43,7 @@ public abstract class BaseExchange implements Exchange<ConcurrentMap<String, Obj
     /**
      * 中间数据
      */
-    private ConcurrentMap<String, Object> body;
+    private ConcurrentMap<String, Object> body = new ConcurrentHashMap<>();
 
     /**
      * 异常
