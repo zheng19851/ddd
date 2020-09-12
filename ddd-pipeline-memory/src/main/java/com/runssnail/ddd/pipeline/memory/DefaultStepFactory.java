@@ -22,6 +22,7 @@ import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
  * Created on 2020-09-08
  * @see GrpcStep
  */
+@Deprecated
 public class DefaultStepFactory extends BaseFactory implements StepFactory {
 
     /**
@@ -30,9 +31,13 @@ public class DefaultStepFactory extends BaseFactory implements StepFactory {
     public static final long DEFAULT_TIMEOUT = 5000;
 
     @Override
+    public String getType() {
+        return null;
+    }
+
+    @Override
     public Step create(StepDefinition definition) throws StepDefinitionException {
 
-        // todo 后续可以优化成SPI机制，key=type，value=具体的StepFactory
         Step step = null;
         if ("grpc".equalsIgnoreCase(definition.getStepType())) {
             step = createGrpcStep(definition);

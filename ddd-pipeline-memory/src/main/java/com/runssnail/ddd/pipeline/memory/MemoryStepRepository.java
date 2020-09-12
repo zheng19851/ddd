@@ -13,10 +13,13 @@ import java.util.concurrent.TimeUnit;
 import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.StepRepository;
+import com.runssnail.ddd.pipeline.api.concurrent.DefaultExecutorFactory;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
@@ -28,6 +31,7 @@ import com.runssnail.ddd.pipeline.api.spi.StepFactory;
  *
  * @author zhengwei
  */
+@Repository
 public class MemoryStepRepository implements StepRepository {
     private static final Logger log = LoggerFactory.getLogger(MemoryStepRepository.class);
 
@@ -44,11 +48,13 @@ public class MemoryStepRepository implements StepRepository {
     /**
      * 步骤定义仓储
      */
+    @Autowired
     private StepDefinitionRepository stepDefinitionRepository;
 
     /**
      * StepFactory仓储
      */
+    @Autowired
     private StepFactoryRepository stepFactoryRepository;
 
     /**
@@ -148,9 +154,16 @@ public class MemoryStepRepository implements StepRepository {
     @Override
     public void init() {
         log.info("init start");
+        initExecutorFactory();
         refreshSteps();
         initRefreshThread();
         log.info("init end");
+    }
+
+    private void initExecutorFactory() {
+        if (this.executorFactory == null) {
+            this.executorFactory = new DefaultExecutorFactory();
+        }
     }
 
     private void refreshSteps() {

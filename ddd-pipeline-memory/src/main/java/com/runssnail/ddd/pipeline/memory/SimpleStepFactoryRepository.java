@@ -3,6 +3,9 @@ package com.runssnail.ddd.pipeline.memory;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.spi.StepFactory;
@@ -14,8 +17,10 @@ import com.runssnail.ddd.pipeline.memory.grpc.GrpcStepFactory;
  *
  * @author zhengwei
  * Created on 2020-09-12
+ * @see SpiStepFactoryRepository
  */
-public class DefaultStepFactoryRepository implements StepFactoryRepository {
+public class SimpleStepFactoryRepository implements StepFactoryRepository {
+    private static final Logger log = LoggerFactory.getLogger(SimpleStepFactoryRepository.class);
     private Map<String, StepFactory> stepFactoryMap = new HashMap<>();
 
     @Override
@@ -25,8 +30,6 @@ public class DefaultStepFactoryRepository implements StepFactoryRepository {
 
     @Override
     public void init() {
-        // todo 提前加载所有StepFactory
-        // 后续可以使用SPI自动找到对应的工厂
         stepFactoryMap.put("bean", new BeanStepFactory());
         stepFactoryMap.put("grpc", new GrpcStepFactory());
     }

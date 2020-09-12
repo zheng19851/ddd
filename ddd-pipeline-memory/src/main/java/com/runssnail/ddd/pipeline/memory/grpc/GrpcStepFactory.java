@@ -53,4 +53,8 @@ public class GrpcStepFactory extends BaseStepFactory implements StepFactory {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "grpc";
+    }
 }

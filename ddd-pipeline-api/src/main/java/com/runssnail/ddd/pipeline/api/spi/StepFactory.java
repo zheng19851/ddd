@@ -14,6 +14,13 @@ import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 public interface StepFactory extends Lifecycle {
 
     /**
+     * step类型
+     *
+     * @return 类型
+     */
+    String getType();
+
+    /**
      * 步骤执行对象
      *
      * @param sd 步骤定义

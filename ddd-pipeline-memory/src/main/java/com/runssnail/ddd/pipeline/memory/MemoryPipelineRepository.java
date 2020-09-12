@@ -13,6 +13,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseFactory;
@@ -23,6 +25,7 @@ import com.runssnail.ddd.pipeline.api.PipelineRepository;
 import com.runssnail.ddd.pipeline.api.Step;
 import com.runssnail.ddd.pipeline.api.StepFactoryRepository;
 import com.runssnail.ddd.pipeline.api.StepRepository;
+import com.runssnail.ddd.pipeline.api.concurrent.DefaultExecutorFactory;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.constant.Constants;
 import com.runssnail.ddd.pipeline.api.exception.PipelineDefinitionException;
@@ -40,6 +43,7 @@ import com.runssnail.ddd.pipeline.api.spi.StepFactory;
  *
  * @author zhengwei
  */
+@Repository
 public class MemoryPipelineRepository implements PipelineRepository {
     private static final Logger log = LoggerFactory.getLogger(MemoryPipelineRepository.class);
 
@@ -56,31 +60,37 @@ public class MemoryPipelineRepository implements PipelineRepository {
     /**
      * 流程定义仓储
      */
+    @Autowired
     private PipelineDefinitionRepository pipelineDefinitionRepository;
 
     /**
      * 流程工厂
      */
+    @Autowired
     private PipelineFactory pipelineFactory;
 
     /**
      * 阶段工厂
      */
+    @Autowired
     private PhaseFactory phaseFactory;
 
     /**
      * 阶段仓储
      */
+    @Autowired
     private PhaseRepository phaseRepository;
 
     /**
      * StepFactory仓储
      */
+    @Autowired
     private StepFactoryRepository stepFactoryRepository;
 
     /**
      * 阶段仓储
      */
+    @Autowired
     private StepRepository stepRepository;
 
     /**
@@ -179,9 +189,16 @@ public class MemoryPipelineRepository implements PipelineRepository {
         Validate.notNull(this.stepRepository, "stepRepository is required");
 
         log.info("init start");
+        initExecutorFactory();
         refreshPipelines(true);
         initRefreshThread();
         log.info("init end");
+    }
+
+    private void initExecutorFactory() {
+        if (this.executorFactory == null) {
+            this.executorFactory = new DefaultExecutorFactory();
+        }
     }
 
     private void initRefreshThread() {

@@ -8,14 +8,13 @@ import com.runssnail.ddd.pipeline.api.exception.StepDefinitionException;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinition;
 import com.runssnail.ddd.pipeline.api.spi.BaseStepFactory;
 import com.runssnail.ddd.pipeline.api.spi.StepFactory;
-import com.runssnail.ddd.pipeline.memory.grpc.GrpcStep;
 
 /**
  * 步骤执行对象工厂
  *
  * @author zhengwei
  * Created on 2020-09-08
- * @see GrpcStep
+ * @see BeanStep
  */
 public class BeanStepFactory extends BaseStepFactory implements StepFactory {
 
@@ -41,4 +40,8 @@ public class BeanStepFactory extends BaseStepFactory implements StepFactory {
         return null;
     }
 
+    @Override
+    public String getType() {
+        return "bean";
+    }
 }

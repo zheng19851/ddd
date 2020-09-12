@@ -17,7 +17,6 @@ import com.runssnail.ddd.pipeline.api.concurrent.DefaultExecutorFactory;
 import com.runssnail.ddd.pipeline.api.concurrent.ExecutorFactory;
 import com.runssnail.ddd.pipeline.api.metadata.PipelineDefinitionRepository;
 import com.runssnail.ddd.pipeline.api.metadata.StepDefinitionRepository;
-import com.runssnail.ddd.pipeline.api.spi.StepFactory;
 import com.runssnail.ddd.pipeline.definition.mysql.MysqlStepDefinitionRepository;
 
 /**
@@ -72,7 +71,6 @@ public class DefaultPipelineEngineTest {
 
         StepFactoryRepository stepFactoryRepository = createStepFactoryRepository();
 
-        StepFactory stepFactory = new DefaultStepFactory();
         StepDefinitionRepository stepDefinitionRepository = new MysqlStepDefinitionRepository();
         stepRepository.setStepDefinitionRepository(stepDefinitionRepository);
 //        stepRepository.setStepFactory(stepFactory);
@@ -89,13 +87,14 @@ public class DefaultPipelineEngineTest {
         pipelineRepository.setStepRepository(stepRepository);
         pipelineRepository.setExecutorFactory(executorFactory);
 
+        stepRepository.init();
         pipelineRepository.init();
         return pipelineRepository;
     }
 
-    private DefaultStepFactoryRepository createStepFactoryRepository() {
-        DefaultStepFactoryRepository defaultStepFactoryRepository = new DefaultStepFactoryRepository();
-        defaultStepFactoryRepository.init();
-        return defaultStepFactoryRepository;
+    private SimpleStepFactoryRepository createStepFactoryRepository() {
+        SimpleStepFactoryRepository simpleStepFactoryRepository = new SimpleStepFactoryRepository();
+        simpleStepFactoryRepository.init();
+        return simpleStepFactoryRepository;
     }
 }

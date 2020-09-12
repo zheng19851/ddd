@@ -7,13 +7,17 @@ import java.util.concurrent.ConcurrentMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.runssnail.ddd.pipeline.api.Phase;
 import com.runssnail.ddd.pipeline.api.PhaseRepository;
 
 /**
+ * 用内存实现的阶段执行对象仓储
+ *
  * @author zhengwei
  */
+@Repository
 public class MemoryPhaseRepository implements PhaseRepository {
     private static final Logger log = LoggerFactory.getLogger(MemoryPhaseRepository.class);
 
