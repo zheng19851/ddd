@@ -16,9 +16,6 @@
         <module>ddd-spring-boot-autoconfigure</module>
         <module>ddd-spring-boot-starter</module>
         <module>ddd-module-demo</module>
-        <module>ddd-pipeline-api</module>
-        <module>ddd-pipeline-memory</module>
-        <module>ddd-pipeline-definition-mysql</module>
     </modules>
 
     <name>ddd-parent</name>
