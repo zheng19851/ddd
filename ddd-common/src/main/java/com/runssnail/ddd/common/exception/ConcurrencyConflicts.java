@@ -1,5 +1,7 @@
 package com.runssnail.ddd.common.exception;
 
+import java.util.concurrent.Callable;
+
 /**
  * 并发冲突异常检测工具
  *
@@ -26,6 +28,21 @@ public class ConcurrencyConflicts {
         if (count != 1) {
             throw new ConcurrencyConflictException(errorCode, msg);
         }
+    }
+
+    public static void check(Callable<Integer> callable) throws ConcurrencyConflictException {
+
+        Integer rowsAffected = 0;
+        try {
+            rowsAffected = callable.call();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        if (rowsAffected == 0) {
+            throw new ConcurrencyConflictException();
+        }
+
     }
 
 }

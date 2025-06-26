@@ -8,6 +8,10 @@ package com.runssnail.ddd.common.exception;
  **/
 public class ConcurrencyConflictException extends BaseException {
 
+    public ConcurrencyConflictException() {
+        super(BasicErrorCode.CONCURRENCY_CONFLICT, BasicErrorCode.CONCURRENCY_CONFLICT.getErrorMsg());
+    }
+
     public ConcurrencyConflictException(String msg) {
         super(BasicErrorCode.CONCURRENCY_CONFLICT, msg);
     }
