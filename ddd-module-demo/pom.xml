@@ -12,7 +12,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <modules>
-        <module>ddd-interface-adapter</module>
+        <module>ddd-adapter</module>
         <module>ddd-application</module>
         <module>ddd-infrastructure</module>
         <module>ddd-domain</module>
@@ -90,7 +90,7 @@
 
             <dependency>
                 <groupId>com.runssnail.ddd</groupId>
-                <artifactId>ddd-interface-adapter</artifactId>
+                <artifactId>ddd-adapter</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
 

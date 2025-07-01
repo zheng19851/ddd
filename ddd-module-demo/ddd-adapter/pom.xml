@@ -12,10 +12,9 @@
     </parent>
 
     <groupId>com.runssnail.ddd</groupId>
-    <artifactId>ddd-interface-adapter</artifactId>
+    <artifactId>ddd-adapter</artifactId>
 
-    <name>ddd-interface-adapter</name>
-    <!-- FIXME change it to the project's website -->
+    <name>ddd-adapter</name>
     <url>http://www.example.com</url>
 
     <properties>

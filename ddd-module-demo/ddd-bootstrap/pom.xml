@@ -61,7 +61,7 @@
 
         <dependency>
             <groupId>com.runssnail.ddd</groupId>
-            <artifactId>ddd-interface-adapter</artifactId>
+            <artifactId>ddd-adapter</artifactId>
         </dependency>
     </dependencies>
 
