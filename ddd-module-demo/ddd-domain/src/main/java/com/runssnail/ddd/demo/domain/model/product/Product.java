@@ -1,5 +1,6 @@
 package com.runssnail.ddd.demo.domain.model.product;
 
+import com.runssnail.ddd.common.domain.ConcurrencySafeEntity;
 import org.apache.commons.lang3.Validate;
 
 import com.runssnail.ddd.common.domain.Entity;
@@ -15,7 +16,7 @@ import lombok.Getter;
  * @date 2019-11-05 14:20
  **/
 @Getter
-public class Product extends Entity {
+public class Product extends ConcurrencySafeEntity {
 
     private String productId;
 

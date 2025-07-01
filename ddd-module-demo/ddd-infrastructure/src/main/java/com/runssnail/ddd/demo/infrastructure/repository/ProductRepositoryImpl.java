@@ -3,6 +3,8 @@ package com.runssnail.ddd.demo.infrastructure.repository;
 import java.util.List;
 import java.util.UUID;
 
+import com.runssnail.ddd.common.exception.ConcurrencyConflicts;
+import com.runssnail.ddd.demo.infrastructure.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -26,6 +28,14 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     @Autowired
     private ProductConverter productConverter;
+
+    // 测试的
+    private ProductMapper productMapper = new ProductMapper() {
+        @Override
+        public int removeProduct(String productId, String operator, int concurrencyVersion) {
+            return 1;
+        }
+    };
 
     @Override
     public void save(Product product) {
@@ -72,6 +82,7 @@ public class ProductRepositoryImpl implements ProductRepository {
     @Override
     public void remove(Product product) {
         log.info("remove domain, id={}", product.getProductId());
+        ConcurrencyConflicts.check(() -> productMapper.removeProduct(product.getProductId(), product.getOperator(), product.getConcurrencyVersion()));
     }
 
     @Override

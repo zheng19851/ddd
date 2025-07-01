@@ -19,8 +19,8 @@
 
 ### 架构风格
 结合了<a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">整洁架构风格</a> 、CQRS风格以及分层架构风格，并采用依赖原则分4层，如下：
-* interface-adapter 接口适配层（适配dubbo、rest接口等协议）
-* application 应用层（实现用例的地方，eg：电商场景里的用户下单是个用例）
+* adapter 接口适配层（适配dubbo、restful接口等协议）
+* application 应用层（实现用例的地方，eg：电商场景里的用户下单、商家发布商品等等）
 * domain 领域层（写领域逻辑的地方，eg：电商场景里的用户下单包含订单逻辑、商品逻辑、以及优惠逻辑等）
 * infrastructure 基础层（放Cache、MQ框架、数据库持久实现等的地方）
 
@@ -80,7 +80,7 @@ curl -H "Content-Type:application/json" -X POST 'http://localhost:8080/product/d
 
 注意：需要提前将jar ```mvn clean install -Dmaven.test.skip=true```进maven本地库或私库里
 
-* ##### 方式1、如果你的应用没有使用springboot
+* ##### 方式1、如果你的应用「没有使用」SpringBoot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -97,7 +97,7 @@ curl -H "Content-Type:application/json" -X POST 'http://localhost:8080/product/d
 ```
 
 
-* ##### 方式2、如果你的应用使用springboot
+* ##### 方式2、如果你的应用「使用」了SpringBoot
 ```
 <dependency>
     <groupId>com.runssnail.ddd</groupId>
@@ -318,8 +318,14 @@ public class ProductConverter implements Converter<Product, ProductDO> {
 ```
  @Override
     public void remove(Product product) throws ConcurrencyConflictException {
+        
+        // 方式1:
         int count = this.productDOMapper.deleteById(product.getId(), product.getOperator(), product.getConcurrencyVersion());
         ConcurrencyConflicts.check(count, "remove Product, id={}, concurrencyVersion={}", product.getId(), product.getConcurrencyVersion());
+    
+        // 方式2:
+        ConcurrencyConflicts.check(() -> productMapper.removeProduct(product.getProductId(), product.getOperator(), product.getConcurrencyVersion()));
+    }
     }
 ```
 
