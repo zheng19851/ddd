@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.intf.adapter.dubbo;
+package com.runssnail.ddd.demo.adapter.dubbo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

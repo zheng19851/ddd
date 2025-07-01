@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.intf.adapter.rest;
+package com.runssnail.ddd.demo.adapter.rest;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
