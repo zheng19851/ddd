@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.google.common.collect.Lists;
 import com.runssnail.ddd.common.result.PagingResult;
-import com.runssnail.ddd.demo.client.dataobject.ProductDO;
+import com.runssnail.ddd.demo.infrastructure.dataobject.ProductDO;
 import com.runssnail.ddd.demo.client.dto.domain.product.ProductId;
 import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.ProductQuery;

@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.client.dataobject;
+package com.runssnail.ddd.demo.infrastructure.dataobject;
 
 import com.runssnail.ddd.common.dto.BaseDTO;
 import lombok.Data;
