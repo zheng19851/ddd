@@ -25,8 +25,10 @@
 * infrastructure 基础层（放Cache、MQ框架、数据库持久实现等的地方）
 
 模块依赖关系以及与<a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html" target="_blank">整洁架构风格</a>模块对应关系：
-
 ![采用依赖倒置的依赖关系](https://mmbiz.qpic.cn/mmbiz_png/IuUJiciaodp4ePgKtYeUV7aroO6yQUTGzwvFPFUDqKkq0GmticL51s0f11Qjx5n6SB7x1bwY8Js4YbJWnVxiaDUrSQ/0?wx_fmt=png)
+
+各模块详细拆解：
+![DDD分层架构](ddd.png)
 
 ### DEMO
 * 执行ddd-module-demo/ddd-bootstrap下的App类的main方法
