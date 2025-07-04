@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.validator.CommandValidator;
  * @author zhengwei
  * @date 2019-11-07 15:12
  **/
-public abstract class AbstractCommand<T extends BaseResult> extends BaseDTO implements Command<T> {
+public abstract class BaseCommand<T extends BaseResult> extends BaseDTO implements Command<T> {
 
     @Override
     public void validate(CommandValidator<Command<T>> validator) throws IllegalArgumentException, BizException {

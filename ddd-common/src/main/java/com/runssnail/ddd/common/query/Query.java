@@ -1,6 +1,6 @@
 package com.runssnail.ddd.common.query;
 
-import com.runssnail.ddd.common.command.AbstractCommand;
+import com.runssnail.ddd.common.command.BaseCommand;
 import com.runssnail.ddd.common.command.Command;
 import com.runssnail.ddd.common.result.Result;
 
@@ -9,7 +9,7 @@ import com.runssnail.ddd.common.result.Result;
  *
  * @author zhengwei
  */
-public abstract class Query<T extends Result> extends AbstractCommand<T> implements Command<T> {
+public abstract class Query<T extends Result> extends BaseCommand<T> implements Command<T> {
     private static final long serialVersionUID = 1L;
 
 }

@@ -1,11 +1,11 @@
 package com.runssnail.ddd.demo.application.command.order;
 
-import com.runssnail.ddd.common.command.AbstractCommand;
+import com.runssnail.ddd.common.command.BaseCommand;
 import com.runssnail.ddd.common.result.Result;
 import lombok.Data;
 
 @Data
-public class OrderPayCommand extends AbstractCommand<Result> {
+public class OrderPayCommand extends BaseCommand<Result> {
 
     private String orderId;
 

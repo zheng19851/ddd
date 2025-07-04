@@ -2,7 +2,7 @@ package com.runssnail.ddd.demo.client.dto.command.product;
 
 import javax.validation.constraints.NotBlank;
 
-import com.runssnail.ddd.common.command.AbstractCommand;
+import com.runssnail.ddd.common.command.BaseCommand;
 import com.runssnail.ddd.common.result.Result;
 
 import lombok.Data;
@@ -14,7 +14,7 @@ import lombok.Data;
  * @date 2019-11-05 14:36
  **/
 @Data
-public class ActivateProductCommand extends AbstractCommand<Result> {
+public class ActivateProductCommand extends BaseCommand<Result> {
 
     @NotBlank
     private String productId;
