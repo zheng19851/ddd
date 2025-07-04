@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.domain.repository;
+package com.runssnail.ddd.demo.domain.repository.product;
 
 import lombok.Data;
 

@@ -9,8 +9,8 @@ import com.runssnail.ddd.demo.application.assembler.product.ProductAssembler;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
 import com.runssnail.ddd.demo.client.dto.command.product.GetProductCommand;
 import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
-import com.runssnail.ddd.demo.domain.model.product.Product;
-import com.runssnail.ddd.demo.domain.repository.ProductRepository;
+import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 
 /**
  * @author zhengwei

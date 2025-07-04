@@ -1,9 +1,8 @@
-package com.runssnail.ddd.demo.domain.model.product;
+package com.runssnail.ddd.demo.domain.entity.product;
 
 import com.runssnail.ddd.common.domain.ConcurrencySafeEntity;
 import org.apache.commons.lang3.Validate;
 
-import com.runssnail.ddd.common.domain.Entity;
 import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;

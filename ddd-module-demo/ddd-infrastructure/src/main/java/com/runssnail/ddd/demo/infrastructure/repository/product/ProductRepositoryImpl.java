@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.infrastructure.repository;
+package com.runssnail.ddd.demo.infrastructure.repository.product;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,9 +12,9 @@ import com.google.common.collect.Lists;
 import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.demo.infrastructure.dataobject.ProductDO;
 import com.runssnail.ddd.demo.client.dto.domain.product.ProductId;
-import com.runssnail.ddd.demo.domain.model.product.Product;
-import com.runssnail.ddd.demo.domain.repository.ProductQuery;
-import com.runssnail.ddd.demo.domain.repository.ProductRepository;
+import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.repository.product.ProductQuery;
+import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
