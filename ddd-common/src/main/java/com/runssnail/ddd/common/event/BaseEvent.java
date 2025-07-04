@@ -5,12 +5,12 @@ import java.util.Date;
 import com.runssnail.ddd.common.dto.BaseDTO;
 
 /**
- * AbstractEvent
+ * BaseEvent
  *
  * @author zhengwei
  * @date 2019/3/21 12:41 PM
  **/
-public abstract class AbstractEvent extends BaseDTO implements Event {
+public abstract class BaseEvent extends BaseDTO implements Event {
     private static final long serialVersionUID = -750375438171631444L;
 
     /**
