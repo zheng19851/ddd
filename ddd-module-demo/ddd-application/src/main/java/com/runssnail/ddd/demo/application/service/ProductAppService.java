@@ -21,7 +21,7 @@ import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
  * @date 2019-11-05 14:38
  **/
 @Component
-public class ProductApplicationService {
+public class ProductAppService {
 
     @Autowired
     private CommandBus commandBus;

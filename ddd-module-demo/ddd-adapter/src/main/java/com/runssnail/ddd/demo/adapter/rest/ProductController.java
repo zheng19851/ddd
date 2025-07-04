@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.application.service.ProductApplicationService;
+import com.runssnail.ddd.demo.application.service.ProductAppService;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
 import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
@@ -27,7 +27,7 @@ import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
 public class ProductController {
 
     @Autowired
-    private ProductApplicationService productApplicationService;
+    private ProductAppService productAppService;
 
     /**
      * 分页查询商品信息
@@ -38,7 +38,7 @@ public class ProductController {
      */
     @GetMapping(value = "query", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PagingResult<ProductDTO> queryProducts(@Validated QueryProductCommand command) {
-        PagingResult<ProductDTO> result = productApplicationService.queryProducts(command);
+        PagingResult<ProductDTO> result = productAppService.queryProducts(command);
         return result;
     }
 
@@ -51,7 +51,7 @@ public class ProductController {
      */
     @PostMapping(value = "create", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<String> createProduct(@Validated @RequestBody CreateProductCommand command) {
-        Result<String> result = productApplicationService.createProduct(command);
+        Result<String> result = productAppService.createProduct(command);
         return result;
     }
 
@@ -63,7 +63,7 @@ public class ProductController {
      */
     @PostMapping(value = "update", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<String> updateProduct(@Validated @RequestBody UpdateProductCommand command) {
-        Result<String> result = productApplicationService.updateProduct(command);
+        Result<String> result = productAppService.updateProduct(command);
         return result;
     }
 
@@ -75,7 +75,7 @@ public class ProductController {
      */
     @GetMapping(value = "get", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<ProductDTO> getProduct(@Validated GetProductCommand command) {
-        Result<ProductDTO> result = productApplicationService.getProduct(command);
+        Result<ProductDTO> result = productAppService.getProduct(command);
         return result;
     }
 
@@ -87,7 +87,7 @@ public class ProductController {
      */
     @PostMapping(value = "deactivate", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<String> deactivateProduct(@Validated DeactivateProductCommand command) {
-        Result<String> result = productApplicationService.deactivateProduct(command);
+        Result<String> result = productAppService.deactivateProduct(command);
         return result;
     }
 
@@ -99,7 +99,7 @@ public class ProductController {
      */
     @PostMapping(value = "activate", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<String> activateProduct(@Validated ActivateProductCommand command) {
-        Result<String> result = productApplicationService.activateProduct(command);
+        Result<String> result = productAppService.activateProduct(command);
         return result;
     }
 
@@ -112,7 +112,7 @@ public class ProductController {
      */
     @PostMapping(value = "delete", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Result<String> deleteProduct(@Validated RemoveProductCommand command) {
-        Result<String> result = productApplicationService.removeProduct(command);
+        Result<String> result = productAppService.removeProduct(command);
         return result;
     }
 }

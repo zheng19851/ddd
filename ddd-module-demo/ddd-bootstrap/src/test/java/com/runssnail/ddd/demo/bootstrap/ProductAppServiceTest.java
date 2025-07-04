@@ -33,7 +33,7 @@ import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ComponentScan("com.runssnail.ddd.demo.bootstrap")
-public class ProductApplicationServiceTest {
+public class ProductAppServiceTest {
 
     @Autowired
     private ProductService productService;
