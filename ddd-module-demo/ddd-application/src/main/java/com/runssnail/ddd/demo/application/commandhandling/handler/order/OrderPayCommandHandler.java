@@ -4,7 +4,7 @@ import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.order.OrderPayCommand;
-import com.runssnail.ddd.demo.domain.entity.order.Order;
+import com.runssnail.ddd.demo.domain.model.order.Order;
 import com.runssnail.ddd.demo.domain.repository.order.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.domain.valueobject;
+package com.runssnail.ddd.demo.domain.valueobject.order;
 
 
 import com.runssnail.ddd.common.domain.ValueObject;

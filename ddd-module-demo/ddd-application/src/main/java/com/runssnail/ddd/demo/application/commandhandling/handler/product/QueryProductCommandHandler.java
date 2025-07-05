@@ -12,7 +12,7 @@ import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.demo.application.assembler.product.ProductAssembler;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
 import com.runssnail.ddd.demo.client.command.product.QueryProductCommand;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.product.ProductQuery;
 import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 

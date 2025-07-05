@@ -2,7 +2,7 @@ package com.runssnail.ddd.demo.infrastructure.repository.product;
 
 import com.runssnail.ddd.converter.Converter;
 import com.runssnail.ddd.demo.infrastructure.dataobject.ProductDO;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 
 import org.springframework.stereotype.Component;
 

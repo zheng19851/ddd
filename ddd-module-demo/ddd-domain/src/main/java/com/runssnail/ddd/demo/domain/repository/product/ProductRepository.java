@@ -1,8 +1,8 @@
 package com.runssnail.ddd.demo.domain.repository.product;
 
 import com.runssnail.ddd.common.result.PagingResult;
-import com.runssnail.ddd.demo.domain.entity.product.ProductId;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
+import com.runssnail.ddd.demo.domain.valueobject.product.ProductId;
 
 /**
  * @author zhengwei

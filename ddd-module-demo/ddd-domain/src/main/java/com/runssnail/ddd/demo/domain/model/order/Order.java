@@ -1,8 +1,12 @@
-package com.runssnail.ddd.demo.domain.entity.order;
+package com.runssnail.ddd.demo.domain.model.order;
 
 import com.runssnail.ddd.common.domain.Entity;
 import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.demo.domain.valueobject.*;
+import com.runssnail.ddd.demo.domain.valueobject.order.OrderId;
+import com.runssnail.ddd.demo.domain.valueobject.order.OrderItemId;
+import com.runssnail.ddd.demo.domain.valueobject.order.OrderStatus;
+import com.runssnail.ddd.demo.domain.valueobject.product.ProductId;
 import lombok.Data;
 import org.apache.commons.lang3.Validate;
 

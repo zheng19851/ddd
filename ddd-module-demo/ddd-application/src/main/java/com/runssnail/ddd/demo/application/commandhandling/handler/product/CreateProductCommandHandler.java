@@ -7,7 +7,7 @@ import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
 import com.runssnail.ddd.demo.domain.event.product.ProductCreatedEvent;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 import com.runssnail.ddd.demo.domain.service.ProductDomainService;
 import com.runssnail.ddd.eventhandling.EventBus;

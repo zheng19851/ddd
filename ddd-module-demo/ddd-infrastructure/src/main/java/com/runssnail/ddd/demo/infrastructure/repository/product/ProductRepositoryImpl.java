@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import com.runssnail.ddd.common.exception.ConcurrencyConflicts;
+import com.runssnail.ddd.demo.domain.valueobject.product.ProductId;
 import com.runssnail.ddd.demo.infrastructure.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.google.common.collect.Lists;
 import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.demo.infrastructure.dataobject.ProductDO;
-import com.runssnail.ddd.demo.domain.entity.product.ProductId;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.product.ProductQuery;
 import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 

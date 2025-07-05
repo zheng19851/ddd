@@ -1,13 +1,11 @@
 package com.runssnail.ddd.demo.infrastructure.repository.order;
 
-import com.runssnail.ddd.demo.domain.entity.order.Order;
+import com.runssnail.ddd.demo.domain.model.order.Order;
 import com.runssnail.ddd.demo.domain.repository.order.OrderRepository;
-import com.runssnail.ddd.demo.domain.valueobject.OrderId;
+import com.runssnail.ddd.demo.domain.valueobject.order.OrderId;
 import com.runssnail.ddd.demo.infrastructure.dataobject.OrderDO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
-
-import java.util.UUID;
 
 @Repository
 public class OrderRepositoryImpl implements OrderRepository {

@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.domain.entity.product;
+package com.runssnail.ddd.demo.domain.model.product;
 
 import com.runssnail.ddd.common.domain.ConcurrencySafeEntity;
 import org.apache.commons.lang3.Validate;

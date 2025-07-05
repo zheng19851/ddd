@@ -8,7 +8,7 @@ import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.client.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.domain.event.product.ProductActivatedEvent;
 import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 import com.runssnail.ddd.demo.domain.repository.product.ProductRepository;
 import com.runssnail.ddd.eventhandling.EventBus;
 

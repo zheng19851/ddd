@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.assembler.Assembler;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
-import com.runssnail.ddd.demo.domain.entity.product.Product;
+import com.runssnail.ddd.demo.domain.model.product.Product;
 
 /**
  * @author zhengwei
