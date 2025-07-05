@@ -6,7 +6,9 @@ import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.order.CreateOrderCommand;
 import com.runssnail.ddd.demo.domain.acl.product.ProductService;
 import com.runssnail.ddd.demo.domain.acl.ump.CalcPriceRequest;
+import com.runssnail.ddd.demo.domain.acl.ump.CalcPriceResponse;
 import com.runssnail.ddd.demo.domain.acl.ump.MarketingService;
+import com.runssnail.ddd.demo.domain.acl.ump.OrderDiscountInfoDTO;
 import com.runssnail.ddd.demo.domain.entity.order.Order;
 import com.runssnail.ddd.demo.domain.event.order.OrderCreatedEvent;
 import com.runssnail.ddd.demo.domain.repository.order.OrderRepository;
@@ -45,11 +47,11 @@ public class CreateOrderCommandHandler extends BaseCommandHandler<CreateOrderCom
         // 2、锁库存，这里模拟订单域，访问商品域(正常情况应该是多个sku，因为可以购物车下单，这里只是为了举例，我们就1个sku)
         productService.lockStock(orderId, cmd.getSkuId(), cmd.getSkuQuantity());
 
-        // 3、、计算优惠、锁券等，这里要把订单信息推给营销来计算优惠价格、同时锁券等
-        marketingService.calcPrice(new CalcPriceRequest(orderId));
+        // 3、计算优惠、锁券等，这里要把订单信息推给营销来计算优惠价格、同时锁券等
+        CalcPriceResponse calcPriceResponse = marketingService.calcPrice(new CalcPriceRequest(orderId));
 
-        // 4、、创单
-        Order order = createOrder(cmd, orderId);
+        // 4、创单，需要将优惠信息，保存到订单里
+        Order order = createOrder(cmd, orderId, calcPriceResponse.getOrderDiscountInfo());
         repository.createOrder(order);
 
         // 5、发布事件
@@ -61,11 +63,12 @@ public class CreateOrderCommandHandler extends BaseCommandHandler<CreateOrderCom
     /**
      * 创建订单实体
      *
-     * @param cmd     命令
+     * @param cmd               命令
      * @param orderId
+     * @param orderDiscountInfo
      * @return
      */
-    private Order createOrder(CreateOrderCommand cmd, String orderId) {
+    private Order createOrder(CreateOrderCommand cmd, String orderId, OrderDiscountInfoDTO orderDiscountInfo) {
         ProductId productId = null;
         String productName = "";
         Money price = null;
