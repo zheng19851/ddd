@@ -25,6 +25,8 @@ public class OrderPayCommandHandler extends BaseCommandHandler<OrderPayCommand, 
         // 保存订单
         repository.orderPay(order);
 
+        // 发布事件
+
         return Result.success(order.getId().getValue().toString());
     }
 
