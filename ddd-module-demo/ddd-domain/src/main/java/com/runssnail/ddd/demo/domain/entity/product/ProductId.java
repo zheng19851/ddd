@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.client.dto.domain.product;
+package com.runssnail.ddd.demo.domain.entity.product;
 
 import org.apache.commons.lang3.Validate;
 

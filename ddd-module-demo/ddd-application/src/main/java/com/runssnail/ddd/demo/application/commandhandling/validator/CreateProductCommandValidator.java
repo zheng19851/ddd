@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.common.validator.CommandValidator;
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
 
 /**
  * @author zhengwei

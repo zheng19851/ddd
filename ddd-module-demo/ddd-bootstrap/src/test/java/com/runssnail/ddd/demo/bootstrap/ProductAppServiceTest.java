@@ -16,10 +16,10 @@ import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.Cr
 import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.Order2CreateProductInterceptor;
 import com.runssnail.ddd.demo.application.commandhandling.validator.CreateProductCommandValidator;
 import com.runssnail.ddd.demo.client.api.ProductService;
-import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
+import com.runssnail.ddd.demo.client.command.product.ActivateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.DeactivateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.RemoveProductCommand;
 
 
 /**

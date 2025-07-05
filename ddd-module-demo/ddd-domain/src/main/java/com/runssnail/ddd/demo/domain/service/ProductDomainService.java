@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Component;
 
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
 import com.runssnail.ddd.demo.domain.entity.product.Product;
 
 /**

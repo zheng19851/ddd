@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.client.dto.command.product;
+package com.runssnail.ddd.demo.client.command.product;
 
 import com.runssnail.ddd.common.command.BaseCommand;
 import com.runssnail.ddd.common.result.Result;
@@ -10,7 +10,9 @@ import lombok.Data;
  * @date 2019-11-05 14:36
  **/
 @Data
-public class CreateProductCommand extends BaseCommand<Result> {
+public class UpdateProductCommand extends BaseCommand<Result> {
+
+    private String productId;
 
     private String name;
 

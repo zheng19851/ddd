@@ -1,4 +1,4 @@
-package com.runssnail.ddd.demo.client.dto.command.product;
+package com.runssnail.ddd.demo.client.command.product;
 
 import com.runssnail.ddd.common.command.BaseCommand;
 import com.runssnail.ddd.common.result.Result;

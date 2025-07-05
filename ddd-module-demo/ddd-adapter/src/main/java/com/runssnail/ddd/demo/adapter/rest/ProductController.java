@@ -14,13 +14,13 @@ import com.runssnail.ddd.common.result.PagingResult;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.service.ProductAppService;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
-import com.runssnail.ddd.demo.client.dto.command.product.ActivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.GetProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.QueryProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.RemoveProductCommand;
-import com.runssnail.ddd.demo.client.dto.command.product.UpdateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.ActivateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.DeactivateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.GetProductCommand;
+import com.runssnail.ddd.demo.client.command.product.QueryProductCommand;
+import com.runssnail.ddd.demo.client.command.product.RemoveProductCommand;
+import com.runssnail.ddd.demo.client.command.product.UpdateProductCommand;
 
 @RestController
 @RequestMapping("product")

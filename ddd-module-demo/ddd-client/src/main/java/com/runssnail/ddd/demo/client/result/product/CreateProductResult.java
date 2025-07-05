@@ -1,6 +1,7 @@
-package com.runssnail.ddd.demo.client.dto.result.product;
+package com.runssnail.ddd.demo.client.result.product;
 
 import com.runssnail.ddd.common.result.Result;
+
 import lombok.Data;
 
 /**
@@ -8,7 +9,7 @@ import lombok.Data;
  * @date 2019-11-05 14:36
  **/
 @Data
-public class RemoveProductResult extends Result {
+public class CreateProductResult extends Result {
 
     private String productId;
 

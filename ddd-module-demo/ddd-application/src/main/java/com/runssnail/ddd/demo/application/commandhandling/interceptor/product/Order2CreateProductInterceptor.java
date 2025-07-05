@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.commandhandling.interceptor.CommandInterceptor;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.client.dto.command.product.CreateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
 
 /**
  * @author zhengwei

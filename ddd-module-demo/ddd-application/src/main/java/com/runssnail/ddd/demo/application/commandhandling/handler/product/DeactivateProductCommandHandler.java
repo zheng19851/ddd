@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.result.Result;
-import com.runssnail.ddd.demo.client.dto.command.product.DeactivateProductCommand;
+import com.runssnail.ddd.demo.client.command.product.DeactivateProductCommand;
 import com.runssnail.ddd.demo.domain.event.product.ProductDeactivatedEvent;
 import com.runssnail.ddd.demo.domain.exception.ProductErrorCode;
 import com.runssnail.ddd.demo.domain.entity.product.Product;
