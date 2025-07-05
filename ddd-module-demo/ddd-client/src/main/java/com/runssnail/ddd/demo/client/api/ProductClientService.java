@@ -13,7 +13,7 @@ import com.runssnail.ddd.demo.client.command.product.UpdateProductCommand;
  * @author zhengwei
  * @date 2019-11-06 10:54
  **/
-public interface ProductService {
+public interface ProductClientService {
 
     Result<String> createProduct(CreateProductCommand command);
 

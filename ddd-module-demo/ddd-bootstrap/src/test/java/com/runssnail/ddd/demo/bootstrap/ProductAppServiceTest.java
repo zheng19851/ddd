@@ -15,7 +15,7 @@ import com.runssnail.ddd.demo.application.commandhandling.handler.product.Create
 import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.CreateProductInterceptor;
 import com.runssnail.ddd.demo.application.commandhandling.interceptor.product.Order2CreateProductInterceptor;
 import com.runssnail.ddd.demo.application.commandhandling.validator.CreateProductCommandValidator;
-import com.runssnail.ddd.demo.client.api.ProductService;
+import com.runssnail.ddd.demo.client.api.ProductClientService;
 import com.runssnail.ddd.demo.client.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
 import com.runssnail.ddd.demo.client.command.product.DeactivateProductCommand;
@@ -36,14 +36,14 @@ import com.runssnail.ddd.demo.client.command.product.RemoveProductCommand;
 public class ProductAppServiceTest {
 
     @Autowired
-    private ProductService productService;
+    private ProductClientService productClientService;
 
     @Test
     public void testDeactivateProductOk() {
         DeactivateProductCommand command = new DeactivateProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        Result<String> result = productService.deactivateProduct(command);
+        Result<String> result = productClientService.deactivateProduct(command);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getData());
@@ -54,7 +54,7 @@ public class ProductAppServiceTest {
         ActivateProductCommand command = new ActivateProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        Result<String> result = productService.activateProduct(command);
+        Result<String> result = productClientService.activateProduct(command);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getData());
@@ -65,7 +65,7 @@ public class ProductAppServiceTest {
         RemoveProductCommand command = new RemoveProductCommand();
         command.setOperator("test");
         command.setProductId("3333333333");
-        Result<String> result = productService.removeProduct(command);
+        Result<String> result = productClientService.removeProduct(command);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getData());
@@ -76,7 +76,7 @@ public class ProductAppServiceTest {
         CreateProductCommand createProductCommand = new CreateProductCommand();
         createProductCommand.setDescription("demo");
         createProductCommand.setName("test");
-        Result<String> result = productService.createProduct(createProductCommand);
+        Result<String> result = productClientService.createProduct(createProductCommand);
 
         Assert.assertNotNull(result);
         Assert.assertNotNull(result.getData());
@@ -87,7 +87,7 @@ public class ProductAppServiceTest {
         CreateProductCommand createProductCommand = new CreateProductCommand();
         createProductCommand.setDescription("demo");
         createProductCommand.setName("testfffffffffff");
-        Result<String> result = productService.createProduct(createProductCommand);
+        Result<String> result = productClientService.createProduct(createProductCommand);
 
         Assert.assertNotNull(result);
         Assert.assertTrue(BasicErrorCode.PARAMS_ERROR.getErrorCode() == result.getCode());

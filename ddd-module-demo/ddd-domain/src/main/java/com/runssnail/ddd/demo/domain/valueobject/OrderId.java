@@ -6,17 +6,21 @@ import com.runssnail.ddd.common.domain.ValueObject;
 import java.util.UUID;
 
 public class OrderId extends ValueObject {
-    private final UUID value;
+    private final String value;
 
     public OrderId(UUID value) {
-        this.value = value;
+        this.value = value.toString();
     }
 
     public OrderId() {
-        this.value = UUID.randomUUID();
+        this.value = UUID.randomUUID().toString();
     }
 
-    public UUID getValue() {
+    public OrderId(String orderId) {
+        this.value = orderId;
+    }
+
+    public String getValue() {
         return value;
     }
 

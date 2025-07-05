@@ -4,9 +4,13 @@ import com.runssnail.ddd.commandhandling.handler.BaseCommandHandler;
 import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.order.CreateOrderCommand;
+import com.runssnail.ddd.demo.domain.acl.product.ProductService;
+import com.runssnail.ddd.demo.domain.acl.ump.CalcPriceRequest;
+import com.runssnail.ddd.demo.domain.acl.ump.MarketingService;
 import com.runssnail.ddd.demo.domain.entity.order.Order;
 import com.runssnail.ddd.demo.domain.event.order.OrderCreatedEvent;
 import com.runssnail.ddd.demo.domain.repository.order.OrderRepository;
+import com.runssnail.ddd.demo.domain.service.OrderDomainService;
 import com.runssnail.ddd.demo.domain.valueobject.Money;
 import com.runssnail.ddd.demo.domain.valueobject.OrderId;
 import com.runssnail.ddd.demo.domain.valueobject.ProductId;
@@ -21,37 +25,52 @@ public class CreateOrderCommandHandler extends BaseCommandHandler<CreateOrderCom
     OrderRepository repository;
 
     @Autowired
+    OrderDomainService orderDomainService;
+
+    @Autowired
     EventBus eventBus;
+
+    @Autowired
+    ProductService productService;
+
+    @Autowired
+    MarketingService marketingService;
 
     @Override
     protected Result<String> doHandle(CreateOrderCommand cmd) throws BizException {
 
-        // 1、锁库存
+        // 1、订单号
+        String orderId = orderDomainService.nextId();
 
-        // 2、计算优惠、锁券等
+        // 2、锁库存，这里模拟订单域，访问商品域(正常情况应该是多个sku，因为可以购物车下单，这里只是为了举例，我们就1个sku)
+        productService.lockStock(orderId, cmd.getSkuId(), cmd.getSkuQuantity());
 
-        // 3、创单
-        Order order = createOrder(cmd);
+        // 3、、计算优惠、锁券等，这里要把订单信息推给营销来计算优惠价格、同时锁券等
+        marketingService.calcPrice(new CalcPriceRequest(orderId));
+
+        // 4、、创单
+        Order order = createOrder(cmd, orderId);
         repository.createOrder(order);
 
-        // 4、发布事件
-        eventBus.publish(new OrderCreatedEvent(order.getId().getValue().toString()));
+        // 5、发布事件
+        eventBus.publish(new OrderCreatedEvent(order.getId().getValue()));
 
-        return Result.success(order.getId().getValue().toString());
+        return Result.success(order.getId().getValue());
     }
 
     /**
      * 创建订单实体
      *
-     * @param cmd 命令
+     * @param cmd     命令
+     * @param orderId
      * @return
      */
-    private Order createOrder(CreateOrderCommand cmd) {
+    private Order createOrder(CreateOrderCommand cmd, String orderId) {
         ProductId productId = null;
         String productName = "";
         Money price = null;
         int quantity = 1;
-        Order order = new Order(new OrderId());
+        Order order = new Order(new OrderId(orderId));
         order.addItem(productId, productName, price, quantity);
         return order;
     }

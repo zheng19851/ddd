@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.service.ProductAppService;
-import com.runssnail.ddd.demo.client.api.ProductService;
+import com.runssnail.ddd.demo.client.api.ProductClientService;
 import com.runssnail.ddd.demo.client.dto.ProductDTO;
 import com.runssnail.ddd.demo.client.command.product.ActivateProductCommand;
 import com.runssnail.ddd.demo.client.command.product.CreateProductCommand;
@@ -19,7 +19,7 @@ import com.runssnail.ddd.demo.client.command.product.UpdateProductCommand;
  * @date 2019-11-07 10:03
  **/
 @Component
-public class ProductServiceImpl implements ProductService {
+public class ProductClientServiceImpl implements ProductClientService {
 
     @Autowired
     private ProductAppService productAppService;

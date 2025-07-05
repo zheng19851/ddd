@@ -20,7 +20,7 @@ public class OrderRepositoryImpl implements OrderRepository {
         orderDO.setSkuId("skuid");
         orderDO.setQuantity(1);
 
-        Order order = new Order(new OrderId(UUID.fromString(orderDO.getId())));
+        Order order = new Order(new OrderId(orderDO.getId()));
 
         BeanUtils.copyProperties(orderDO, order);
         return order;
