@@ -4,17 +4,17 @@ import com.runssnail.ddd.common.event.BaseEvent;
 
 public class OrderCreatedEvent extends BaseEvent {
 
-    private String order;
+    private String orderId;
 
-    public OrderCreatedEvent(String order) {
-        this.order = order;
+    public OrderCreatedEvent(String orderId) {
+        this.orderId = orderId;
     }
 
-    public String getOrder() {
-        return order;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setOrder(String order) {
-        this.order = order;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 }

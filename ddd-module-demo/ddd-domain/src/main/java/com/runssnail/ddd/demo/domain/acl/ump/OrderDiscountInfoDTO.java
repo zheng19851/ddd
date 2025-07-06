@@ -6,9 +6,19 @@ import java.util.List;
 
 public class OrderDiscountInfoDTO extends BaseDTO {
 
+    private String orderId;
+
     private List<OrderItemDiscountInfoDTO> orderItems;
 
     private DiscountInfoDTO discountInfo;
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
 
     public List<OrderItemDiscountInfoDTO> getOrderItems() {
         return orderItems;
