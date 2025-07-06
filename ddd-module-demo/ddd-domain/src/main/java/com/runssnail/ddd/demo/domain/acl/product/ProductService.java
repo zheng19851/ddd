@@ -7,6 +7,4 @@ public interface ProductService {
 
     Result<ProductDTO> getProduct(String productId);
 
-    void lockStock(String orderId, String skuId, Integer skuQuantity);
-
 }

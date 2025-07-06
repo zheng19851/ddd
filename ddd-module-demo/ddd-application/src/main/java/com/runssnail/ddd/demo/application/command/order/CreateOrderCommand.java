@@ -9,7 +9,8 @@ public class CreateOrderCommand extends BaseCommand<Result> {
 
     // 立即购买，只有1个sku，做个demo
 
-    private Long uid;
+    private Long buyerId;
+    private Long sellerId;
     private String skuId;
     private Integer skuQuantity;
 

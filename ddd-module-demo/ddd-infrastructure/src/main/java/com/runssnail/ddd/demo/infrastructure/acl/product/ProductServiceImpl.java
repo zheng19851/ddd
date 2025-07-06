@@ -9,11 +9,9 @@ import org.springframework.stereotype.Service;
 public class ProductServiceImpl implements ProductService {
     @Override
     public Result<ProductDTO> getProduct(String productId) {
+
+        // 调用商品域服务
         return null;
     }
 
-    @Override
-    public void lockStock(String orderId, String skuId, Integer skuQuantity) {
-
-    }
 }

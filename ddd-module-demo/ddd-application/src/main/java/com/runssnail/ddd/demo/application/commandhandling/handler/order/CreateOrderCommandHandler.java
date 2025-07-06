@@ -5,6 +5,7 @@ import com.runssnail.ddd.common.exception.BizException;
 import com.runssnail.ddd.common.result.Result;
 import com.runssnail.ddd.demo.application.command.order.CreateOrderCommand;
 import com.runssnail.ddd.demo.domain.acl.product.ProductService;
+import com.runssnail.ddd.demo.domain.acl.stock.StockService;
 import com.runssnail.ddd.demo.domain.acl.ump.*;
 import com.runssnail.ddd.demo.domain.model.order.Order;
 import com.runssnail.ddd.demo.domain.event.order.OrderCreatedEvent;
@@ -33,6 +34,9 @@ public class CreateOrderCommandHandler extends BaseCommandHandler<CreateOrderCom
     ProductService productService;
 
     @Autowired
+    StockService stockService;
+
+    @Autowired
     MarketingService marketingService;
 
     @Override
@@ -42,7 +46,7 @@ public class CreateOrderCommandHandler extends BaseCommandHandler<CreateOrderCom
         String orderId = orderDomainService.nextId();
 
         // 2、锁库存，这里模拟订单域，访问商品域(正常情况应该是多个sku，因为可以购物车下单，这里只是为了举例，我们就1个sku)
-        productService.lockStock(orderId, cmd.getSkuId(), cmd.getSkuQuantity());
+        stockService.lockStock(orderId, cmd.getSkuId(), cmd.getSkuQuantity());
 
         // 3、计算优惠、锁券等，这里要把订单信息推给营销来计算优惠价格、同时锁券等
         CalcPriceResponse calcPriceResponse = marketingService.calcPrice(new CalcPriceRequest(new OrderInfoDTO()));
